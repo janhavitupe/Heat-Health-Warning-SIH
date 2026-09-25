@@ -59,12 +59,17 @@ def validate(cfg: dict[str, Any]) -> None:
         raise ConfigError("downscaling.day_transition_wm2 must be positive")
 
     _check_weights("pvi", cfg["pvi"]["weights"])
+    if cfg["pvi"].get("normalization", "percentile_rank") not in ("percentile_rank", "minmax"):
+        raise ConfigError("pvi.normalization must be 'percentile_rank' or 'minmax'")
     _check_increasing_bands("htsi.categories", cfg["htsi"]["categories"])
     _check_increasing_bands("alerts.levels", cfg["alerts"]["levels"])
 
-    floor = cfg["risk"]["vulnerability_floor"]
-    if not 0 <= floor <= 1:
-        raise ConfigError("risk.vulnerability_floor must be in [0, 1]")
+    spread = cfg["risk"]["vulnerability_spread"]
+    if not 0 <= spread < 1:
+        raise ConfigError("risk.vulnerability_spread must be in [0, 1)")
+    cap = cfg["risk"]["capacity"]
+    if cap["catchment_km"] <= 0 or not 0 <= cap["spread"] < 1:
+        raise ConfigError("risk.capacity: catchment_km must be positive and spread in [0, 1)")
     for key in ("historical_factor", "capacity_factor"):
         f = cfg["risk"][key]
         if not f["min"] <= f["default"] <= f["max"]:

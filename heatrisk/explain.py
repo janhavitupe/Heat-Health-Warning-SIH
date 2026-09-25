@@ -2,8 +2,10 @@
 
 The risk score is decomposed so that the contributions sum exactly to it:
 
-  heat part           HTSI × floor, split across HTSI components by their points
-  vulnerability part  HTSI × (1 − floor) × PVI/100, split across PVI indicators
+  heat part           HTSI, split across HTSI components by their points
+  vulnerability part  HTSI × spread × (PVI − 50)/50, split across PVI indicators by
+                      each one's distance from its midpoint (neutral indicators give 0;
+                      below-average vulnerability gives negative points)
   factor part         HTSI × mult × (F − 1)   (historical illness H_m or capacity C_h)
 
 where F is H_m (for MRI) or C_h (for HRI) and mult is the vulnerability
@@ -14,6 +16,8 @@ scaled by the same ratio, so the sum still equals the reported score.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+
+from heatrisk.risk import vulnerability_multiplier
 
 HEAT_LABELS = {
     "utci": ("Whole-body heat stress (UTCI)", "live"),
@@ -64,9 +68,10 @@ class Explanation:
 def explain_day(day: dict, pvi_row: dict, pvi_status: dict[str, str], factor: float,
                 factor_defaulted: bool, target: str, cfg: dict) -> Explanation:
     """Explain one ward-day. `day` is a row of the scored daily table."""
-    floor = cfg["risk"]["vulnerability_floor"]
+    spread = cfg["risk"]["vulnerability_spread"]
+    weights = cfg["pvi"]["weights"]
     pvi = pvi_row["pvi"]
-    mult = floor + (1 - floor) * pvi / 100.0
+    mult = vulnerability_multiplier(pvi, cfg)
 
     htsi_scale = day["htsi"] / day["htsi_raw"] if day["htsi_raw"] > 0 else 0.0
     raw_score = day[f"{target}_raw"]
@@ -75,16 +80,16 @@ def explain_day(day: dict, pvi_row: dict, pvi_status: dict[str, str], factor: fl
 
     contribs: list[Contribution] = []
     for key, (label, data_label) in HEAT_LABELS.items():
-        pts = day[f"pts_{key}"] * floor * s
+        pts = day[f"pts_{key}"] * s
         note = "roof data not yet available — counted as 0" if key == "indoor" and day["indoor_data_missing"] else ""
         contribs.append(Contribution(key, label, pts, "heat", data_label, note))
 
-    vuln_total = day["htsi_raw"] * (1 - floor) * (pvi / 100.0) * s
     for key, label in PVI_LABELS.items():
-        share = pvi_row[f"pvi_pts_{key}"] / pvi if pvi > 0 else 0.0
+        above_mid = pvi_row[f"pvi_pts_{key}"] - 50.0 * weights[key]   # sums to PVI − 50
+        pts = day["htsi_raw"] * spread * above_mid / 50.0 * s
         status = pvi_status.get(key, "used")
         note = "" if status == "used" else status.replace("neutral: ", "held at city midpoint — ")
-        contribs.append(Contribution(key, label, vuln_total * share, "vulnerability", "model_estimate", note))
+        contribs.append(Contribution(key, label, pts, "vulnerability", "model_estimate", note))
 
     f_label, f_data = FACTOR_LABELS[target]
     contribs.append(Contribution(

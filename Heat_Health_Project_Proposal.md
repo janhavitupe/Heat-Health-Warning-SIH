@@ -519,3 +519,7 @@ The human-in-the-loop alert approval step ensures the system supports, rather th
 8. ISO 7243:2017. *Ergonomics of the thermal environment — Assessment of heat stress using the WBGT index.*
 9. ACGIH. *Heat Stress and Strain: TLV® Documentation.*
 10. Tartarini, F., & Schiavon, S. (2020). pythermalcomfort: A Python package for thermal comfort research. *SoftwareX*, 12, 100578.
+
+
+
+

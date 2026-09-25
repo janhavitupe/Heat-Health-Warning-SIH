@@ -17,7 +17,8 @@ Data collection is the slowest and most uncertain part of the project. If ward b
 - [x] AMC zone for each ward (Wikipedia list, name-matched; Indrapuri's South-zone assignment confirmed by the AMC UHC list).
 
 ### Population and vulnerability (§6.4, §7.4)
-- [ ] **Blocked on the 2011 ward map.** Census 2011 ward-level PCA is downloaded (`data/raw/census/pca_tv_ahmadabad_2011.xlsx`, 58 wards) but the wards are numbered with no names or boundaries. Obtain a 2011 AMC ward map or number-to-name list (AMC Estate/Election dept, Directorate of Census Operations Gujarat, or a scanned map), then build `data/manual/ward_crosswalk_2011_2015.csv`. Unblocks slum share, roof material, and worker data.
+- [x] *Slum share unblocked without the crosswalk:* `scripts/extract_slums.py` takes AMC's 2010-11 slum survey (Slum Free City Action Plan 2014, Annexure II) and maps it to 2015 wards (`data/manual/ward_crosswalk_slum_2010.csv`).
+- [ ] **Blocked on the 2011 ward map** (roof material, workers, under-6). Census 2011 ward-level PCA is downloaded (`data/raw/census/pca_tv_ahmadabad_2011.xlsx`, 58 wards) but the wards are numbered with no names or boundaries. Obtain a 2011 AMC ward map or number-to-name list (AMC Estate/Election dept, Directorate of Census Operations Gujarat, or a scanned map), then build `data/manual/ward_crosswalk_2011_2015.csv`. Unblocks slum share, roof material, and worker data.
 - [ ] Extract **roof material** from Census houselisting tables — share of households with metal/asbestos/sheet roofs → `roof_sheet_share` (*Innovation 1*). Document the geographic level actually available and any disaggregation.
 - [x] Run `gee/export_ward_stats.py` (project `heat-health-sih`): WorldPop population plus LST day/night, NDVI, built-up, tree cover for all 48 wards.
 - [ ] WorldPop age shares turned out uniform across wards. Get ward-level under-6 from the Census 2011 Primary Census Abstract, and search for any ward-level elderly data (see data/README.md).

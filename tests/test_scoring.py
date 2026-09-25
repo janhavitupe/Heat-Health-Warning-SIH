@@ -28,13 +28,13 @@ def _daily(cfg, **kw):
 
 
 def test_persistence_counts_consecutive_hot_days(cfg):
-    d = indices.htsi(_daily(cfg, days=4), cfg, roof_sheet_share=0.0)
+    d = indices.htsi(_daily(cfg, days=4, tmax=46.5), cfg, roof_sheet_share=0.0)   # heat-alert level day
     assert d["hot_run_days"].tolist() == [1, 2, 3, 4]
     assert d["pts_persist"].tolist() == [0.0, 2.5, 5.0, 7.5]
 
 
 def test_persistence_resets_after_cool_day(cfg):
-    d = _daily(cfg, days=3)
+    d = _daily(cfg, days=3, tmax=46.5)
     d.loc[d.index[1], ["utci", "wbgt", "heat_index"]] = [20, 18, 20]
     out = indices.htsi(d, cfg, roof_sheet_share=0.0)
     assert out["hot_run_days"].tolist() == [1, 0, 1]
@@ -94,9 +94,17 @@ def test_risk_zero_without_heat(cfg):
     assert out["mri"].iloc[0] == 0 and out["alert_mri"].iloc[0] == "green"
 
 
-def test_least_vulnerable_ward_keeps_floor_share(cfg):
-    out = risk.score(pd.Series([100.0]), pvi=0, h_m=1.0, c_h=1.0, cfg=cfg)
-    assert out["mri"].iloc[0] == pytest.approx(100 * cfg["risk"]["vulnerability_floor"])
+def test_vulnerability_multiplier_centred_on_average_ward(cfg):
+    s = cfg["risk"]["vulnerability_spread"]
+    out = risk.score(pd.Series([50.0, 50.0, 50.0]), pvi=50, h_m=1.0, c_h=1.0, cfg=cfg)
+    assert out["mri"].iloc[0] == pytest.approx(50.0)                 # average ward: heat as is
+    assert risk.vulnerability_multiplier(0, cfg) == pytest.approx(1 - s)
+    assert risk.vulnerability_multiplier(100, cfg) == pytest.approx(1 + s)
+
+
+def test_average_ward_reaches_red_on_extreme_heat(cfg):
+    out = risk.score(pd.Series([85.0]), pvi=50, h_m=1.0, c_h=1.0, cfg=cfg)
+    assert out["alert_mri"].iloc[0] == "red"
 
 
 def test_factor_defaults_and_clamps(cfg):
@@ -106,7 +114,7 @@ def test_factor_defaults_and_clamps(cfg):
 
 
 def test_alert_band_edges(cfg):
-    out = risk.score(pd.Series([40.0, 60.0, 80.0, 100.0]), pvi=100, h_m=1.0, c_h=1.0, cfg=cfg)
+    out = risk.score(pd.Series([40.0, 60.0, 80.0, 100.0]), pvi=50, h_m=1.0, c_h=1.0, cfg=cfg)
     assert out["alert_mri"].tolist() == ["green", "yellow", "orange", "red"]
 
 
@@ -150,4 +158,28 @@ def test_golden_day(cfg, wards, wx):
     assert d["mri"] == pytest.approx(GOLDEN["mri"], abs=0.05)
 
 
-GOLDEN = {"htsi": 98.42, "mri": 65.941}
+GOLDEN = {"htsi": 61.96, "mri": 61.955}   # 44 °C synthetic day → Very High HTSI; W3 is the median toy ward (PVI 50)
+
+
+def test_score_city_long_table(cfg, wards, wx):
+    t = pipeline.score_city(wx, wards, cfg)
+    assert list(t.columns) == pipeline.CITY_COLUMNS
+    assert len(t) == len(wards) * 3                     # 3 synthetic days
+    one = pipeline.score_ward("W4", wx, wards, cfg)["daily"]
+    assert t[t.ward_id == "W4"]["mri"].to_numpy() == pytest.approx(one["mri"].to_numpy())
+    assert t["top_factors"].str.contains("UTCI").all()
+
+
+def test_persistence_needs_heat_alert_level_days(cfg):
+    """A long run of merely High days (44 °C, base < 60) earns no persistence points."""
+    d = indices.htsi(_daily(cfg, days=4, tmax=44.0), cfg, roof_sheet_share=0.0)
+    assert (d["base"] < cfg["htsi"]["persistence"]["min_base_score"]).all()
+    assert (d["pts_persist"] == 0).all()
+
+
+def test_pvi_percentile_rank_centres_median_ward(cfg):
+    from heatrisk.vulnerability import normalize
+    skewed = np.array([0.0, 0.01, 0.02, 0.03, 0.6])            # one outlier, like slum share
+    assert normalize(skewed, "percentile_rank").tolist() == [0, 0.25, 0.5, 0.75, 1.0]
+    assert normalize(skewed, "minmax")[2] < 0.05                # min-max squeezes the median ward
+    assert normalize(np.array([1.0, 2.0, 2.0, 3.0]), "percentile_rank").tolist() == pytest.approx([0, 0.5, 0.5, 1])

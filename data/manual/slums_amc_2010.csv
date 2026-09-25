@@ -1,0 +1,687 @@
+slum_code,zone_2010,ward_2010,slum_name,huts,page,ward_key
+17,West,Ambawadi,Mehratbhai Na Chhapara,22,119,AMBAWADI
+22,West,S.P. Stadium,Ashabhavan Na Chhapara,125,119,SPSTADIUM
+33,West,Juna Vadaj,River Bank Na Chhapara,138,119,JUNAVADAJ
+55,West,Paldi,B/H. NID Chhapara,34,119,PALDI
+63,West,Navrangpura,Govindbhai Ni Chali,178,119,NAVRANGPURA
+66,West,Paldi,Nadi Kinara Na Chhapara,510,119,PALDI
+68,West,Paldi,P.T. College Chhapara,383,119,PALDI
+69,West,Paldi,P.T. College Chhapara,11,119,PALDI
+92,West,Sabarmati,Kailash Nagar Na Chhapara,542,119,SABARMATI
+155,West,Ambawadi,Velabhai Ni Chali,42,119,AMBAWADI
+931,West,Vasna,Paresh Na Chhapara,175,119,VASNA
+214,South,Behrampura,Suburban Pumping Station Na Chhapara,35,119,BEHRAMPURA
+313,South,Maninagar,Mirchhipir Na Chhapara,237,119,MANINAGAR
+318,South,Maninagar,Sindhi Camp,57,119,MANINAGAR
+275,Central,Khadia,Gautam Nagar,128,119,KHADIA
+276,Central,Khadia,Gautam Nagar Na Chhapara,50,119,KHADIA
+403,Central,Dudheshwar,Gaushala Na Chhapara,633,119,DUDHESHWAR
+405,Central,Dudheshwar,Harijan Na Zupda,171,119,DUDHESHWAR
+448,Central,Dudheshwar,Vanzara Na Zupda (Anwarnagar Ni Chali),146,119,DUDHESHWAR
+473,Central,Giridharnagar,New Shorrock Mill Ni Chali,60,119,GIRIDHARNAGAR
+509,Central,Raikhad,Dhobighat Na Zupda,17,119,RAIKHAD
+510,Central,Raikhad,Haveli Na Chhapara,31,119,RAIKHAD
+513,Central,Raikhad,Shrinath Chal,868,120,RAIKHAD
+515,Central,Raikhad,Slum On River Bank (Maratha Wad),174,120,RAIKHAD
+517,Central,Raikhad,Victoria Na Zupda,725,120,RAIKHAD
+522,Central,Shahpur,Abdulkhan Ni Chali (Khari Vadi Chali),356,120,SHAHPUR
+523,Central,Raikhad,Azadnagar,240,120,RAIKHAD
+528,Central,Shahpur,Saiyed Na Chhapara (Mithan Sayed Na Chhapara),147,120,SHAHPUR
+429,Central,Dudheshwar,Nathavbava Ni Chali,109,120,DUDHESHWAR
+435,Central,Dudheshwar,Phoolghar Ni Chali,54,120,DUDHESHWAR
+449,Central,Dudheshwar,Vidha Manadas Ni Chali,273,120,DUDHESHWAR
+516,Central,Raikhad,Slums Near Nehru Bridge,370,120,RAIKHAD
+529,Central,Shahpur,Shankar Bhuvan Na Chhapara,2175,120,SHAHPUR
+153,West,Paladi,Tajbibi Badshah Khan Na Chhapara,19,121,PALADI
+194,Central,Jamalpur,Lekhraj Nu Dehlu,9,121,JAMALPUR
+225,South,Dani Limda,Bhakt Vallabh Dhola Na Chhapara,10,121,DANILIMDA
+226,South,Dani Limda,Bhandariya Kuva Ni Chali,15,121,DANILIMDA
+268,South,Kankaria,Bhakt Vallabh Ni Chali,7,121,KANKARIA
+310,South,Maninagar,Choksi Ni Chali,15,121,MANINAGAR
+312,South,Ghodasar,Laxmanbapa Ni Chali,14,121,GHODASAR
+320,South,Indrapuri,Aajmalbhai Ni Chali,10,121,INDRAPURI
+343,South,Ghodasar,Laxman Nagar Ni Chali,14,121,GHODASAR
+369,Central,Madhupura,Chandubhai Madhaji Na Chhapara,15,121,MADHUPURA
+372,Central,Madhupura,Galiben Na Chhapara,8,121,MADHUPURA
+383,Central,Madhupura,Tawadipura Na Chhapara,11,121,MADHUPURA
+402,Central,Shahpur,Ganesh Rabari Ni Chali,10,121,SHAHPUR
+415,Central,Dudheshwar,Mahakali Mandir Ni Chali,12,121,DUDHESHWAR
+464,Central,Dudheshwar,Kabrastan Na Zupda,2,121,DUDHESHWAR
+498,Central,Dudheshwar,Bharatbhai Ni Chali,16,121,DUDHESHWAR
+527,Central,Shahpur,Haji bldg. Na Zupda,16,121,SHAHPUR
+539,North,Asarva,Harijanvas,4,121,ASARVA
+556,North,Asarva,Talavadi Na Chhapara,9,121,ASARVA
+620,North,Saijpur Bogha,Chotabhai Ni Chali,12,121,SAIJPURBOGHA
+1001,South,BEHRAMPURA,Daud Na Chhapara,20,121,BEHRAMPURA
+1071,East,Amaraiwadi,Swastik Ni Chali,12,121,AMARAIWADI
+1075,East,Bhaipura,CHANAJI NA CHHAPARA,10,121,BHAIPURA
+15,West,Ambawadi,Mehnatpura Na Chhapara,791,122,AMBAWADI
+29 (803),West,Juna Vadaj,Madrasi Na Chhapara,212,122,JUNAVADAJ
+31,West,Juna Vadaj,Panchal Nagar,91,122,JUNAVADAJ
+107,New West,Kali,Parvati Nagar,205,122,KALI
+115,West,Sabarmati,Satya Narayan Na Chhapara,22,122,SABARMATI
+133,West,Vasana,Bhikha Bhai Juvabhai Na Chhapara,258,122,VASANA
+136,West,Vasana,Desai Vas,91,122,VASANA
+141,West,Ambawadi,Malav Talav Chamunda Nagar,246,122,AMBAWADI
+218,South,Kankaria,Sutariya Ni Chali,723,122,KANKARIA
+223,South,Behrampura,Babu Nagar,170,122,BEHRAMPURA
+264,South,Kankaria,Baldev Nagar,80,122,KANKARIA
+278,South,Kankaria,Haripura Na Chhapara,77,122,KANKARIA
+299,South,Kankaria,Shushilaben Na Chhapara(Pathan Ni Chali),589,122,KANKARIA
+304,South,Kankaria,Tabha Seth Ni Chali,138,122,KANKARIA
+431,Central,Dudheshwar,Parmananda Ni Chali,252,122,DUDHESHWAR
+432,Central,Dudheshwar,Pathan Ni Chali,20,122,DUDHESHWAR
+455,Central,Giridhar Nagar,Bhilvas Na Chhapara,70,122,GIRIDHARNAGAR
+536,Central,Giridhar Nagar,Bhilvas Inside Hiralal Ni Chali,79,122,GIRIDHARNAGAR
+538,Central,Giridhar Nagar,Bhilvas Inside Vasudevpura,84,122,GIRIDHARNAGAR
+543,North,Asarva,Mahadev Vado,582,122,ASARVA
+637,North,Sardarnagar,Approach Road Na Chhapara,150,122,SARDARNAGAR
+693,East,Odhav,Sukrutinagar,76,122,ODHAV
+710,East,Rakhiyal,Vora Na Roja Na Zupda,47,122,RAKHIYAL
+EX24,New West,Ghatlodia,Laxmanghad,789,122,GHATLODIA
+EX38,New West,Vejalpur,Bhajwada,261,122,VEJALPUR
+70,West,Paladi,Rabari Na Chhapara,70,123,PALADI
+111,West,Sabarmati,Rabari Vas (Dahyabhai Ni Chali),13,123,SABARMATI
+914,West,S.P.Stadium,Thakorvas,121,123,SPSTADIUM
+919 (920+922),West,Nava Vadaj,MARAVADI NI CHALI,342,123,NAVAVADAJ
+227,South,Dani Limda,Bharvad Vas,46,123,DANILIMDA
+228,South,Dani Limda,Bhil Vas Na Chhapara,245,123,DANILIMDA
+240,South,Dani Limda,Patel Vas Na Chhapara,113,123,DANILIMDA
+244,South,Dani Limda,Thakor Vas Na Chhapara,70,123,DANILIMDA
+247,South,Ishanpur,Atmaram Ni Chali,10,123,ISHANPUR
+332,South,Vatva,Godhai Vas,28,123,VATVA
+960,South,Vatva,Sultanpura,58,123,VATVA
+969,South,Vatva,Moto Bhoivas,58,123,VATVA
+970,South,Vatva,Navo Cunarvas,125,123,VATVA
+971,South,Lambha,Bhutiavas,31,123,LAMBHA
+973,South,Vatva,Green Chowk Dargha Road,117,123,VATVA
+266,Central,Khadia,Bhagwanpura Nu Pithu,247,123,KHADIA
+281,Central,Khadia,Jugaldas Nu Dehlu,22,123,KHADIA
+382,Central,Dariyapur,Kumbhar Vas Na Chhapra (Lodha Vas),122,123,DARIYAPUR
+385,Central,Dariyapur,Vaghri Vad,219,123,DARIYAPUR
+512,Central,Raikhad,Shahpur Mill Compound Na Chhapara,239,123,RAIKHAD
+525,Central,Raikhad,Bhilvas,108,123,RAIKHAD
+541,North,Asarva,Hanuman Vali Chali,31,123,ASARVA
+554,North,Asarva,Slums Near Tilaknagar,15,123,ASARVA
+668,East,Amaraiwadi,Tahkorewas,20,123,AMARAIWADI
+EX61,East,Ramol- Hathijan,Chunaravas,225,123,RAMOLHATHIJAN
+37,New West,Bodakdev,Ramsingbhai Na Chhapara,950,124,BODAKDEV
+43,West,Navarangpura,Chhapara,111,124,NAVARANGPURA
+44,West,Navarangpura,Gulbai Tekra Na Chhapara,2500,124,NAVARANGPURA
+48,West,Navarangpura,Rabari Na Chhapara,45,124,NAVARANGPURA
+49,West,Navarangpura,Vanik Chatralay Na Chhapara,60,124,NAVARANGPURA
+62,West,Paladi,Girnar Soc Na Chhapara,167,124,PALADI
+106,West,Sabarmati,Nr Hindustan Livers Chhapara,15,124,SABARMATI
+210,Central,Jamalpur,Rabari Na Slum,20,124,JAMALPUR
+533,North,Asarva,Bhairav Tekri Na,8,124,ASARVA
+547,North,Asarva,Mohanbhai Rabari Na Chhapra,60,124,ASARVA
+18,West,Ambawadi,Rabari Na Chhapara(Jiva Dosa Na Chhapara),162,124,AMBAWADI
+53,West,Nava Vadaj,Rabari Na Chhapara,466,124,NAVAVADAJ
+147,West,Ambawadi,Rajiv Nagar,439,124,AMBAWADI
+156,West,Vasana,Yogeshwar Na Chhapara,842,124,VASANA
+351,South,Vatva,Rajabhai Ni Chali,26,124,VATVA
+80,West,Sabarmati,Chhapara (J P Ni Chali ),497,125,SABARMATI
+239,South,Dani Limda,Navabkhan Na Chhapara,4105,125,DANILIMDA
+241,South,Dani Limda,Shah Nagar Na Chhapara,478,125,DANILIMDA
+248,South,Ghodasar,Kantinagar,228,125,GHODASAR
+249,South,Ishanpur,Kashi Vishwanath Na Chhapara(Chamun danagar),202,125,ISHANPUR
+251,South,Ghodasar,Ramwadi,683,125,GHODASAR
+259,South,Lambha,Thakorvas,231,125,LAMBHA
+260,South,Lambha,Vaghrivas,210,125,LAMBHA
+261,South,Lambha,Vanjaravas,459,125,LAMBHA
+325,South,Lambha,Bibi Talav Na Chhapara,33,125,LAMBHA
+341,South,Lambha,Kali Talavdi Ni Chali,311,125,LAMBHA
+349,South,Vatva,Nr. Vatva Talav Chhapara (Chunaravas),81,126,VATVA
+EX90,South,Vatva,Vanarvat talav,477,126,VATVA
+638,North,Sardarnagar,Baliadevnagar,288,126,SARDARNAGAR
+EX102,South,Lambha,Vadiya Talav Na Chhapara,30,126,LAMBHA
+EX32,New West,Thaltej,Malav Talav,1161,126,THALTEJ
+EX35,New West,Vejalpur,Boot bhavani na chhapara,225,126,VEJALPUR
+EX58,East,Ramol- Hathijan,Gapurbasti (Khanvadi),162,126,RAMOLHATHIJAN
+EX60,East,Ramol- Hathijan,Jantanagar Talawadi,128,126,RAMOLHATHIJAN
+EX70,East,Odhav,Ramnagar,99,126,ODHAV
+11,West,Ambawadi,DHOR VADO,49,126,AMBAWADI
+26,West,S.P.Stadium,Gopal Nagar,25,126,SPSTADIUM
+36,West,S.P.Stadium,Chhapara (Khodiyar Nagar),40,126,SPSTADIUM
+60,West,Paladi,FUGULLA SOC NA CHHAPARA,10,126,PALADI
+67,West,Paladi,NR. MAHALAXMI CROSSING CHHAPARA,12,126,PALADI
+105,West,Sabarmati,Nr Power House Chhapara,229,126,SABARMATI
+176,South,Behrampura,Ganj Sahid Tekra's Chhapara,105,126,BEHRAMPURA
+184,South,Behrampura,Kabrastan Na Chhapara,84,126,BEHRAMPURA
+192,South,Behrampura,Lablavi Ni Chali,506,126,BEHRAMPURA
+196,South,Behrampura,Madhubhai Ni Chali(160 Aec Kotni Rang Na Chhapara),17,126,BEHRAMPURA
+1019,South,Behrampura,Pirana Road Na Chhapara,124,126,BEHRAMPURA
+EX10 7,South,Dani Limda,Ektanagar,221,127,DANILIMDA
+243,South,Dani Limda,Suryanagar Na Chhapara,301,127,DANILIMDA
+250,South,Lambha,Kashiram Na Chhapara,24,127,LAMBHA
+322,South,Vatva,Ambica Tube Na Chhapara,54,127,VATVA
+397,Central,Dudheshwar,Dal Mill Na Zupda,15,127,DUDHESHWAR
+453,Central,Giridharnag ar,Ashaben Ni Chali,104,127,GIRIDHARNAGAR
+479,Central,Giridharnag ar,Slums Behind Camp Tolnaka(Chandra Skekhar Ni Chali),28,127,GIRIDHARNAGAR
+482,Central,Jamalpur,Astodiya Darwaja Na Chhapara,113,127,JAMALPUR
+486,Central,Jamalpur,Jamalpur Kot Ni Rang Na Zupda,147,127,JAMALPUR
+488,Central,Jamalpur,Madrasi Ni Chali(Jagdish Mandir Ni Kot Ni Sate Na Chhapara),35,127,JAMALPUR
+555,North,Asarva,Sorath Mill Na Comp. Na Chhapara,33,127,ASARVA
+564,North,Nobal Nagar,Sitaramnagar Na Chhapara,31,127,NOBALNAGAR
+568,North,Naroda Road,Asarwa Railway Yard Na Chhapara,128,127,NARODAROAD
+571,North,Meghaninag ar,Bhimrav Nagar Na Chhapara,59,127,MEGHANINAGAR
+605,North,Naroda Road,Anil Starch Police Chowki Na Chhapara,18,127,NARODAROAD
+610,North,Naroda Road,Eklavya Ni Chali,13,127,NARODAROAD
+612,North,India Colony,Leela Desai Na Chhapara,8,127,INDIACOLONY
+618,North,Saraspur,Sonaria Blocks Na Zupda,16,127,SARASPUR
+701,North,Saraspur,Girdhar Master Na Zupda,16,127,SARASPUR
+672,South,Khokhara,Crossing Na Chhapara,74,127,KHOKHARA
+675,East,Gomtipur,Inamdar Ni Chali,22,127,GOMTIPUR
+698,East,Rakhiyal,Chartoda Kabrastan Na Zupda,359,127,RAKHIYAL
+699,East,Rakhiyal,D-20 Davakhana Na Chhapara,103,127,RAKHIYAL
+EX23,New West,Ghatlodia,Vadiyakuva Vasahat,60,127,GHATLODIA
+EX39,New West,Vejalpur,Jaltarang,35,128,VEJALPUR
+23,West,Juna Vadaj,Babar Ni Chali,28,128,JUNAVADAJ
+24,West,Juna Vadaj,Bholenath Tekri Na Chhapara (Kabirtekri),270,128,JUNAVADAJ
+30,West,Juna Vadaj,Mahalaxmi Nagar,112,128,JUNAVADAJ
+64,West,Paldi,Juni Mazjid Na Chhapara,75,128,PALDI
+500,Central,Dudheshwar,Jaisinghbhai Ni Chali,11,128,DUDHESHWAR
+502,Central,Dudheshwar,Kanubhai Ni Chali,25,128,DUDHESHWAR
+514,Central,Raikhad,Slum At Khanja Gate,225,128,RAIKHAD
+EX121,North,Naroda Road,Burhani Na Chhapra,66,128,NARODAROAD
+25,West,Juna Vadaj,Chandrabhagh a Pool Na Chhapara,71,128,JUNAVADAJ
+1219,East,Odhav,Kheta Vanzara Na Zupda,108,128,ODHAV
+164,South,Behrampura,Ashram Na Chhapara,50,128,BEHRAMPURA
+170,South,Behrampura,Chaganbhai Na Chhapara,114,128,BEHRAMPURA
+171,South,Behrampura,Chamunda Nagar,1088,129,BEHRAMPURA
+179,South,Behrampura,Hanuman Ni Chali (Municipal Karmacharina Jupda),186,129,BEHRAMPURA
+190,South,Behrampura,Khodiyarnagar,277,129,BEHRAMPURA
+199,South,Behrampura,Mochivad Ni Chali,169,129,BEHRAMPURA
+200,South,Behrampura,Mohanbhai Na Chhapara,83,129,BEHRAMPURA
+296,South,Behrampura,Ramdevpir Ni Chali,174,129,BEHRAMPURA
+295,East,Gomtipur,RAILWAY PARK NI CHALI,32,129,GOMTIPUR
+704,East,Rakhiyal,Madhubhai Na Zupda,68,129,RAKHIYAL
+EX1,New West,KALI,Shamalbhai ni chali,221,129,KALI
+EX14,New West,KALI,"Indiranagar (chharanagar, Madarashi ni chali, Digvijay new chali)",347,129,KALI
+EX17,New West,KALI,Madrashi na chhapara,59,129,KALI
+EX15,New West,Ranip,Juni Dholka railway line (Specific name to be given),65,129,RANIP
+EX19,New West,Ranip,Visvakarmanagar,97,129,RANIP
+EX53,New West,Ranip,Gopalpura,205,129,RANIP
+EX46,New West,Sarkhej,Railway station na chhapra,45,129,SARKHEJ
+272,South,Kankaria,Chhipa Kabrastan,7,129,KANKARIA
+298,South,Kankaria,Shusan Ali Kabrastan Ni Chali,9,130,KANKARIA
+412,Central,Dudheshwar,Kazi Miya Ni Chali,701,130,DUDHESHWAR
+433,Central,Dudheshwar,Pathan Ni Chali,49,130,DUDHESHWAR
+501,Central,Raikhad,Jamalpur Na Zupda,86,130,RAIKHAD
+546,North,Asarva,MLA- Quarters Na Chhapara,20,130,ASARVA
+560,North,Krishnanagar,Cheharvas (Krushna Nagar Na Chhapara),9,130,KRISHNANAGAR
+EX115,North,Sardarnagar,Bhilvas,317,130,SARDARNAGAR
+662,East,Amaraiwadi,Chali (Sakarahira No Wado),25,130,AMARAIWADI
+666,East,Amaraiwadi,Slum Qrs. Na Zupda,63,130,AMARAIWADI
+EX57,East,Ramol- Hathijan,Noraninagar,24,130,RAMOLHATHIJAN
+EX72,East,Ramol- Hathijan,Machunagarna Chhapara,841,130,RAMOLHATHIJAN
+1,West,Ambawadi,Abhuji Na Kuva Na Chhapara,59,131,AMBAWADI
+46,West,Navarangpura,Lakhudi Talavdi,453,131,NAVARANGPURA
+661,East,Amaraiwadi,Bhikhadev No Vado,340,131,AMARAIWADI
+667,East,Amaraiwadi,Talawadi Na Zupda,547,131,AMARAIWADI
+671,East,Gomtipur,Salat Nagar,284,131,GOMTIPUR
+1072,East,Amaraiwadi,Rushi Nagar Na Chhapara,187,131,AMARAIWADI
+5,West,Ambawadi,Bhill Vas Na Chhapara,120,131,AMBAWADI
+40,West,Naranpura,Talavdi Na Chhapara,1311,131,NARANPURA
+41,West,Navarang pura,Bhagat Na Chhapara,455,131,NAVARANGPURA
+83,West,Sabarmati,Gandhi Vas,1687,131,SABARMATI
+88,West,Sabarmati,Harekrishna Nagar,241,131,SABARMATI
+89,West,Sabarmati,Harivan Na Chhapara,69,131,SABARMATI
+113,West,Sabarmati,Sant Keval Nagar,204,131,SABARMATI
+157,East,Mahavirnagar,Hanuman Nagar- 1,204,131,MAHAVIRNAGAR
+158,East,Mahavirnagar,Hanuman Nagar- 2,230,131,MAHAVIRNAGAR
+222,South,Behrampura,Abadnagar,139,131,BEHRAMPURA
+229,South,Kankaria,Bhil Vas,733,131,KANKARIA
+262,Central,Khadia,Afjalkhan No Tekro,418,132,KHADIA
+478,Central,Giridharnagar,Slums Behind B Colony,518,132,GIRIDHARNAGAR
+625,North,Krishnanagar,Nehrunagar (Sanjaynagar),224,132,KRISHNANAGAR
+683,East,Odhav,Bhangi Na Chhapara (Valmiki Vas),197,132,ODHAV
+684,East,Odhav,Bharwad Na Chhapara,15,132,ODHAV
+687,East,Odhav,Chamunda Nagar/ Sukhia Nagar,157,132,ODHAV
+689,East,Odhav,Chunara Na Chhapara,26,132,ODHAV
+690,East,Odhav,Harijan Na Chhapara,23,132,ODHAV
+691,East,Odhav,Indiranagar(Old + New) Na Chhapara,575,132,ODHAV
+695,East,Odhav,Vanzara Na Chhapara,114,132,ODHAV
+697,East,Rakhiyal,Adjacent to Muni. Garden Na Zupda,149,132,RAKHIYAL
+943,South,Maninagar,Chunar Vas (Ramgali),229,132,MANINAGAR
+EX10 9,South,Kankaria,Rabarivas,69,132,KANKARIA
+EX2,New West,Gota,Bhamariya,948,132,GOTA
+EX22,New West,Ghatlodia,Khodiyarnagar,373,132,GHATLODIA
+EX33,New West,Thaltej,Harsiddhinagar na chhapra,177,132,THALTEJ
+EX36,New West,Jodhpur,"(1) Suryanagar, (2) Chandranagar, (3) Bhilvas",615,132,JODHPUR
+EX37,New West,Jodhpur,Vishatnagar - Talavdi,391,132,JODHPUR
+EX4,New West,Ranip,Siddheshwari na chhapara,48,132,RANIP
+EX5,New West,Ranip,Oil mill Na Chhapara (Chhotalalni chali) sr. No. 5 & 13 combined drg.,493,132,RANIP
+EX50,New West,Jodhpur,Ramdevnagar,794,132,JODHPUR
+EX51,New,Jodhpur,Ranuja 1,322,132,JODHPUR
+EX52,New West,BODAKDEV,Ranuja -2,357,133,BODAKDEV
+EX6,New West,Ranip,Jogeshwari na Chhapara,131,133,RANIP
+EX7,New West,Ranip,P&T Na Chhapara & Hanuman Nagar,187,133,RANIP
+EX9,New West,Ranip,Vanzara no tekro,86,133,RANIP
+6,West,Ambawadi,Bhudarpura Na Chhapara (Bhilvas),74,133,AMBAWADI
+32,West,Juna Vadaj,Ramdev Pir No Tekro,8476,133,JUNAVADAJ
+56,West,Paladi,Bank of Baroda Society Na Chhapara,91,133,PALADI
+61,West,Paladi,Ganesh Nagar,28,133,PALADI
+72,West,Paladi,Trikamlal Ni Chali,115,133,PALADI
+73,West,Paladi,Vasant Kuva Na Chhapara,284,133,PALADI
+74,West,Sabarmati,Ambica Nagar Na Chhapara,99,133,SABARMATI
+76,West,Sabarmati,Babubhai Rabari Ni Chali,210,133,SABARMATI
+79,West,Sabarmati,Bhill Vas,316,133,SABARMATI
+90,West,Sabarmati,Jagabhai Ni Chali,124,133,SABARMATI
+93,West,Sabarmati,Ramapir Ni Chali,269,133,SABARMATI
+99,West,Chndkheda Motera,Marvadi Ni Chali,233,133,CHNDKHEDAMOTERA
+103,New West,Kali,Natha Bagat Na Chhapara,38,133,KALI
+112,New West,Kali,Ramdev Nagar,207,133,KALI
+114,West,Sabarmati,Sardarji Na Bangla Chhapara (Panch Bangla Na Chhapara),100,134,SABARMATI
+116,West,Sabarmati,Shubhash Nagar Na Chhapara,307,134,SABARMATI
+117,West,Juna Vadaj,Kanku Ma Ni Chali,166,134,JUNAVADAJ
+128 (805 + 806 + 807 + 812),West,S.P. Stadium,"Rohidas Nagar, Jognima Ni Chali",677,134,SPSTADIUM
+129,West,S.P. Stadium,Shramik Nagar,113,134,SPSTADIUM
+130,West,S.P.Stadium,Shubhash Nagar,141,134,SPSTADIUM
+132,West,S.P. Stadium,Tulsi Nagar,18,134,SPSTADIUM
+142,West,Vasana,Mangal Talav Na Chhapara,530,134,VASANA
+149,West,Vasana,Sorai Nagar Na Chhapara,1057,134,VASANA
+162,South,Behrampura,"Allah Nagar (Fresh Mohallo, Rehmani Mohallo, Madhuben Ni Chali, Rehmati Mohallo)",1334,134,BEHRAMPURA
+163,South,Behrampura,Asha Nagar,66,134,BEHRAMPURA
+242,South,Behrampura,Site & Service Na Chhapara,655,134,BEHRAMPURA
+255,South,Lambha,Saraniya Vas,428,134,LAMBHA
+308,South,Kankaria,Amar Bhuvan Na Slum,289,134,KANKARIA
+335,South,Indrapuri,Hanuman Nagar,188,134,INDRAPURI
+338,East,Ramol- Hathijan,Indiranagar,255,134,RAMOLHATHIJAN
+358,South,Vatva,Satyapriya Na Chhapara,30,134,VATVA
+444,Central,Dudheshwar,Shantilal Ni Chali,60,134,DUDHESHWAR
+532,North,Asarva,Babupuri Na Chhapara,126,134,ASARVA
+542,North,Asarva,Kantaan Vali Chali,47,134,ASARVA
+553,North,Meghaninagar,Slum B/H Siddheshwari Park Soc,114,134,MEGHANINAGAR
+563,North,Naroda,Santoshinagar,1061,134,NARODA
+573,North,Meghaninagar,Chhanagi Na Chhapara,251,134,MEGHANINAGAR
+591,North,Meghaninagar,Nadia Vas,40,134,MEGHANINAGAR
+592,North,Meghaninagar,Narayan Patel Ni Chali,44,134,MEGHANINAGAR
+595,North,Saijpur Bogha,Parsi Na Bhatta Na Chhapara,133,135,SAIJPURBOGHA
+613,North,Naroda Road,Meldipura Kantibhai Desai Ni Chali,53,135,NARODAROAD
+616,North,India Colony,Radharaman Ni Chali,459,135,INDIACOLONY
+628,North,Naroda Road,Bordivarnagar,189,135,NARODAROAD
+641,North,Nobal Nagar,Kamdar Nagar,342,135,NOBALNAGAR
+647,North,Nobal Nagar,Rajivnagar,329,135,NOBALNAGAR
+650,North,Nobal Nagar,Subhashnagar,1131,135,NOBALNAGAR
+663,East,Amaraiwadi,Gandalal Ni Chali,243,135,AMARAIWADI
+705,East,Rakhiyal,Madhubhai Ni Chali,144,135,RAKHIYAL
+709,East,Rakhiyal,Satyadev Soc. Na Zupda,82,135,RAKHIYAL
+885,West,S.P.Stadium,Natna Na Chhapara,155,135,SPSTADIUM
+1090,South,Khokhara,Bava Na Chhapara,195,135,KHOKHARA
+Ex100,South,Lambha,Saraniyavas,57,135,LAMBHA
+Ex113,North,Asarva,Fakira Tank Na Chhapara,67,135,ASARVA
+Ex117,North,Nobal Nagar,Sanjaynagar,232,135,NOBALNAGAR
+Ex118,North,Nobal Nagar,Ramdevnagar,132,135,NOBALNAGAR
+Ex120,North,Naroda Road,Sanjaynagar Na Chhapara,175,135,NARODAROAD
+Ex122,North,Naroda Road,Adityanagar Na Chhapra,98,135,NARODAROAD
+Ex56,New West,Vejalpur,Chunaravas,173,135,VEJALPUR
+Ex64,East,Ramol- Hathijan,Rajivnagar,224,135,RAMOLHATHIJAN
+Ex68,East,Odhav,Rajivnagar,223,135,ODHAV
+Ex71,East,Nikol,Bhathijino Tekro,536,135,NIKOL
+Ex73,East,Ramol- Hathijan,Ramdevnagar,120,135,RAMOLHATHIJAN
+4,West,Ambawadi,Bharwad Vas,124,136,AMBAWADI
+12,West,Ambawadi,Ganesh Nagar Na Chhapara,201,136,AMBAWADI
+27,West,Juna Vadaj,Khadiyavali Rambhai Ni Chali,334,136,JUNAVADAJ
+35,West,S.P. Stadium,Uddhav Nagar,329,136,SPSTADIUM
+38,West,S.P. Stadium,Shankarbhai Ramjibhai Na Chhapara,513,136,SPSTADIUM
+51,West,Nava Vadaj,Garib Nagar (Vasukeshwar Nagar),180,136,NAVAVADAJ
+59,West,Paladi,Fatehpura Na Chhapara,91,136,PALADI
+71,West,Paladi,Sharda Nagar's Chhapara,99,136,PALADI
+81,West,Sabarmati,Chara Nagar Na Chhapara,217,136,SABARMATI
+84,West,Sabarmati,Ganeshpura,17,136,SABARMATI
+85,New West,Kali,Gangeshwar Mahadev Na Chhapara,100,136,KALI
+86,West,Sabarmati,Govindbhai Ni Chali,46,136,SABARMATI
+87,New West,Kali,Gurudwara Chhapara,76,136,KALI
+91,West,Sabarmati,Juna Bazar Na Chhapara,15,136,SABARMATI
+96,West,Sabarmati,Madrasi Na Chhapara,47,136,SABARMATI
+97,West,Sabarmati,Maganji Sabaji Ni Chali,21,136,SABARMATI
+102,New West,Kali,Narayan Mistri Na Tekra Na Chhapara,42,136,KALI
+104,West,Sabarmati,Navgari Thakorvas Na Chhapara,32,136,SABARMATI
+118,New West,Kali,Vishwakarma Mandir Na Chhapara,122,136,KALI
+121,West,S.P.Stadium,Gopal Nagar,1395,136,SPSTADIUM
+122,New West,Bodakdev,Jogni Mata Temple Na Chhapra (Jadav Ngr),1670,137,BODAKDEV
+124,West,S.P.Stadium,Krishna Nagar Na Chhapara,429,137,SPSTADIUM
+127,West,S.P.Stadium,Rabari Vas,159,137,SPSTADIUM
+131,New West,Bodakdev,Talavdi Na Chhapara,713,137,BODAKDEV
+134,West,Vasana,Chndra Nagar Na Chhapara,21,137,VASANA
+137,West,Vasana,Gupta Nagar Na Chhapara,2926,137,VASANA
+140,West,Vasana,Kachiya Vas,55,137,VASANA
+144,West,Vasana,Pravin Nagar Na Chhapara,630,137,VASANA
+145,West,Vasana,Om Nagar Na Chhapra,672,137,VASANA
+146,West,Vasana,Rabari Vado (Khodiyar Park Thakorvas),31,137,VASANA
+148,West,Vasana,Rampura Gam's Chhapara,41,137,VASANA
+150,West,Vasana,Soneshwar Nagar Na Chhapara,661,137,VASANA
+151,West,Vasana,Sompura Na Chhapara,109,137,VASANA
+154,West,Vasana,Vallabh Nagar Na Chhapara,22,137,VASANA
+166,Central,Jamalpur,Benu Master Nu Dehlu,145,137,JAMALPUR
+173,South,Behrampura,Dudhabhai Ni Chali,151,137,BEHRAMPURA
+174,South,Behrampura,Dudhvala Ni Chali,355,137,BEHRAMPURA
+175,Central,Jamalpur,Gandhi Dhanaji Parsotam Ni Chali,22,137,JAMALPUR
+178,Central,Jamalpur,Gulam Ali Ni Chali,90,137,JAMALPUR
+180,Central,Jamalpur,Hanumanwali Chali,134,138,JAMALPUR
+181,South,Behrampura,Indira Nagar,53,138,BEHRAMPURA
+185,South,Behrampura,Kabrastan Na Chhapara,377,138,BEHRAMPURA
+188,South,Behrampura,Kasai Ni Chali,70,138,BEHRAMPURA
+191,South,Behrampura,Khushal Karbhari Ni Chali,91,138,BEHRAMPURA
+195,Central,Jamalpur,Lodhani Chali,56,138,JAMALPUR
+201,South,Behrampura,Momin Ni Chali,60,138,BEHRAMPURA
+203,South,Behrampura,Narayandas Ni Chali,177,138,BEHRAMPURA
+204,South,Behrampura,Narayan Das Ni Chali,204,138,BEHRAMPURA
+206,Central,Jamalpur,Pethaji Nathaji Ni Chali,116,138,JAMALPUR
+207,South,Behrampura,Pinko Textile Mill Ni Chali,180,138,BEHRAMPURA
+209,South,Behrampura,Punjalal Ni Chali,25,138,BEHRAMPURA
+212,South,Behrampura,Ram Rahim Tekra Ni Chali,1488,138,BEHRAMPURA
+216,South,Behrampura,Saranagar,128,138,BEHRAMPURA
+219,South,Behrampura,Tarachand Gandhi Ni Chali,91,138,BEHRAMPURA
+220,South,Behrampura,Visaji Ni Chali,217,138,BEHRAMPURA
+231,South,Behrampura,Buddh Nagar (Narayan Ni Chali),59,138,BEHRAMPURA
+232,South,Behrampura,Chippa Ni Chali,95,138,BEHRAMPURA
+233,South,Dani Limda,Gajanand Na Chhapara / Kanu Bechar Na Chhapara,64,138,DANILIMDA
+234,South,Dani Limda,Govindbhai Ni Chali,90,138,DANILIMDA
+236,South,Dani Limda,Millat Nagar,1681,138,DANILIMDA
+245,South,Dani Limda,Vadivas,16,138,DANILIMDA
+253,South,Ishanpur,Ranchod Park Na Chhapara,22,138,ISHANPUR
+254,South,Ishanpur,Rasikbhai Ni Chali,31,138,ISHANPUR
+257,South,Lambha,Shree Nivas Ni Chali (Bharwad Vas),125,138,LAMBHA
+258,South,Lambha,Slams With In Calico Nagar,31,138,LAMBHA
+263,South,Kankaria,Bahucharaji Ni Chali,28,138,KANKARIA
+265,Central,Khadia,Behra Pitamber Ni Chali,72,138,KHADIA
+267,Central,Khadia,Bhailalbhai Patel Ni Chali,135,138,KHADIA
+269,Central,Khadia,Bordi Mill Ni Chali,71,138,KHADIA
+270,Central,Khadia,Bordi Mill Ni Chali (Peravali Chali),22,139,KHADIA
+273,Central,Khadia,Chunar Vas,321,139,KHADIA
+279,Central,Khadia,Hiralal Ni Chali,87,139,KHADIA
+282,Central,Khadia,Katoliya Vadi,453,139,KHADIA
+283,South,Kankaria,Kangal Puri Chipa Ni Chali,120,139,KANKARIA
+285,Central,Khadia,Kumbhar Ni Chali,33,139,KHADIA
+287,Central,Jamalpur,Marvadi Ni Chali,46,139,JAMALPUR
+292,South,Kankaria,Officers Compound Slum,54,139,KANKARIA
+293,Central,Khadia,Pathan Ni Chali,73,139,KHADIA
+294,Central,Khadia,Rabarivas,45,139,KHADIA
+301,Central,Khadia,Soni Nu Dehlu,38,139,KHADIA
+302,Central,Khadia,Sreshtnagar Na Chhapara (Laxmipura Na Chhapara),103,139,KHADIA
+303,Central,Khadia,Surendra Maneklal Ni Chali,38,139,KHADIA
+307,South,Kankaria,Ved Mandir Ni Chali,21,139,KANKARIA
+309,South,Maninagar,Bhairavnagar Na Chhapara,80,139,MANINAGAR
+314,South,Kankaria,Mohanbhai Valajibhai Ni Chali,43,139,KANKARIA
+316,South,Ghodasar,Ramghad Vas,71,139,GHODASAR
+317,South,Maninagar,Ramjinagar Na Chhapara,43,139,MANINAGAR
+319,South,Maninagar,Sukhpura Na Chhapara,169,139,MANINAGAR
+328,South,Vatva,Chunar Vas,424,139,VATVA
+330,South,Indrapuri,Ganesh Tekra Na Chhapara,69,139,INDRAPURI
+331,South,Vatva,Ganganagar,297,139,VATVA
+344,South,Vatva,Midco Na Chhapara,30,139,VATVA
+345,South,Vatva,Momediyan Vas (Saiyed Mohallo),37,139,VATVA
+346,South,Indrapuri,Nagjibhai Ni Chali (Govabhai Ni Chali),33,139,INDRAPURI
+350,South,Indrapuri,Rabarivas,380,139,INDRAPURI
+356,South,Indrapuri,Sarniyavas,196,139,INDRAPURI
+359,South,Vatva,Savita Nagar,855,139,VATVA
+363,South,Indrapuri,Slams Of Chandan Tenement,21,139,INDRAPURI
+365,South,Indrapuri,Vagrivas,16,139,INDRAPURI
+373,Central,Madhupura,Ganeshpura,81,139,MADHUPURA
+375,Central,Madhupura,"Ghoda No Tabalo, Vaghrivas",144,140,MADHUPURA
+377,Central,Madhupura,Gujarat Ginning Mill Compound,52,140,MADHUPURA
+380,Central,Madhupura,Kamal Bhagat Na Chhapara,50,140,MADHUPURA
+381,Central,Madhupura,Kankri Kui Na Chhapara,243,140,MADHUPURA
+387,Central,Madhupura,Vora Ni Chali And Zupda,152,140,MADHUPURA
+389,Central,Dudheshwar,Babubhai Na Zupda,68,140,DUDHESHWAR
+390,Central,Dudheshwar,Bahuchar Ram No Tekro(Gajmjgiri Ni Chali),51,140,DUDHESHWAR
+391,Central,Dudheshwar,Bai Parvati Na Zupda,67,140,DUDHESHWAR
+393,Central,Dudheshwar,Balapir Tekra Na Zupda,101,140,DUDHESHWAR
+394,Central,Dudheshwar,Bhagubhai Ni Chali,392,140,DUDHESHWAR
+395,Central,Dudheshwar,Budhalal Zanechanda Ni Chali,41,140,DUDHESHWAR
+396,Central,Shahpur,Chhotalal Ni Chali,179,140,SHAHPUR
+398,Central,Dudheshwar,Damodarwala Ni Chali,375,140,DUDHESHWAR
+399,Central,Dudheshwar,Dhobighat,64,140,DUDHESHWAR
+400,Central,Dudheshwar,Gajrajnagar Ni Chali,213,140,DUDHESHWAR
+401,Central,Shahpur,Galaji Ni Chali,428,140,SHAHPUR
+404,Central,Dudheshwar,Hanumanpura Ni Chali,75,140,DUDHESHWAR
+406,Central,Dudheshwar,Indiranagar Na Chhapara,163,140,DUDHESHWAR
+407,Central,Shahpur,Kabrastan Na Zupda,86,140,SHAHPUR
+409,Central,Dudheshwar,Kamal Dhobi Ni Chali,44,140,DUDHESHWAR
+410,Central,Dudheshwar,Kamu Miya Ni Chali,430,140,DUDHESHWAR
+411,Central,Dudheshwar,Kashibhuvan Ni Chali,31,140,DUDHESHWAR
+416,Central,Shahpur,Mangaldas Ni Chali,28,140,SHAHPUR
+419,Central,Dudheshwar,Mohan Lodha Ni Chali,96,140,DUDHESHWAR
+420,Central,Dudheshwar,Mohanji Lakhaji Ni Chali,217,140,DUDHESHWAR
+423,Central,Dudheshwar,Munilal Nu Delhu (Manibhadra Nu Dehlu),38,140,DUDHESHWAR
+425,Central,Dudheshwar,Naklangpura,242,140,DUDHESHWAR
+426,Central,Dudheshwar,Narsinh Mandir Ni Chali,25,140,DUDHESHWAR
+428,Central,Dudheshwar,Nathavbava Ni Chali,166,141,DUDHESHWAR
+430,Central,Shahpur,Noorbhai Ni Chali,29,141,SHAHPUR
+434,Central,Dudheshwar,Patrawali Chali,112,141,DUDHESHWAR
+437,Central,Dudheshwar,Radha Vallabh Ni Chali,68,141,DUDHESHWAR
+438,Central,Dudheshwar,Ramla Khoda Ni Chali,418,141,DUDHESHWAR
+439,Central,Dudheshwar,Ramlal Ni Chali,43,141,DUDHESHWAR
+443,Central,Dudheshwar,Shahi Masjid Compound Na Chhapara,58,141,DUDHESHWAR
+450,Central,Dudheshwar,Vora Ki Chali,105,141,DUDHESHWAR
+451,Central,Giridharnagar,Aryodaya Mills Ni Navi Chali,40,141,GIRIDHARNAGAR
+452,North,Asarva,Aryodaya Mills Ni Navi Chali,98,141,ASARVA
+454,Central,Giridharnagar,Bhaichandpura (Shantilal Ni Chali),167,141,GIRIDHARNAGAR
+456,Central,Giridharnagar,Gajananda Ni Chali,37,141,GIRIDHARNAGAR
+458,Central,Madhupura,Ganpathnagar Na Zupda,51,141,MADHUPURA
+459,Central,Giridharnagar,Ghanchi Ni Chali,67,141,GIRIDHARNAGAR
+460,Central,Madhupura,Ghasiram Chaudhari Na Zupda (Santoshnagar),42,141,MADHUPURA
+463,Central,Giridharnagar,Jerandas Ni Chali,46,141,GIRIDHARNAGAR
+465,Central,Madhupura,Kanjinagar Na Zupda,94,141,MADHUPURA
+467,Central,Giridharnagar,Kasapura,33,141,GIRIDHARNAGAR
+469,Central,Madhupura,Ladla Compound Na Chhapara,130,141,MADHUPURA
+470,Central,Giridharnagar,Manjushri Mill Ni Chali,34,141,GIRIDHARNAGAR
+471,Central,Giridharnagar,Manubhai Ni Chali (Shantipura Manubhai Ni Chali),375,141,GIRIDHARNAGAR
+475,Central,Giridharnagar,Ranchodpura Na Chhapara,113,141,GIRIDHARNAGAR
+477,Central,Giridharnagar,Slums Behind Aama Park,154,141,GIRIDHARNAGAR
+481,Central,Giridharnagar,Thakorvas Na Chhapara,45,141,GIRIDHARNAGAR
+485,Central,Jamalpur,Jagdish Mandir Ni,51,141,JAMALPUR
+499,Central,Dudheshwar,Ismail Sheth Ni Chali,50,142,DUDHESHWAR
+503,Central,Dariyapur,Mansukhram Ni Chali,65,142,DARIYAPUR
+504,Central,Dudheshwar,Meda Wali Chali,91,142,DUDHESHWAR
+505,Central,Madhupura,Pathan Darji Ni Chali,225,142,MADHUPURA
+507,Central,Dariyapur,Rabari Na Chhapara,47,142,DARIYAPUR
+508,Central,Dudheshwar,Tata Advance Ni Chali,350,142,DUDHESHWAR
+518,Central,Dudheshwar,Ganeshji Na Chhapara(Kaji Miya Ni Chali),125,142,DUDHESHWAR
+521,Central,Madhupura,Slums Behind Gokul Flats,435,142,MADHUPURA
+531,North,Asarva,Atmaram Na Chhapara,52,142,ASARVA
+535,Central,Giridharnagar,Bhilvas Inside Babulal Pranlal Ni Chali,62,142,GIRIDHARNAGAR
+537,Central,Giridharnagar,Bhilvas Inside Kantilal Ni Chali,101,142,GIRIDHARNAGAR
+544,North,Saijpur Bogha,Maneknagar Shaktikunj Na Chhapara,351,142,SAIJPURBOGHA
+545,North,Asarva,Matar Bhavani Na Chhapara,85,142,ASARVA
+548,North,Asarva,Narayan Bhai Na Chhapara,74,142,ASARVA
+550,North,Asarva,Rabarivas,37,142,ASARVA
+552,North,Asarva,Santokben Ni Chali,322,142,ASARVA
+558,North,Meghaninagar,Shantinagar Na Chhapara,516,142,MEGHANINAGAR
+561,North,Nobal Nagar,Kashiram Na Zupda,34,142,NOBALNAGAR
+566,North,Naroda Road,Aroddaya Ginning Mill Ni Chali,164,142,NARODAROAD
+569,North,Asarva,Bachubhai Na Chhapara,90,142,ASARVA
+570,North,Asarva,Bapalal Modi Chali Na Chhapara,457,142,ASARVA
+572,North,Asarva,Chandulal Shyamdas Ni Chali,77,142,ASARVA
+575,North,Naroda Road,Chimanlal Ni Chali Na Chhapara,267,142,NARODAROAD
+576,North,Naroda Road,Dhupnagar Na Chhapara,239,142,NARODAROAD
+577,North,Asarva,Gapuji Prajapati Na Chhapara,105,142,ASARVA
+578,North,Naroda Road,Gayatri Nagar Na Chhapara,137,142,NARODAROAD
+580,North,Asarva,Gitanagar Na Chhapara,22,143,ASARVA
+583,North,Naroda Road,Hukamsingh Chali Na Chhapara,202,143,NARODAROAD
+585,North,Asarva,Kachwada Ni Chali Na Chhapara,52,143,ASARVA
+586,North,Meghaninagar,Khodiyarnagar Na Chhapara,49,143,MEGHANINAGAR
+587,North,Naroda Road,Kothavla Ni Chali Na Chhapara,124,143,NARODAROAD
+588,North,Asarva,Krishnaji Na Chhapara,149,143,ASARVA
+589,North,Asarva,Mohan Vakil Ni Chali Na Chhapara,193,143,ASARVA
+590,North,Naroda Road,Marwadi Na Makano,21,143,NARODAROAD
+593,North,Asarva,Narmadben Na Chhapara,130,143,ASARVA
+594,North,Naroda Road,Nava Gokulpura Na Chhapara,275,143,NARODAROAD
+597,North,Naroda Road,Pataninagar Na Chhapara,121,143,NARODAROAD
+600,North,Asarva,Ramchandra Colony Na Chhapara,541,143,ASARVA
+601,North,Asarva,Ramchandranagar Na Zupda,31,143,ASARVA
+603,North,Asarva,Soma Kumbhar Na Chhapara,95,143,ASARVA
+606,North,Saraspur,BAPALAL KAIDIA NI CHALI,209,143,SARASPUR
+608,North,Naroda Road,Dhanaji Raghaji Ni Chali,69,143,NARODAROAD
+609,North,Saraspur,DHANAJI RAGHAJI NI CHALI,88,143,SARASPUR
+614,North,Naroda Road,Nala Na Zupda,28,143,NARODAROAD
+621,North,Kubernagar,Jethakaka Ni Chali,20,143,KUBERNAGAR
+622,North,Saijpur Bogha,Mahajaniya Vas,85,143,SAIJPURBOGHA
+624,North,Saijpur Bogha,Nava Thakorvas,82,143,SAIJPURBOGHA
+626,North,Saijpur Bogha,Parmeshwarnagar Na Chhapara,198,143,SAIJPURBOGHA
+627,North,Saraspur,ASHOKWADI NA CHHAPARA,41,143,SARASPUR
+631,North,Naroda Road,Lalitaben Ni Chali,140,143,NARODAROAD
+632,East,Bapunagar,NAVAL SHETH NA CHHAPARA,60,143,BAPUNAGAR
+633,North,Naroda Road,Panditnagar Na Chhapara,277,144,NARODAROAD
+634,North,Naroda Road,Sevanath Na Chhapara,35,144,NARODAROAD
+636,East,Rakhiyal,Vaghri Vad,249,144,RAKHIYAL
+645,North,Sardarnagar,Rabarivas,225,144,SARDARNAGAR
+649,North,Nobal Nagar,Shiv Shakti Nagar Na Chhapara,46,144,NOBALNAGAR
+658,North,Thakkar Bapanagar,VISHALNAGAR NA CHHAPARA,410,144,THAKKARBAPANAGAR
+660,East,Amaraiwadi,Bhagat Ni Chali,36,144,AMARAIWADI
+673,South,Khokhara,GANGAJI NA CHHAPARA,143,144,KHOKHARA
+677,South,Khokhara,PATNIVAS,94,144,KHOKHARA
+686,East,Odhav,Bomin Ni Chali,121,144,ODHAV
+700,East,Rakhiyal,Ganga Dosi Ni Chali,24,144,RAKHIYAL
+708,East,Rakhiyal,Sarki Kabrastan Na Zupda,23,144,RAKHIYAL
+825,East,Bhaipura,"ARTINAGAR-2, HATKESHWAR DEPO",47,144,BHAIPURA
+836,South,Indrapuri,Revaba Nagar / Sarasvati School,188,144,INDRAPURI
+865,West,SABARMATI,Varsing Ni Chali,9,144,SABARMATI
+873,West,SABARMATI,Shankarapura Na Chhapara,110,144,SABARMATI
+883,West,SABARMATI,Trikaji Jivaji Ni Chali,53,144,SABARMATI
+890,New West,KALI,Himmatlal Ni Chali,73,144,KALI
+905,West,SABARMATI,Badshah Ni Chali,21,144,SABARMATI
+907,West,S.P.STADIUM,KHODIYAR NAGAR,369,144,SPSTADIUM
+908,West,S.P.STADIUM,Sukal Ni Chali,147,144,SPSTADIUM
+924,West,AMBAWADI,SURSANG NI CHALI,59,144,AMBAWADI
+925,West,AMBAWADI,HARGOVAN NI CHALI,67,144,AMBAWADI
+927,New West,BODAKDEV,Sreenath Nagar,364,144,BODAKDEV
+934,West,JUNA VADAJ,JETALAL SOMNATH NI CHALI,55,144,JUNAVADAJ
+935,West,S.P.STADIUM,Bhurabhai Ni Chali,36,144,SPSTADIUM
+936,West,JUNA VADAJ,SHAKTI NAGAR,31,144,JUNAVADAJ
+937,West,S.P.STADIUM,Surabhai Ni Chali,37,144,SPSTADIUM
+939,West,NAVARANG,LAL BUNGLA,112,144,NAVARANG
+941,West,NAVA VADAJ,POONAM PARTY PLOT NA CHHAPARA,14,145,NAVAVADAJ
+948,South,Maninagar,Baba Patel Ni Cahali,419,145,MANINAGAR
+953,South,Maninagar,Ramdev Bapa Ni Chali,45,145,MANINAGAR
+956,South,Lambha,Barot Vas,165,145,LAMBHA
+957,South,Lambha,Bhill Vas,127,145,LAMBHA
+959,South,Ishanpur,Anvar Elahi Nagar,54,145,ISHANPUR
+961,South,Vatva,Mota Thakor Vas,104,145,VATVA
+962,South,Lambha,Rohit Vas (Chamarvas),76,145,LAMBHA
+963,South,Vatva,Khara Kuva,218,145,VATVA
+964,South,Vatva,Rahemat Nagar,55,145,VATVA
+965,South,Vatva,Darbar Nagar,118,145,VATVA
+966,South,Vatva,Devadiya (Cunaravas),46,145,VATVA
+967,South,Lambha,Bachubhai No Kuvo,2417,145,LAMBHA
+968,South,Vatva,Navapura,55,145,VATVA
+972,South,Vatva,Matiyavas,106,145,VATVA
+975,South,Lambha,Vanjaravas,83,145,LAMBHA
+985,South,Lambha,Saraniya Vas,58,145,LAMBHA
+998,South,Kankaria,Rto Na Chhapara,67,145,KANKARIA
+999,South,Kankaria,Baliyadev Ni Chali,114,145,KANKARIA
+1003,South,BEHRAMPUR A,Jogmaya Nagar,30,145,BEHRAMPURA
+1027,South,BEHRAMPUR A,Gulam Nabi Master Ni Chali,168,145,BEHRAMPURA
+1048,South,Indrapuri,Azad Nagar,199,145,INDRAPURI
+1051,South,Indrapuri,Uday Nagar,115,145,INDRAPURI
+1052,South,Indrapuri,Ram Rajya Nagar,218,145,INDRAPURI
+1066,South,Indrapuri,Kevda Wadi,759,145,INDRAPURI
+1067,South,Indrapuri,Matru Bhakti Nagar,679,145,INDRAPURI
+1068,South,DANI LIMDA,Musa Miya Ni Chali,75,145,DANILIMDA
+1070,South,Indrapuri,Raktpit Nagar (Leporsocpy),141,145,INDRAPURI
+1074,East,Bhaipura,BHAIPURA TALAVDI NA CHHAPARA,170,146,BHAIPURA
+1078,South,Ishanpur,Fulwadi,69,146,ISHANPUR
+1079,South,Maninagar,Rambhai Na Chhapara,43,146,MANINAGAR
+1080,East,Mahavirnagar,Ganshiyam Nagar,133,146,MAHAVIRNAGAR
+1100,Central,Jamalpur,Takiyavali Chali / Sokat Ni Chali,45,146,JAMALPUR
+1101,South,BEHRAMPUR A,Sant Rohidas Nagar,108,146,BEHRAMPURA
+1102,Central,Jamalpur,Fakir Mukhi Ni Chali,129,146,JAMALPUR
+1103,South,Kankaria,Vasudevdhanji Ni Chali,236,146,KANKARIA
+1104,South,Kankaria,Badhapuna Ni Chali,71,146,KANKARIA
+1105,South,Kankaria,Manekpura Ni Chali,132,146,KANKARIA
+1110,South,Kankaria,Thakor Vas (Khadawali Ni Chali),25,146,KANKARIA
+1137,East,Amaraiwadi,Radha Kishan Nagar,167,146,AMARAIWADI
+1139,East,Amaraiwadi,Champa Ben Ni Chali,85,146,AMARAIWADI
+126 (882),West,S.P.STADIUM,Purusarth Nagar,236,146,SPSTADIUM
+177 (1023),Central,Jamalpur,Garib Nagar,349,146,JAMALPUR
+182 (1021),Central,Jamalpur,Jivanlal Ni Chali,224,146,JAMALPUR
+205 (1031),Central,Jamalpur,Peer Dhobi Ni Chali,316,146,JAMALPUR
+297 (1083),Central,Khadia,Shekhu Miya Ni Chali,158,146,KHADIA
+Ex10,New West,Ranip,New Premnagar& Bakaramandi,1247,146,RANIP
+Ex101,South,Lambha,Mahadevpura,495,146,LAMBHA
+Ex103,South,Lambha,Vanzaravas,64,146,LAMBHA
+Ex104,South,Lambha,Bharvadvas,50,146,LAMBHA
+Ex105,South,Lambha,Bhaiyavas,134,146,LAMBHA
+Ex106,South,Lambha,Chunaravas,121,146,LAMBHA
+Ex110,South,Lambha,Vijaynagar,199,146,LAMBHA
+Ex111,South,Lambha,Shantinagar,97,146,LAMBHA
+Ex112,South,Lambha,Khodiyarnagar,22,146,LAMBHA
+Ex114,North,Sardarnagar,Dashamani Chali,146,146,SARDARNAGAR
+Ex116,North,Nobal Nagar,Shantinagar Na Chhaparara (Vanzara Vas ),155,146,NOBALNAGAR
+Ex12,New West,Ranip,Sai Nagar,183,146,RANIP
+Ex123,North,Naroda Road,Gujarnagar Na,16,146,NARODAROAD
+Ex124,North,Naroda Road,Ramdevnagar Or Judge Saheb Na Chhapara,118,147,NARODAROAD
+Ex16,New West,Ranip,Bhavna Bharwadvas,151,147,RANIP
+Ex18,New West,Kali,Chamundanagar,115,147,KALI
+Ex20,New West,Ranip,Maganpura,264,147,RANIP
+Ex21,New West,Ghatlodia,Mota Talav Na Chhapara,68,147,GHATLODIA
+Ex25,New West,Ghatlodia,Mahalaxminagar,35,147,GHATLODIA
+Ex26,New West,Chandlodia,Ganeshnagar,101,147,CHANDLODIA
+Ex27,New West,Chandlodia,Gokulnagar,163,147,CHANDLODIA
+Ex28,New West,Chandlodia,Mathuranagar,156,147,CHANDLODIA
+Ex29,New West,Chandlodia,Nagdevta,71,147,CHANDLODIA
+Ex3,New West,Gota,Gokulnagar,328,147,GOTA
+Ex30,New West,Chandlodia,Indiranagar,388,147,CHANDLODIA
+Ex31,New West,Chandlodia,Bharvadvas,123,147,CHANDLODIA
+Ex34,New West,Vejalpur,Salpara,544,147,VEJALPUR
+Ex40,New West,Sarkhej,Shankarpura (Chhapara),173,147,SARKHEJ
+Ex41,New West,Jodhpur,Panch Talav,236,147,JODHPUR
+Ex42,New West,Sarkhej,Vaghrivas,197,147,SARKHEJ
+Ex43,New West,Sarkhej,"Chamundanagar, Mahakali Nagar",202,147,SARKHEJ
+Ex44,New West,Sarkhej,Kacharabhai Ni Chali/ Babubhai Ni Chali,67,147,SARKHEJ
+Ex45,New West,Sarkhej,Valmikivas,40,147,SARKHEJ
+Ex47,New West,Sarkhej,Indiranagar (New Vanzara),212,147,SARKHEJ
+Ex48,New West,Sarkhej,Sapana Cinema Na Chhapra,132,147,SARKHEJ
+Ex55,New West,Sarkhej,Nehrunagar,1000,147,SARKHEJ
+Ex63,East,Ramol- Hathijan,Nirma No Kuwo,29,147,RAMOLHATHIJAN
+Ex65,East,Vastral,Indiranagar.,271,147,VASTRAL
+Ex66,East,Vastral,Parvatinagar,251,147,VASTRAL
+Ex67,East,Vastral,Bharvadvas,182,147,VASTRAL
+Ex69,East,Odhav,Bhagvatinagar,1911,147,ODHAV
+Ex74,East,Ramol- Hathijan,Shahid Park,49,148,RAMOLHATHIJAN
+Ex75,East,Vastral,"Laxminagar Part- 1,2,3",225,148,VASTRAL
+Ex76,East,Vastral,Vaghrivas,46,148,VASTRAL
+Ex77+ 78,East,Vastral,Kishannagar+Muke shnagar,74,148,VASTRAL
+Ex79,East,Vastral,Kundannagar,34,148,VASTRAL
+Ex80,East,Odhav,Babaji Ni Chali,109,148,ODHAV
+Ex81,East,Odhav,Azadnagar,73,148,ODHAV
+Ex82,East,Odhav,Thakorvash,39,148,ODHAV
+Ex83,East,Nikol,Bharvadvas(Gopalc hok),500,148,NIKOL
+Ex84,East,Nikol,"Indiranagar,Bharva dvash",122,148,NIKOL
+Ex85,South,Vatva,Dhanpaleshwarnag ar/ Slm Na Chhapara,42,148,VATVA
+Ex87,South,Vatva,Durganagar Na Chhapara,217,148,VATVA
+Ex88,South,Vatva,Bhimnath Ni Chali,147,148,VATVA
+Ex89,South,Vatva,Rajivnagar Ni Chali,81,148,VATVA
+Ex91,South,Ramol- Hathijan,Ramdevnagar,54,148,RAMOLHATHIJAN
+Ex94,South,Vatva,"Moti Khan , Madhavpura.",96,148,VATVA
+Ex97,South,Lambha,Chovadi Vistar,168,148,LAMBHA
+7,West,Ambawadi,Bhudarpura Na Chhapara (Rami Ramniklal Ni Chali),497,149,AMBAWADI
+82,New West,Kali,Chndrabhaga Nagar (Kadiya Ni Chali),66,149,KALI
+95,West,Sabarmati,Kolsi Tekra Chhapara,331,149,SABARMATI
+100,New West,Kali,Mevaram Na Chhapara,65,149,KALI
+213,South,Behrampura,Ramji Mandir Na Chhapara,186,149,BEHRAMPURA
+215,South,Behrampura,Santosh Nagar,587,149,BEHRAMPURA
+237,South,Behrampura,Mohan Talavi Ni Chali,204,149,BEHRAMPURA
+340,South,Indrapuri,Juni Vasahat,2476,149,INDRAPURI
+347,South,Indrapuri,Navi Vasahat,3264,149,INDRAPURI
+367,Central,Dudheshwar,Baba Bakula Na Chhapara,225,149,DUDHESHWAR
+370,Central,Madhupura,Devjipura Na Chhapara (Jogni Ma Ni Chali),324,149,MADHUPURA
+476,Central,Giridharnagar,Shantilal Ni Chali,163,149,GIRIDHARNAGAR
+480,Central,Giridharnagar,Slums Behind Cantonment Area,157,149,GIRIDHARNAGAR
+562,North,Naroda,Mafatnagar Na Chhapara,542,149,NARODA
+582,North,Meghaninagar,Hasmukhlal Ni Chali,258,149,MEGHANINAGAR
+598,North,Meghaninagar,Pattni Sanjog nagar Na Chhapara,56,149,MEGHANINAGAR
+602,North,Meghaninagar,Shanti Nagar Na Chhapara,365,149,MEGHANINAGAR
+635,North,Saraspur,SHALAM NI CHALI,287,149,SARASPUR
+640,North,Sardarnagar,Juno/Navo Saraniyavs,392,149,SARDARNAGAR
+657,North,Thakkar Bapanagar,"Vasantnagar, nr. Camak Chuna",931,150,THAKKARBAPANAGAR
+685,East,Arbudanagar,Bhawaninagar Tekra Na Zupda,1106,150,ARBUDANAGAR
+688,East,Arbudanagar,Chhagan Hema Tekra Na Zupda,170,150,ARBUDANAGAR
+696,East,Arbudanagar,Varsibhai Rabari Ni Chali,180,150,ARBUDANAGAR
+1073,East,Amaraiwadi,Gulab Nagar Chhapara,669,150,AMARAIWADI
+1076,East,Bhaipura,Rabari Na Chhapara,926,150,BHAIPURA
+1077,East,Bhaipura,Haripura Na Chhapra (Kankeshwar Mahadev Chhapra,948,150,BHAIPURA
+1081,East,Mahavirnagar,Lavkush Na Chhapara (Babu Raja Ram Ni Chali),49,150,MAHAVIRNAGAR
+1082,East,Mahavirnagar,Niti Nagar/Utakarsh Nagar,246,150,MAHAVIRNAGAR

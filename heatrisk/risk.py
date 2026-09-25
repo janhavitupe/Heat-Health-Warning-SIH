@@ -1,7 +1,10 @@
 """Mortality and Hospitalization Risk Indices — proposal §6.5–6.6.
 
-MRI = min(100, HTSI × (floor + (1 − floor) × PVI/100) × H_m)
-HRI = min(100, HTSI × (floor + (1 − floor) × PVI/100) × C_h)
+MRI = min(100, HTSI × (1 + spread × (PVI − 50)/50) × H_m)
+HRI = min(100, HTSI × (1 + spread × (PVI − 50)/50) × C_h)
+
+A ward of average vulnerability (PVI 50) carries the heat level unchanged, so a
+city-wide extreme heat day can reach Red; vulnerability moves wards up or down.
 """
 
 from __future__ import annotations
@@ -19,8 +22,8 @@ def factor_or_default(value, bounds: dict) -> tuple[float, bool]:
 
 
 def vulnerability_multiplier(pvi: float, cfg: dict) -> float:
-    floor = cfg["risk"]["vulnerability_floor"]
-    return floor + (1 - floor) * pvi / 100.0
+    spread = cfg["risk"]["vulnerability_spread"]
+    return 1.0 + spread * (pvi - 50.0) / 50.0
 
 
 def score(htsi: pd.Series, pvi: float, h_m: float, c_h: float, cfg: dict) -> pd.DataFrame:

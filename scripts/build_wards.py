@@ -5,6 +5,7 @@ Inputs:
   data/raw/amc_facilities_datameet.kml      AMC libraries, ward/zonal offices
   data/processed/osm_points.geojson         from scripts/fetch_osm.py
   data/manual/ward_attributes.csv           census / survey attributes entered by hand
+  data/manual/slum_ward_stats.csv           slum huts per ward (scripts/extract_slums.py)
   data/manual/column_sources.csv            provenance of every ward column
 
 Outputs:
@@ -23,12 +24,14 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 
 import geopandas as gpd
+import numpy as np
 import pandas as pd
 import shapely
 from shapely.geometry import Point
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
+from heatrisk import access as access_mod  # noqa: E402
 from heatrisk.config import load_config  # noqa: E402
 
 RAW = ROOT / "data" / "raw"
@@ -150,6 +153,34 @@ def main() -> None:
         print("gee_ward_stats.csv not found - population and satellite columns left empty")
         for col in GEE_COLUMNS:
             wards[col] = pd.NA
+    # Slum share from the AMC 2010-11 slum survey (scripts/extract_slums.py). Wards with no
+    # listed slum get 0. The survey counted people in 2010; WorldPop is 2020, so the share is
+    # a relative indicator (PVI min-max normalizes it), capped at 1.
+    slum_path = MANUAL / "slum_ward_stats.csv"
+    if slum_path.exists():
+        slums = pd.read_csv(slum_path, dtype={"ward_id": str}).set_index("ward_id")
+        wards["slum_huts"] = wards["ward_id"].map(slums["slum_huts"]).fillna(0)
+        slum_pop = wards["ward_id"].map(slums["slum_pop_est"]).fillna(0)
+        wards["informal_housing_share"] = (slum_pop / wards["population"]).clip(upper=1.0)
+    else:
+        print("slum_ward_stats.csv not found - informal_housing_share left as entered in ward_attributes.csv")
+        wards["slum_huts"] = pd.NA
+    # Public beds reachable per resident (E2SFCA), and from it C_h when enabled. A hospital
+    # without coordinates is placed at its ward's centroid. A value entered by hand wins.
+    cap = cfg["risk"]["capacity"]
+    beds_xy = gpd.GeoDataFrame(
+        beds, geometry=gpd.points_from_xy(beds["lon"], beds["lat"]), crs="EPSG:4326").to_crs(metric)
+    centroids = wards.to_crs(metric).set_index("ward_id").geometry.centroid
+    missing_xy = beds["lat"].isna().to_numpy()
+    beds_xy.loc[missing_xy, "geometry"] = centroids.loc[beds.loc[missing_xy, "ward_id"]].to_numpy()
+    access = access_mod.e2sfca(
+        np.c_[centroids.x, centroids.y], wards.set_index("ward_id")["population"].to_numpy(dtype=float),
+        np.c_[beds_xy.geometry.x, beds_xy.geometry.y], beds["beds"].to_numpy(dtype=float), cap["catchment_km"])
+    wards["public_beds_access"] = wards["ward_id"].map(pd.Series(access * 1000, index=centroids.index))  # per 1,000
+    if cap["spread"] > 0:   # disabled until private beds are in the data (see config.yaml)
+        derived = access_mod.capacity_factor(wards.set_index("ward_id")["public_beds_access"],
+                                             cfg["risk"]["capacity_factor"], cap["spread"])
+        wards["capacity_factor"] = wards["capacity_factor"].fillna(wards["ward_id"].map(derived))
     wards["elderly_share"] = wards["pop_60plus"] / wards["population"]
     wards["under5_share"] = wards["pop_under5"] / wards["population"]
     wards["population_density"] = wards["population"] / wards["area_km2"]

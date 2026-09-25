@@ -27,7 +27,8 @@ scripts/          data fetch and build scripts
 gee/              Google Earth Engine exports
 data/             raw, manual, and processed data
 tests/            unit and data tests
-docs/             changelog, evaluation, methodology
+docs/             status report, calibration, backtest, changelog
+backtest/         May 2024 replay, sensitivity analysis, results
 phases/           development plan
-api/ frontend/ backtest/ notebooks/   (later phases)
+api/ frontend/    (later phases)
 ```

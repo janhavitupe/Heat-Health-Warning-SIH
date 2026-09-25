@@ -1,0 +1,67 @@
+ward_key,ward_id,ward_name_2015,share,method,evidence
+AMARAIWADI,AMC-39,Amraiwadi,1.0,name,Same ward name in 2015
+AMBAWADI,AMC-18,Navrangpura,1.0,geocode,"Locality geocoded (OpenStreetMap Nominatim): Ambawadi, Ahmedabad, SabarmatiTaluka, Ahmedabad, Gujarat, 380006, Indi"
+ARBUDANAGAR,AMC-40,Odhav,1.0,tp_scheme,All listed slums are in TP scheme 'Odhav 2'
+ASARVA,AMC-15,Asarwa,1.0,name,Same ward name in 2015
+BAPUNAGAR,AMC-26,Bapunagar,1.0,name,Same ward name in 2015
+BEHRAMPURA,AMC-35,Baherampura,1.0,name,Same ward name in 2015
+BHAIPURA,AMC-43,Bhaipura Hatkeshwar,1.0,name,Old Bhaipura ward is part of 2015 Bhaipura Hatkeshwar (geocoder hit an unrelated 'Bhaipura Road')
+BODAKDEV,AMC-19,Bodakdev,1.0,name,Same ward name in 2015
+CHANDLODIA,AMC-02,Chandlodia,1.0,name,Same ward name in 2015
+CHNDKHEDAMOTERA,AMC-03,Chandkheda,1.0,name,Same ward name in 2015
+DANILIMDA,AMC-36,Danilimda,1.0,name,Same ward name in 2015
+DARIYAPUR,AMC-21,Dariyapur,1.0,name,Same ward name in 2015
+DUDHESHWAR,AMC-17,Shahpur,1.0,geocode,"Locality geocoded (OpenStreetMap Nominatim): Dudheshwar, Asarva Taluka, Ahmedabad, Gujarat, 380004, India"
+GHATLODIA,AMC-07,Ghatlodia,1.0,name,Same ward name in 2015
+GHODASAR,AMC-45,Isanpur,1.0,geocode,"Locality geocoded (OpenStreetMap Nominatim): Ghodasar, BRTS Station, Isanpur, Maninagar Taluka, Ahmedabad, Gujarat,"
+GIRIDHARNAGAR,AMC-16,Shahibag,1.0,geocode,Girdharnagar locality geocodes to 2015 Shahibag
+GOMTIPUR,AMC-38,Gomtipur,1.0,name,Same ward name in 2015
+GOTA,AMC-01,Gota,1.0,name,Same ward name in 2015
+INDIACOLONY,AMC-22,India Colony,1.0,name,Same ward name in 2015
+INDRAPURI,AMC-42,Indrapuri,1.0,name,Same ward name in 2015
+ISHANPUR,AMC-45,Isanpur,1.0,name,Same ward name in 2015
+JAMALPUR,AMC-29,Jamalpur,1.0,name,Same ward name in 2015
+JODHPUR,AMC-20,Jodhpur,1.0,name,Same ward name in 2015
+JUNAVADAJ,AMC-06,New Wadaj,1.0,name,Same ward name in 2015
+KALI,AMC-04,Sabarmati,1.0,tp_scheme,"Slums in TP 23, the same scheme as Sabarmati ward slums; geocoded Kali Road lies in Sabarmati"
+KANKARIA,AMC-37,Maninagar,1.0,geocode,"Locality geocoded (OpenStreetMap Nominatim): Kankaria, Maninagar Taluka, Ahmedabad, Gujarat, 380028, India"
+KHADIA,AMC-28,Khadia,1.0,name,Same ward name in 2015
+KHOKHARA,AMC-44,Khokhra,1.0,name,Same ward name in 2015
+KRISHNANAGAR,AMC-12,Naroda,1.0,geocode,"Locality geocoded (OpenStreetMap Nominatim): Krishnanagar bus stop, NH8, Naroda, Asarva Taluka, Ahmedabad, Gujarat,"
+KUBERNAGAR,AMC-14,Kubernagr,1.0,name,Same ward name in 2015
+LAMBHA,AMC-46,Lambha,1.0,name,Same ward name in 2015
+MADHUPURA,AMC-16,Shahibag,1.0,geocode,"Locality geocoded (OpenStreetMap Nominatim): Madhupura, Asarva Taluka, Ahmedabad, Gujarat, 380004, India"
+MAHAVIRNAGAR,AMC-39,Amraiwadi,0.5,tp_scheme,TP 27 slums (428 huts); TP 27 is mostly Amraiwadi
+MAHAVIRNAGAR,AMC-43,Bhaipura Hatkeshwar,0.5,tp_scheme,TP 51/D slums (434 huts); TP 51 is Bhaipura
+MANINAGAR,AMC-37,Maninagar,1.0,name,Same ward name in 2015
+MEGHANINAGAR,AMC-15,Asarwa,1.0,geocode,"Locality geocoded (OpenStreetMap Nominatim): Meghaninagar, Asarva Taluka, Ahmedabad, Gujarat, 380038, India"
+NARANPURA,AMC-09,Naranpura,1.0,name,Same ward name in 2015
+NARODA,AMC-12,Naroda,1.0,name,Same ward name in 2015
+NARODAROAD,AMC-22,India Colony,1.0,geocode,"Locality geocoded (OpenStreetMap Nominatim): Naroda Road, Sahijpur, Asarva Taluka, Ahmedabad, Gujarat, 382345, Indi"
+NAVARANG,AMC-18,Navrangpura,1.0,name,Same ward name in 2015
+NAVARANGPURA,AMC-18,Navrangpura,1.0,name,Same ward name in 2015
+NAVAVADAJ,AMC-06,New Wadaj,1.0,name,Same ward name in 2015
+NAVRANGPURA,AMC-18,Navrangpura,1.0,name,Same ward name in 2015
+NIKOL,AMC-24,Nikol,1.0,name,Same ward name in 2015
+NOBALNAGAR,AMC-12,Naroda,1.0,tp_scheme,Slums in TP '1 Naroda' and Naroda TP schemes 97-99
+ODHAV,AMC-40,Odhav,1.0,name,Same ward name in 2015
+PALADI,AMC-30,Paldi,1.0,name,Spelling variant of Paldi
+PALDI,AMC-30,Paldi,1.0,name,Same ward name in 2015
+RAIKHAD,AMC-29,Jamalpur,1.0,geocode,"Landmark slums (Victoria Garden / Lokmanya Tilak Garden, Jamalpur Na Zupda) lie in 2015 Jamalpur"
+RAKHIYAL,AMC-27,Saraspur-Rakhiyal,1.0,name,Same ward name in 2015
+RAMOLHATHIJAN,AMC-48,Ramol Hathijan,1.0,name,Same ward name in 2015
+RANIP,AMC-05,Ranip,1.0,name,Same ward name in 2015
+SABARMATI,AMC-04,Sabarmati,1.0,name,Same ward name in 2015
+SAIJPURBOGHA,AMC-13,Saijpur Bogha,1.0,name,Same ward name in 2015
+SARASPUR,AMC-27,Saraspur-Rakhiyal,1.0,name,Same ward name in 2015
+SARDARNAGAR,AMC-11,Sardarnagar,1.0,name,Same ward name in 2015
+SARKHEJ,AMC-33,Sarkhej,1.0,name,Same ward name in 2015
+SHAHPUR,AMC-17,Shahpur,1.0,name,Same ward name in 2015
+SPSTADIUM,AMC-10,S.P.Stadium,1.0,name,Same ward name in 2015
+THAKKARBAPANAGAR,AMC-23,Thakkarbapanagar,1.0,name,Same ward name in 2015
+THALTEJ,AMC-08,Thaltej,1.0,name,Same ward name in 2015
+VASANA,AMC-31,Vasna,1.0,name,Same ward name in 2015
+VASNA,AMC-31,Vasna,1.0,name,Same ward name in 2015
+VASTRAL,AMC-41,Vastral,1.0,name,Same ward name in 2015
+VATVA,AMC-47,Vatva,1.0,name,Same ward name in 2015
+VEJALPUR,AMC-32,Vejalpur,1.0,name,Same ward name in 2015

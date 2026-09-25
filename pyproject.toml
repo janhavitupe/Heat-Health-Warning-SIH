@@ -22,6 +22,7 @@ dependencies = [
 [project.optional-dependencies]
 dev = ["pytest>=8"]
 gee = ["earthengine-api>=0.1.390"]
+pdf = ["pdfplumber>=0.11"]            # scripts/extract_slums.py
 
 [tool.setuptools.packages.find]
 include = ["heatrisk*"]

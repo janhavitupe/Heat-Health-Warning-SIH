@@ -11,12 +11,14 @@ n_cooling_points,Drinking-water points and parks inside ward,OpenStreetMap (+ AM
 n_candidate_sites,Schools/community centres/libraries/ward offices inside ward,OpenStreetMap + AMC via DataMeet,point,current,False,census,build_wards.py,1.0,complete
 nearest_hospital_km,Straight-line km from centroid to nearest hospital (provisional access proxy),OpenStreetMap,ward,current,True,model_estimate,build_wards.py,1.0,complete
 zone,AMC administrative zone,"Wikipedia (Amdavad Municipal Corporation), cross-checked with AMC UHC list zone codes",ward,current,False,census,manual,1.0,complete
-informal_housing_share,Share of population in slums/informal settlements,Census 2011 slum tables + AMC slum list; reallocated to 2015 wards,ward,2011,True,model_estimate,manual,0.0,missing
+informal_housing_share,Share of population in listed slums (2010 slum pop estimate / 2020 WorldPop population),AMC socio-economic slum survey 2010-11 via Slum Free City Action Plan 2014 Annexure II; 2010 wards mapped to 2015 wards (ward_crosswalk_slum_2010.csv),slum settlement,2010-11,True,model_estimate,build_wards.py,1.0,complete
+slum_huts,Huts in listed slum settlements,AMC slum survey 2010-11 via Slum Free City Action Plan 2014 Annexure II (scripts/extract_slums.py),slum settlement,2010-11,True,census,build_wards.py,1.0,complete
 roof_sheet_share,Share of households with metal/asbestos/sheet roofs (Innovation 1),Census 2011 Houselisting HH tables; reallocated to 2015 wards,town or ward,2011,True,model_estimate,manual,0.0,missing
 outdoor_worker_share,Share of workers in outdoor occupations,PLFS/NSSO district figures disaggregated by population,district,latest PLFS,True,model_estimate,manual,0.0,missing
 hospital_beds,Public hospital beds located in the ward (private hospitals not yet included),data/manual/hospital_beds.csv (Wikipedia Healthcare in Ahmedabad; DeshGujarat 2023),facility,2019-2023,True,model_estimate,build_wards.py,1.0,complete
 historical_factor,H_m historical heat-illness factor (default 1.0 if no data),NCDC NPCCHH / AMC health dept,ward or district,past seasons,True,historical,manual,1.0,complete
-capacity_factor,C_h capacity-pressure factor (default 1.0 if no data),Derived from beds per population,ward,current,True,model_estimate,manual,0.0,missing
+capacity_factor,C_h capacity-pressure factor (default 1.0 until private beds are available; derivation in build_wards.py is switched off by risk.capacity.spread = 0),"E2SFCA (Luo & Qi 2009) over data/manual/hospital_beds.csv (5 public hospitals, 7,785 beds) and WorldPop ward population; private beds not included",ward,2019-2023 beds / 2020 population,True,model_estimate,build_wards.py,0.0,missing
+public_beds_access,"Public hospital beds reachable per 1,000 residents (E2SFCA, 15 km Gaussian catchment)",data/manual/hospital_beds.csv + WorldPop 2020,ward,2019-2023 beds / 2020 population,True,model_estimate,build_wards.py,1.0,complete
 notes,Free-text notes on how a row was filled,-,ward,-,False,census,manual,1.0,complete
 population,Total population,WorldPop 100 m constrained (via Earth Engine),100 m grid,2020,True,model_estimate,gee,1.0,complete
 pop_60plus,Population aged 60+,WorldPop age-sex structures (via Earth Engine),100 m grid,2020,True,model_estimate,gee,1.0,complete

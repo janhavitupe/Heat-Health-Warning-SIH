@@ -40,10 +40,15 @@ downscaling:
 # §6.2–6.3 Thermal stress indicators → 0–100
 thermal_stress:
   daily_aggregation: max_3h_mean  # mean of the 3 hottest hours of the day
-  normalization:                  # linear map: value at 0 → value at 100 (clamped)
-    utci: {zero: 26.0, full: 46.0}
-    wbgt: {zero: 25.0, full: 33.0}
-    heat_index: {zero: 27.0, full: 54.0}
+  # Linear map: value at 0 → value at 100 (clamped). Anchored to the Ahmedabad Heat
+  # Action Plan (2019) Tmax alert thresholds by climatological rarity: an indicator
+  # value as rare in 1991–2020 Apr–Jun as Tmax 41 °C (80.5th pct, top of "no alert")
+  # scores 40, as rare as 45 °C (99.85th pct, Red "extreme heat") scores 80.
+  # Recompute with scripts/calibrate_htsi.py; see docs/htsi_calibration.md.
+  normalization:
+    utci: {zero: 41.9, full: 51.9}
+    wbgt: {zero: 28.6, full: 38.3}
+    heat_index: {zero: 36.0, full: 50.6}
   weights: {utci: 0.5, wbgt: 0.3, heat_index: 0.2}
   # Inputs are clamped to the UTCI polynomial's valid wind range (10 m wind, m/s)
   wind_limits: {min: 0.5, max: 17.0}
@@ -69,8 +74,11 @@ htsi:
     tmin_threshold_c: 28.0
     tmin_full_c: 31.0             # P_night reaches max at this ward-adjusted Tmin
     max_points: 10
-  persistence:                    # P_persist: consecutive days with base score ≥ high
-    min_base_score: 41
+  persistence:                    # P_persist: consecutive heat-alert days
+    # Very High base (≥ 60 ≈ Heat Action Plan Orange, Tmax ~43 °C) rather than High (41):
+    # IMD counts heatwave-level days, and duration adds far less risk than intensity
+    # (Anderson & Bell 2011). See docs/decisions_humidity_persistence_wards.md.
+    min_base_score: 60
     points_per_day: 2.5
     max_points: 10
   indoor:                         # P_indoor (Innovation 1): heat-trapping roofs
@@ -78,8 +86,12 @@ htsi:
     min_base_score: 41            # only applied on High days or worse
     night_multiplier: 1.5         # when P_night > 0 (sheet roofs release heat slowly)
 
-# §6.4 Population Vulnerability Index (min-max normalized across wards)
+# §6.4 Population Vulnerability Index
 pvi:
+  # Each indicator is scaled 0–1 across wards by percentile rank (as in the CDC/ATSDR Social
+  # Vulnerability Index) so skewed indicators such as slum share do not push the typical ward
+  # below the midpoint; "minmax" is also supported.
+  normalization: percentile_rank
   weights:
     elderly_share: 0.25
     outdoor_worker_share: 0.20
@@ -90,9 +102,18 @@ pvi:
 
 # §6.5 Mortality and hospitalization risk
 risk:
-  vulnerability_floor: 0.4        # risk = HTSI × (floor + (1 - floor) × PVI/100) × factor
+  # risk = HTSI × (1 + spread × (PVI − 50)/50) × factor: a ward of average vulnerability
+  # takes the heat level as is; PVI 0 → ×(1 − spread), PVI 100 → ×(1 + spread).
+  vulnerability_spread: 0.4
   historical_factor: {min: 0.8, max: 1.2, default: 1.0}     # H_m
   capacity_factor: {min: 0.8, max: 1.3, default: 1.0}       # C_h
+  # C_h from hospital beds reachable per resident (E2SFCA, Luo & Qi 2009; Gaussian decay
+  # within catchment_km), percentile-ranked so the median ward gets 1.0 and the least served
+  # 1 + spread. spread = 0 disables it: only public beds are in the data, and private hospitals
+  # handle 64.6% of urban Gujarat admissions (NSS 75th round), so a public-only C_h would
+  # wrongly flag privately served wards. public_beds_access is still computed for display.
+  # Set spread (e.g. 0.15) once private beds are added to data/manual/hospital_beds.csv.
+  capacity: {method: e2sfca_beds, catchment_km: 15, spread: 0.0}
 
 # §6.6 Alert levels (IMD colour scheme); inclusive upper bounds on MRI/HRI
 alerts:
