@@ -1,0 +1,129 @@
+"""Forecast skill and reliability over May 2024 (Phase 4, proposal §9.4).
+
+Archived *ensemble* forecasts for 2024 are not available from Open-Meteo (the
+ensemble API keeps about three months), so skill is measured two ways with
+archived *deterministic* forecasts from the Previous Runs API:
+
+  A. Deterministic skill by lead time. For ECMWF IFS and GFS, the forecast issued
+     L = 1..5 days ahead is scored for every ward and compared with the same model
+     driven by reanalysis weather (the "truth" run in backtest/may2024.py).
+     Metrics for ward-days at Orange or above: hit rate (POD), false alarm ratio
+     (FAR), and exact-level agreement.
+  B. Probability reliability with a time-lagged multi-model ensemble: for
+     effective lead L, members are {ECMWF, GFS, ICON} × issued {L, L+1, L+2} days ahead
+     (9 members, each model equally weighted as in the live ensemble). P(Orange+)
+     is compared with the truth run: Brier score, Brier
+     skill score against climatology, and a reliability table.
+
+Truth = the model's own alert level when driven by observed (reanalysis) weather,
+so this isolates the error that comes from the weather forecast.
+
+Outputs: backtest/results/forecast_skill.md (+ .csv)
+Usage:   python backtest/forecast_skill.py
+"""
+
+from __future__ import annotations
+
+import sys
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
+
+ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT))
+from heatrisk import load_config  # noqa: E402
+from heatrisk.pipeline import load_wards, score_city  # noqa: E402
+from heatrisk.weather import fetch_archive, fetch_previous_runs  # noqa: E402
+
+START, END = "2024-05-01", "2024-06-15"
+EVAL = ("2024-05-06", "2024-06-15")      # skip the first days so persistence has history in every run
+MODELS = {"ecmwf_ifs025": "ECMWF IFS", "gfs_seamless": "GFS", "icon_seamless": "ICON"}
+LEADS = range(1, 6)
+LEVELS = ["green", "yellow", "orange", "red"]
+OUT = Path(__file__).resolve().parent / "results"
+
+
+def orange_plus(alerts: pd.Series) -> pd.Series:
+    return alerts.map(LEVELS.index) >= 2
+
+
+def evaluate(pred: pd.DataFrame, truth: pd.DataFrame) -> dict:
+    j = pred.merge(truth, on=["ward_id", "date"], suffixes=("", "_truth"))
+    j = j[j["date"].between(*EVAL)]
+    p, t = orange_plus(j["alert_mri"]), orange_plus(j["alert_mri_truth"])
+    hits, misses, fa = int((p & t).sum()), int((~p & t).sum()), int((p & ~t).sum())
+    return {"pod": hits / max(hits + misses, 1), "far": fa / max(hits + fa, 1),
+            "exact": float((j["alert_mri"] == j["alert_mri_truth"]).mean()),
+            "mri_mae": float((j["mri"] - j["mri_truth"]).abs().mean()), "n": len(j)}
+
+
+def main() -> None:
+    cfg, wards = load_config(), load_wards()
+    c = cfg["city"]["centre"]
+    cols = ["ward_id", "date", "mri", "alert_mri"]
+    truth = score_city(fetch_archive(c["lat"], c["lon"], START, END), wards, cfg)[cols]
+    truth["date"] = pd.to_datetime(truth["date"])
+
+    runs: dict[tuple[str, int], pd.DataFrame] = {}
+    for model in MODELS:
+        for lead in range(1, max(LEADS) + 3):
+            wx = fetch_previous_runs(c["lat"], c["lon"], START, END, model, lead)
+            t = score_city(wx, wards, cfg)[cols]
+            t["date"] = pd.to_datetime(t["date"])
+            runs[(model, lead)] = t
+            print(f"{model} lead {lead}: scored", flush=True)
+
+    rows = []
+    for model, name in MODELS.items():
+        for lead in LEADS:
+            rows.append({"part": "A", "forecast": name, "lead_days": lead, **evaluate(runs[(model, lead)], truth)})
+
+    # B. time-lagged multi-model ensemble
+    tj = truth[truth["date"].between(*EVAL)].set_index(["ward_id", "date"])
+    obs = orange_plus(tj["alert_mri"]).astype(float)
+    clim = obs.mean()
+    rel_rows = []
+    for lead in LEADS:
+        members = [runs[(m, lead + k)].set_index(["ward_id", "date"])["alert_mri"] for m in MODELS for k in range(3)]
+        prob = pd.concat([orange_plus(s).astype(float) for s in members], axis=1).mean(axis=1).reindex(obs.index)
+        bs = float(((prob - obs) ** 2).mean())
+        bs_clim = float(((clim - obs) ** 2).mean())
+        rows.append({"part": "B", "forecast": "Lagged ensemble (ECMWF+GFS+ICON × 3 issue days)", "lead_days": lead,
+                     "brier": bs, "bss": 1 - bs / bs_clim, "n": len(obs)})
+        if lead in (1, 3, 5):
+            for p_val, grp in obs.groupby(prob.round(3)):
+                rel_rows.append({"lead_days": lead, "forecast_p": p_val, "observed_freq": grp.mean(), "n": len(grp)})
+    res = pd.DataFrame(rows)
+    rel = pd.DataFrame(rel_rows)
+    OUT.mkdir(exist_ok=True)
+    res.to_csv(OUT / "forecast_skill.csv", index=False)
+    rel.to_csv(OUT / "forecast_reliability.csv", index=False)
+
+    a, b = res[res.part == "A"], res[res.part == "B"]
+    lines = ["# Forecast Skill — May 2024", "",
+             f"Evaluation days {EVAL[0]} to {EVAL[1]}, 48 wards ({int(a['n'].iloc[0])} ward-days). "
+             "Truth = the model driven by reanalysis weather. Generated by `backtest/forecast_skill.py`.", "",
+             "## A. Deterministic forecasts, Orange-or-above ward-days", "",
+             "| Forecast | Lead (days) | Hit rate (POD) | False alarm ratio | Exact level | MRI error (MAE) |",
+             "|---|---|---|---|---|---|"]
+    for r in a.itertuples():
+        lines.append(f"| {r.forecast} | {r.lead_days} | {r.pod:.0%} | {r.far:.0%} | {r.exact:.0%} | {r.mri_mae:.1f} |")
+    lines += ["", "## B. Probability of Orange or above — time-lagged multi-model ensemble (9 members)", "",
+              f"Climatological frequency of Orange+ ward-days in the period: {clim:.0%}.", "",
+              "| Effective lead (days) | Brier score | Brier skill score vs climatology |", "|---|---|---|"]
+    for r in b.itertuples():
+        lines.append(f"| {r.lead_days} | {r.brier:.3f} | {r.bss:.2f} |")
+    lines += ["", "### Reliability (forecast probability vs how often Orange+ actually occurred)", "",
+              "| Lead | " + " | ".join(f"P = {p:.2f}" for p in sorted(rel["forecast_p"].unique())) + " |",
+              "|---" * (1 + rel["forecast_p"].nunique()) + "|"]
+    for lead, g in rel.groupby("lead_days"):
+        cells = {round(r.forecast_p, 2): f"{r.observed_freq:.0%} (n={r.n})" for r in g.itertuples()}
+        lines.append(f"| {lead} | " + " | ".join(cells.get(round(p, 2), "—") for p in sorted(rel["forecast_p"].unique())) + " |")
+    text = "\n".join(lines) + "\n"
+    (OUT / "forecast_skill.md").write_text(text, encoding="utf-8")
+    print(text)
+
+
+if __name__ == "__main__":
+    main()

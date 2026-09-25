@@ -16,6 +16,9 @@ python -m venv .venv
 .venv/Scripts/activate          # Windows; use .venv/bin/activate elsewhere
 pip install -e ".[dev]"
 pytest
+
+# Daily ward forecast with alert probabilities
+python scripts/run_forecast.py
 ```
 
 ## Layout

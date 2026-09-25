@@ -23,17 +23,18 @@ def category(score: float, bands: dict[str, float]) -> str:
     return list(bands)[-1]
 
 
-def _hottest_hours_mean(s: pd.Series, n: int = 3) -> float:
-    return float(s.nlargest(n).mean())
-
-
 def daily_indicators(hourly: pd.DataFrame, cfg: dict) -> pd.DataFrame:
     """Aggregate hourly thermal output to one row per local calendar day."""
     how = cfg["thermal_stress"]["daily_aggregation"]
     if how != "max_3h_mean":
         raise ValueError(f"unsupported daily_aggregation: {how}")
-    g = hourly.groupby(hourly.index.date)
-    daily = pd.DataFrame({ind: g[ind].apply(_hottest_hours_mean) for ind in INDICATORS})
+    dates = hourly.index.date
+    g = hourly.groupby(dates)
+    # mean of the 3 hottest hours per day (vectorized: rank within each day)
+    daily = pd.DataFrame({
+        ind: hourly[ind].where(g[ind].rank(ascending=False, method="first") <= 3).groupby(dates).mean()
+        for ind in INDICATORS
+    })
     daily["tmax"] = g["t2m"].max()
     daily["tmin"] = g["t2m"].min()
     daily["hours"] = g.size()

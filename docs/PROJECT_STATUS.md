@@ -1,7 +1,7 @@
 # Project Status Report — Heat-Health Early Warning Platform
 
 SIH 2026 · Problem Statement 26083 · Pilot city: **Ahmedabad** (48 wards)
-Status as of **25 September 2026**. Phases 0, 1 and 2 are done. Phase 3 is complete. Phases 4–9 have not started.
+Status as of **25 September 2026**. Phases 0, 1 and 2 are done. Phases 3 and 4 are complete. Phases 5–9 have not started.
 
 This report explains everything built so far: what the platform is meant to do, what data was collected and where it came from, how each score is calculated, what was tested, what problems were found, and what is still missing.
 
@@ -15,6 +15,7 @@ This report explains everything built so far: what the platform is meant to do, 
 4. [Phase 1 — Scoring library](#4-phase-1--core-scoring-library)
 5. [Phase 2 — Ward-level downscaling](#5-phase-2--ward-level-downscaling)
    - [Phase 3 — Calibration and backtest](#5b-phase-3--calibration-and-backtest)
+   - [Phase 4 — Forecasts and probabilistic alerts](#5c-phase-4--forecasts-and-probabilistic-alerts)
 6. [Tests](#6-tests)
 7. [Real-data results so far](#7-real-data-results-so-far)
 8. [Known problems and open questions](#8-known-problems-and-open-questions)
@@ -53,7 +54,10 @@ MRI / HRI — Mortality and Hospitalization Risk (0–100)       ← Phase 1
 Alert level (Green / Yellow / Orange / Red) + explanation    ← Phase 1
    │
    ▼
-Actions, map, dashboard, voice alerts, what-if simulator     ← Phases 4–9 (not started)
+Forecast: 5-day outlook, peaks, events, alert probabilities ← Phase 4
+   │
+   ▼
+Actions, map, dashboard, voice alerts, what-if simulator     ← Phases 5–9 (not started)
 ```
 
 **Guiding principle:** get one honest number right before building anything around it. The scoring library is built and tested first. The API, map, dashboard and simulator will all call the same library, so the explanation shown to a user always matches the score.
@@ -68,14 +72,14 @@ Actions, map, dashboard, voice alerts, what-if simulator     ← Phases 4–9 (n
 | 1 | Core scoring library | ✅ Done. Its two calibration problems are now fixed in Phase 3 |
 | 2 | Urban heat downscaling | ✅ Done with a literature β value. Misses the 2 °C afternoon-spread target |
 | 3 | Multi-ward scoring & backtest | ✅ Done. Calibrated, backtested on May 2024, sensitivity checked, both open questions decided from research |
-| 4 | Forecast & ensemble probabilities | Not started |
+| 4 | Forecast & ensemble probabilities | ✅ Done. Daily 5-day ward forecast, 122-member ensemble probabilities, peaks, heatwave events; skill checked on 2024 and 2025 |
 | 5 | API & GIS map | Not started |
 | 6 | Decision layer (work windows, cooling deserts) | Not started |
 | 7 | Dashboard & alert delivery | Not started |
 | 8 | What-if simulator & health-worker feedback | Not started |
 | 9 | Validation, polish, demo | Not started |
 
-**Code:** a Python package `heatrisk/` with 9 modules, 3 data scripts, 1 Earth Engine script, 3 backtest scripts, 61 passing tests.
+**Code:** a Python package `heatrisk/` with 9 modules, 3 data scripts, 1 Earth Engine script, 3 backtest scripts, 70 passing tests.
 **Git:** nothing is committed yet. All files are untracked on branch `master`.
 
 ---
@@ -505,9 +509,30 @@ Details and sources: [decisions_humidity_persistence_wards.md](decisions_humidit
 
 ---
 
+## 5c. Phase 4 — Forecasts and probabilistic alerts
+
+Full details: [docs/forecast_phase4.md](forecast_phase4.md).
+
+**Daily run** (`python scripts/run_forecast.py`, about 4 minutes) produces, for every ward: a 5-day outlook with scores and top factors, the **peak day and hour**, an hourly heat curve, and **alert probabilities** from 122 ensemble forecast runs (ECMWF, GFS, ICON). It also produces **heatwave events** (at least 2 consecutive days with a quarter of wards at Orange+, following the IMD rule) and **probability triggers** (e.g. Orange preparedness when P(Red) ≥ 40% within 3 days).
+
+**How good the forecasts are** (archived forecasts for May 2024, all 48 wards):
+
+| | 1 day ahead | 3 days | 5 days |
+|---|---|---|---|
+| ECMWF: Orange+ hit rate / false alarms | 79% / 18% | 84% / 27% | 81% / 29% |
+| Combined probability: Brier skill vs climatology | 0.53 | 0.47 | 0.44 |
+
+- **GFS understates Ahmedabad heat stress** (hit rate 19–44%) because its afternoon winds are 44% too strong. **ICON overstates it** (winds too calm).
+- Combined with equal weight, the three models beat any single model or pair, in 2024 and in a blind 2025 test.
+- A wind bias correction didn't help out of sample, so none is applied.
+
+**Limitation:** archived *ensemble* forecasts for 2024 don't exist, so the live 122-member ensemble's own reliability has to be measured in the 2027 heat season. Daily outputs are saved for this.
+
+---
+
 ## 6. Tests
 
-**61 tests, all passing** (`pytest`, about 10 seconds): 59 test functions, some run with several inputs. Most use synthetic weather, so they run without internet.
+**70 tests, all passing** (`pytest`, about 10 seconds): 68 test functions, some run with several inputs. Most use synthetic weather, so they run without internet.
 
 | File | Test functions | What they check |
 |---|---|---|
@@ -515,6 +540,8 @@ Details and sources: [decisions_humidity_persistence_wards.md](decisions_humidit
 | `test_thermal.py` | 8 | Sun position, MRT higher by day than night, agreement with pythermalcomfort, extreme wind and saturated air |
 | `test_scoring.py` | 23 | Normalization, persistence counting and resets (only heat-alert-level days count), roof points gating and caps, neutral PVI indicators, percentile-rank scaling, risk multiplier centred on the average ward, Red reachable, alert band edges, city-wide batch table, explanations add up exactly, a "golden day" with known output |
 | `test_access.py` | 4 | Distance decay, E2SFCA conserves capacity, farther wards get less access, capacity factor centred and bounded |
+| `test_ensemble.py` | 6 | Probabilities monotonic and equal to member share, model weighting, confidence labels, trigger lead window, member splitting and trimming |
+| `test_forecast.py` | 3 | Event rules (consecutive days, ward share, open-ended), peaks and peak hour |
 | `test_downscale.py` | 11 | Anomalies relative to city mean, night/day/morning offsets, humidity recalculation, missing data, tree shade lowers daytime MRT only, pipeline integration, greening regression signs, real wards vary |
 | `test_ward_data.py` | 6 | 48 unique wards, valid boundaries inside the city box, data completeness |
 
@@ -588,7 +615,9 @@ Phase 3 is done (§5b), including both decisions.
 
 1. ~~Estimate slum share per ward from the AMC Slum Free City Action Plan.~~ Done: all 48 wards, with PVI now percentile-ranked (§5b).
 
-**Phase 4 — Forecast & ensemble probabilities** (next): score the live forecast and ensemble members to turn alerts into probabilities ("60% chance of Red in 3 days").
+~~**Phase 4 — Forecast & ensemble probabilities.**~~ Done: see [forecast_phase4.md](forecast_phase4.md).
+
+**Phase 5 — API & GIS map** (next): serve the forecast tables through an API and show wards, alerts, probabilities and explanations on a map.
 
 In parallel: chase the census crosswalk and the CPCB/SAFAR station data, and consider replaying May 2010 (published daily mortality).
 
@@ -618,6 +647,10 @@ python backtest/plot_timeline.py                          # timeline chart (SVG)
 # Tests
 pytest
 
+# Daily forecast (writes data/forecast/<date>/)
+python scripts/run_forecast.py                            # ~4 min with the 122-member ensemble
+python backtest/forecast_skill.py                         # forecast skill by lead time (May 2024)
+
 # Score a ward
 python scripts/score_ward.py AMC-29                                   # live forecast
 python scripts/score_ward.py AMC-29 --start 2024-05-15 --end 2024-05-28
@@ -643,6 +676,8 @@ heat/
 │   ├── vulnerability.py              PVI
 │   ├── risk.py                       MRI, HRI, alert levels
 │   ├── access.py                     E2SFCA spatial access (hospital beds; cooling points in Phase 6)
+│   ├── forecast.py                   ward peaks, hourly curves, heatwave events
+│   ├── ensemble.py                   ensemble probabilities, confidence, triggers
 │   ├── explain.py                    exact score breakdown
 │   └── pipeline.py                   score_ward() and score_city(): the whole chain
 ├── scripts/
@@ -651,12 +686,14 @@ heat/
 │   ├── build_wards.py                assemble the ward table
 │   ├── build_climatology.py          1991–2020 summer climate record
 │   ├── calibrate_htsi.py             derive HTSI thresholds from the climate record
+│   ├── run_forecast.py               daily forecast run (deterministic + ensemble)
 │   └── score_ward.py                 print a ward's explained score
 ├── gee/export_ward_stats.py          satellite + population per ward
 ├── backtest/
 │   ├── may2024.py                    replay May 2024, metrics vs IMD and the Heat Action Plan
 │   ├── sensitivity.py                ranking stability under ±20% changes
 │   ├── plot_timeline.py              timeline chart (SVG)
+│   ├── forecast_skill.py             forecast skill by lead time, Brier score, reliability
 │   └── results/                      metrics, ward table, chart
 ├── data/
 │   ├── README.md                     data inventory
@@ -669,9 +706,10 @@ heat/
 │   ├── htsi_calibration.md           Phase 3 calibration evidence
 │   ├── backtest_may2024.md           Phase 3 backtest and sensitivity
 │   ├── decisions_humidity_persistence_wards.md   research-based decisions
+│   ├── forecast_phase4.md            Phase 4 forecasts, probabilities and skill
 │   └── weights_changelog.md          every config change and why
 ├── phases/                           plan for phases 0–9
-└── tests/                            61 tests
+└── tests/                            70 tests
 ```
 
 *All scores are model estimates, not clinical predictions.*

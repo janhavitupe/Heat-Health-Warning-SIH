@@ -125,10 +125,26 @@ alerts:
 
 # §6.9 Probabilistic alerts (Innovation 2)
 ensemble:
-  models: [ecmwf_ifs025, gfs025]  # Open-Meteo ensemble model identifiers
+  # Open-Meteo ensemble models: ECMWF IFS (51 members), GFS (31), ICON (40) = 122 runs
+  models: [ecmwf_ifs025, gfs025, icon_seamless]
+  # model: each model's members share an equal third, the combination tested in
+  # backtest/forecast_skill.py (reliable in 2024 and in a blind 2025 test); member: every run
+  # counts once, which would give ECMWF 42% just because it runs more members.
+  # No per-model bias correction: GFS runs windy/dry and ICON calm/humid, but a wind
+  # correction trained on 2024 did not improve 2025 (docs/forecast_phase4.md).
+  weighting: model
   confidence: {high: 0.70, medium: 0.40}
   triggers:
     - {when: p_red, at_least: 0.40, lead_days_max: 3, action: orange_preparedness}
+
+# Phase 4 forecast products
+forecast:
+  days: 5                         # forecast horizon
+  past_days: 3                    # observed/analysed days before today, so persistence carries over
+  # Heatwave event: at least event_min_days consecutive days with at least event_min_share of
+  # wards at Orange or above (IMD also requires 2 consecutive days to declare a heatwave).
+  event_min_share: 0.25
+  event_min_days: 2
 
 # §6.10 Safe work windows (Innovation 4)
 # Maximum WBGT (°C) for each share of time spent working in an hour, by workload.

@@ -23,6 +23,8 @@ import requests
 
 FORECAST_URL = "https://api.open-meteo.com/v1/forecast"
 ARCHIVE_URL = "https://archive-api.open-meteo.com/v1/archive"
+ENSEMBLE_URL = "https://ensemble-api.open-meteo.com/v1/ensemble"
+PREVIOUS_RUNS_URL = "https://previous-runs-api.open-meteo.com/v1/forecast"
 
 COLUMNS = ["t2m", "rh", "td", "wind10", "pressure", "ghi", "dni", "dhi", "cloud"]
 
@@ -71,6 +73,67 @@ def fetch_archive(lat: float, lon: float, start: str, end: str,
                   tz: str = "Asia/Kolkata") -> pd.DataFrame:
     """Hourly reanalysis-based history (Open-Meteo archive, ERA5 family) for backtests."""
     return _to_frame(_request(ARCHIVE_URL, lat, lon, tz, start_date=start, end_date=end), tz)
+
+
+
+
+def fetch_previous_runs(lat: float, lon: float, start: str, end: str, model: str, lead_days: int,
+                        tz: str = "Asia/Kolkata") -> pd.DataFrame:
+    """What an archived forecast issued `lead_days` earlier said for each hour (Open-Meteo Previous Runs API).
+
+    Used to measure forecast skill by lead time over past events (Phase 4 reliability check).
+    """
+    suffix = f"_previous_day{lead_days}"
+    params = {"latitude": lat, "longitude": lon, "hourly": ",".join(v + suffix for v in _OPEN_METEO_VARS),
+              "models": model, "start_date": start, "end_date": end, "wind_speed_unit": "ms", "timezone": tz}
+    r = requests.get(PREVIOUS_RUNS_URL, params=params, timeout=90)
+    r.raise_for_status()
+    payload = r.json()
+    payload["hourly"] = {k.removesuffix(suffix): v for k, v in payload["hourly"].items()}
+    return _to_frame(payload, tz)
+
+def split_members(payload: dict, model: str, tz: str) -> dict[str, pd.DataFrame]:
+    """Split an Open-Meteo ensemble response into one WeatherFrame per member.
+
+    The control run's variables have plain names ("temperature_2m"); perturbed
+    members carry a suffix ("temperature_2m_member01"). Hours before the run starts
+    or after it ends are empty and are trimmed; a member with gaps inside that span
+    is dropped rather than gap-filled.
+    """
+    hourly = payload["hourly"]
+    suffixes = [""] + sorted({k.split("_member", 1)[1] for k in hourly if "_member" in k})
+    frames = {}
+    for suf in suffixes:
+        key = f"{model}_m{suf or '00'}"
+        cols = {new: hourly.get(old + (f"_member{suf}" if suf else "")) for old, new in _OPEN_METEO_VARS.items()}
+        if any(v is None for v in cols.values()):
+            continue
+        df = pd.DataFrame(cols)
+        df.index = pd.DatetimeIndex(pd.to_datetime(hourly["time"]), name="time").tz_localize(tz)
+        required = ["t2m", "rh", "td", "wind10", "pressure", "cloud"]
+        complete = df[required].notna().all(axis=1)
+        if not complete.any():
+            continue
+        df = df.loc[complete.idxmax():complete[::-1].idxmax()]      # trim empty leading/trailing hours
+        if df[required].isna().any().any():
+            continue
+        df["cloud"] = df["cloud"] / 100.0
+        frames[key] = validate(df)
+    return frames
+
+
+def fetch_ensemble(lat: float, lon: float, models: list[str], days: int = 5, past_days: int = 4,
+                   tz: str = "Asia/Kolkata") -> dict[str, pd.DataFrame]:
+    """Hourly Open-Meteo ensemble forecast: {"<model>_m<NN>": WeatherFrame} for every member.
+
+    `past_days` prepends recent days so persistence can be counted in every member (the
+    first is partial, because the run starts at 00 UTC = 05:30 IST, and is dropped later).
+    """
+    members = {}
+    for model in models:
+        payload = _request(ENSEMBLE_URL, lat, lon, tz, models=model, forecast_days=days, past_days=past_days)
+        members.update(split_members(payload, model, tz))
+    return members
 
 
 def validate(df: pd.DataFrame) -> pd.DataFrame:

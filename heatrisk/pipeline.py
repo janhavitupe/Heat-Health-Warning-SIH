@@ -22,7 +22,8 @@ def load_wards(path: str | Path = WARDS_PARQUET) -> pd.DataFrame:
 
 
 def score_ward(ward_id: str, wx: pd.DataFrame, wards: pd.DataFrame, cfg: dict,
-               downscale: bool = True, pvi: tuple[pd.DataFrame, dict] | None = None) -> dict:
+               downscale: bool = True, pvi: tuple[pd.DataFrame, dict] | None = None,
+               explain_scores: bool = True) -> dict:
     """Score one ward for every full day in `wx` (grid weather).
 
     Returns {"daily": DataFrame, "hourly": DataFrame, "pvi": dict, "pvi_status": dict,
@@ -30,6 +31,7 @@ def score_ward(ward_id: str, wx: pd.DataFrame, wards: pd.DataFrame, cfg: dict,
     With `downscale`, `wx` is first adjusted to the ward (§6.1) and tree shade
     applied to MRT; pass False to score the raw grid weather. `pvi` is the result
     of vulnerability.compute_pvi(wards, cfg), passed in to avoid recomputing it.
+    `explain_scores=False` skips explanations (ensemble members don't need them).
     """
     ward = wards.set_index("ward_id").loc[ward_id]
     pvi_table, pvi_status = pvi if pvi is not None else vulnerability.compute_pvi(wards, cfg)
@@ -49,7 +51,7 @@ def score_ward(ward_id: str, wx: pd.DataFrame, wards: pd.DataFrame, cfg: dict,
     daily["pvi"] = pvi_row["pvi"]
 
     explanations = {}
-    for date, row in daily.iterrows():
+    for date, row in (daily.iterrows() if explain_scores else ()):
         r = row.to_dict()
         explanations[date] = {
             "mri": explain.explain_day(r, pvi_row, pvi_status, h_m, h_default, "mri", cfg),

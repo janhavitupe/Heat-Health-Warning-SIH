@@ -75,6 +75,11 @@ def validate(cfg: dict[str, Any]) -> None:
         if not f["min"] <= f["default"] <= f["max"]:
             raise ConfigError(f"risk.{key}: default must lie between min and max")
 
+    if cfg["ensemble"].get("weighting", "model") not in ("member", "model"):
+        raise ConfigError("ensemble.weighting must be 'member' or 'model'")
+    fc = cfg["forecast"]
+    if not 0 < fc["event_min_share"] <= 1 or fc["event_min_days"] < 1:
+        raise ConfigError("forecast.event_min_share must be in (0, 1] and event_min_days >= 1")
     conf = cfg["ensemble"]["confidence"]
     if not 0 < conf["medium"] < conf["high"] < 1:
         raise ConfigError("ensemble.confidence must satisfy 0 < medium < high < 1")
