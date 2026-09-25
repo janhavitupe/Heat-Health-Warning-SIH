@@ -1,0 +1,16 @@
+# docker compose up --build   →   map and API at http://localhost:8000 (API docs at /docs)
+# The scheduler fills the database on first start (forecast in seconds, ensemble in ~4 min).
+# Build the May 2024 replay once:  docker compose exec heat python -m api.cli replay may2024
+services:
+  heat:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      HEAT_SCHEDULER: "1"
+      TZ: Asia/Kolkata
+    volumes:
+      - heat-db:/app/data/api
+    restart: unless-stopped
+volumes:
+  heat-db:

@@ -1,7 +1,7 @@
 # Project Status Report — Heat-Health Early Warning Platform
 
 SIH 2026 · Problem Statement 26083 · Pilot city: **Ahmedabad** (48 wards)
-Status as of **25 September 2026**. Phases 0, 1 and 2 are done. Phases 3 and 4 are complete. Phases 5–9 have not started.
+Status as of **25 September 2026**. Phases 0, 1 and 2 are done. Phases 3, 4 and 5 are complete. Phases 6–9 have not started.
 
 This report explains everything built so far: what the platform is meant to do, what data was collected and where it came from, how each score is calculated, what was tested, what problems were found, and what is still missing.
 
@@ -16,6 +16,7 @@ This report explains everything built so far: what the platform is meant to do, 
 5. [Phase 2 — Ward-level downscaling](#5-phase-2--ward-level-downscaling)
    - [Phase 3 — Calibration and backtest](#5b-phase-3--calibration-and-backtest)
    - [Phase 4 — Forecasts and probabilistic alerts](#5c-phase-4--forecasts-and-probabilistic-alerts)
+   - [Phase 5 — API and ward map](#5d-phase-5--api-and-ward-map)
 6. [Tests](#6-tests)
 7. [Real-data results so far](#7-real-data-results-so-far)
 8. [Known problems and open questions](#8-known-problems-and-open-questions)
@@ -57,7 +58,10 @@ Alert level (Green / Yellow / Orange / Red) + explanation    ← Phase 1
 Forecast: 5-day outlook, peaks, events, alert probabilities ← Phase 4
    │
    ▼
-Actions, map, dashboard, voice alerts, what-if simulator     ← Phases 5–9 (not started)
+API + ward map (layers, day slider, explanations, replay)    ← Phase 5
+   │
+   ▼
+Actions, dashboard, voice alerts, what-if simulator          ← Phases 6–9 (not started)
 ```
 
 **Guiding principle:** get one honest number right before building anything around it. The scoring library is built and tested first. The API, map, dashboard and simulator will all call the same library, so the explanation shown to a user always matches the score.
@@ -73,13 +77,13 @@ Actions, map, dashboard, voice alerts, what-if simulator     ← Phases 5–9 (n
 | 2 | Urban heat downscaling | ✅ Done with a literature β value. Misses the 2 °C afternoon-spread target |
 | 3 | Multi-ward scoring & backtest | ✅ Done. Calibrated, backtested on May 2024, sensitivity checked, both open questions decided from research |
 | 4 | Forecast & ensemble probabilities | ✅ Done. Daily 5-day ward forecast, 122-member ensemble probabilities, peaks, heatwave events; skill checked on 2024 and 2025 |
-| 5 | API & GIS map | Not started |
+| 5 | API & GIS map | ✅ Done. FastAPI + SQLite with hourly/daily refresh, May 2024 replay, React map with layers, day slider and ward explanations (Docker untested) |
 | 6 | Decision layer (work windows, cooling deserts) | Not started |
 | 7 | Dashboard & alert delivery | Not started |
 | 8 | What-if simulator & health-worker feedback | Not started |
 | 9 | Validation, polish, demo | Not started |
 
-**Code:** a Python package `heatrisk/` with 9 modules, 3 data scripts, 1 Earth Engine script, 3 backtest scripts, 70 passing tests.
+**Code:** a Python package `heatrisk/` with 9 modules, 3 data scripts, 1 Earth Engine script, 3 backtest scripts, 75 passing tests.
 **Git:** nothing is committed yet. All files are untracked on branch `master`.
 
 ---
@@ -530,15 +534,36 @@ Full details: [docs/forecast_phase4.md](forecast_phase4.md).
 
 ---
 
+## 5d. Phase 5 — API and ward map
+
+Full details: [docs/api_map_phase5.md](api_map_phase5.md).
+
+![Ward map, May 2024 replay](img/map_replay_may2024.png)
+
+- **API** (FastAPI, SQLite): `/wards` (GeoJSON), `/ward/{id}` (full explanation, probabilities, hourly curve), `/days`, `/forecast`, `/events`, `/config`, `/status`. It refreshes by itself: the forecast hourly and the ensemble daily, with retries. A failed refresh never replaces good data.
+- **Replay mode** (`?replay=may2024`): the May 2024 heatwave through the same endpoints, including the probabilities the system would have shown 3 days ahead.
+- **Map** (React, MapLibre):
+  - Live / replay and Municipal / Healthcare switches;
+  - seven layers, including indoor heat and chance of Red;
+  - low-confidence wards drawn with dashed outlines;
+  - a day slider;
+  - a ward panel explaining every score with source labels, trajectory, probability bars and hourly curve;
+  - a sortable all-wards table;
+  - light and dark themes and a phone layout.
+- **Not yet verified:** the Docker setup is written but untested (Docker isn't installed on the development machine).
+
+---
+
 ## 6. Tests
 
-**70 tests, all passing** (`pytest`, about 10 seconds): 68 test functions, some run with several inputs. Most use synthetic weather, so they run without internet.
+**75 tests, all passing** (`pytest`, about 15 seconds): 73 test functions, some run with several inputs. Most use synthetic weather, so they run without internet.
 
 | File | Test functions | What they check |
 |---|---|---|
 | `test_config.py` | 7 | Config loads; bad weights, bands and ranges are rejected |
 | `test_thermal.py` | 8 | Sun position, MRT higher by day than night, agreement with pythermalcomfort, extreme wind and saturated air |
 | `test_scoring.py` | 23 | Normalization, persistence counting and resets (only heat-alert-level days count), roof points gating and caps, neutral PVI indicators, percentile-rank scaling, risk multiplier centred on the average ward, Red reachable, alert band edges, city-wide batch table, explanations add up exactly, a "golden day" with known output |
+| `test_api.py` | 5 | GeoJSON with scores and probabilities, ward detail explanation adds up, days and events, config disclosed, error codes (temporary database, no network) |
 | `test_access.py` | 4 | Distance decay, E2SFCA conserves capacity, farther wards get less access, capacity factor centred and bounded |
 | `test_ensemble.py` | 6 | Probabilities monotonic and equal to member share, model weighting, confidence labels, trigger lead window, member splitting and trimming |
 | `test_forecast.py` | 3 | Event rules (consecutive days, ward share, open-ended), peaks and peak hour |
@@ -617,7 +642,9 @@ Phase 3 is done (§5b), including both decisions.
 
 ~~**Phase 4 — Forecast & ensemble probabilities.**~~ Done: see [forecast_phase4.md](forecast_phase4.md).
 
-**Phase 5 — API & GIS map** (next): serve the forecast tables through an API and show wards, alerts, probabilities and explanations on a map.
+~~**Phase 5 — API & GIS map.**~~ Done: see [api_map_phase5.md](api_map_phase5.md).
+
+**Phase 6 — Decision layer** (next): safe work windows for outdoor workers (Innovation 4), cooling deserts and new cooling-centre sites (Innovation 5), and rule-based action recommendations.
 
 In parallel: chase the census crosswalk and the CPCB/SAFAR station data, and consider replaying May 2010 (published daily mortality).
 
@@ -647,7 +674,13 @@ python backtest/plot_timeline.py                          # timeline chart (SVG)
 # Tests
 pytest
 
-# Daily forecast (writes data/forecast/<date>/)
+# API + map (http://127.0.0.1:8000; API docs at /docs)
+pip install -e ".[api]"
+python -m api.cli all                                     # wards, forecast, ensemble, May 2024 replay
+cd frontend && npm install && npm run build && cd ..
+HEAT_SCHEDULER=1 uvicorn api.main:app                     # refreshes hourly/daily by itself
+
+# Daily forecast files only (writes data/forecast/<date>/)
 python scripts/run_forecast.py                            # ~4 min with the 122-member ensemble
 python backtest/forecast_skill.py                         # forecast skill by lead time (May 2024)
 
@@ -667,6 +700,9 @@ heat/
 ├── README.md                         setup and layout
 ├── config.yaml                       every weight and threshold
 ├── pyproject.toml                    package and dependencies
+├── api/                              FastAPI app, SQLite storage, refresh jobs, CLI (Phase 5)
+├── frontend/                         React + MapLibre ward map (Phase 5)
+├── Dockerfile, docker-compose.yml    one-command setup (untested)
 ├── heatrisk/                         scoring library
 │   ├── config.py                     load and validate config
 │   ├── weather.py                    Open-Meteo forecast and archive → WeatherFrame
@@ -707,9 +743,10 @@ heat/
 │   ├── backtest_may2024.md           Phase 3 backtest and sensitivity
 │   ├── decisions_humidity_persistence_wards.md   research-based decisions
 │   ├── forecast_phase4.md            Phase 4 forecasts, probabilities and skill
+│   ├── api_map_phase5.md             Phase 5 API and map
 │   └── weights_changelog.md          every config change and why
 ├── phases/                           plan for phases 0–9
-└── tests/                            70 tests
+└── tests/                            75 tests
 ```
 
 *All scores are model estimates, not clinical predictions.*

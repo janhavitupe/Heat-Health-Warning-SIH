@@ -19,6 +19,12 @@ pytest
 
 # Daily ward forecast with alert probabilities
 python scripts/run_forecast.py
+
+# API + ward map (see docs/api_map_phase5.md)
+pip install -e ".[api]"
+python -m api.cli all
+cd frontend && npm install && npm run build && cd ..
+HEAT_SCHEDULER=1 uvicorn api.main:app       # http://127.0.0.1:8000
 ```
 
 ## Layout
@@ -31,7 +37,8 @@ gee/              Google Earth Engine exports
 data/             raw, manual, and processed data
 tests/            unit and data tests
 docs/             status report, calibration, backtest, changelog
-backtest/         May 2024 replay, sensitivity analysis, results
+backtest/         May 2024 replay, sensitivity analysis, forecast skill, results
+api/              FastAPI service, SQLite storage, scheduled refresh
+frontend/         React + MapLibre ward map
 phases/           development plan
-api/ frontend/    (later phases)
 ```

@@ -8,6 +8,9 @@
 
 from __future__ import annotations
 
+import json
+from dataclasses import asdict
+
 import pandas as pd
 
 from heatrisk import vulnerability
@@ -17,20 +20,33 @@ ORANGE_PLUS = ("orange", "red")
 
 
 def run_wards(wx: pd.DataFrame, wards: pd.DataFrame, cfg: dict) -> tuple[pd.DataFrame, pd.DataFrame]:
-    """Score every ward on one WeatherFrame; return (daily table with explanations' top factors, hourly curves)."""
+    """Score every ward on one WeatherFrame; return (daily table, hourly curves).
+
+    The daily table carries the top factors, a one-line summary, and the full MRI and HRI
+    explanations as JSON (every contribution with its points, group, data label and note).
+    """
     pvi = vulnerability.compute_pvi(wards, cfg)
     daily, hourly = [], []
     for ward_id in wards["ward_id"]:
         res = score_ward(ward_id, wx, wards, cfg, pvi=pvi)
         d = res["daily"].reset_index()
         d["ward_id"] = ward_id
-        d["top_factors"] = ["; ".join(f"{c.label} {c.points:+.0f}" for c in res["explanations"][t]["mri"].ranked()[:3])
-                            for t in res["daily"].index]
+        ex = [res["explanations"][t] for t in res["daily"].index]
+        d["top_factors"] = ["; ".join(f"{c.label} {c.points:+.0f}" for c in e["mri"].ranked()[:3]) for e in ex]
+        d["summary_mri"] = [e["mri"].summary() for e in ex]
+        d["explanation_mri"] = [json.dumps(explanation_dict(e["mri"])) for e in ex]
+        d["explanation_hri"] = [json.dumps(explanation_dict(e["hri"])) for e in ex]
         daily.append(d)
         h = res["hourly"][["t2m", "mrt", "utci", "wbgt", "heat_index"]].rename_axis("time").reset_index()
         h["ward_id"] = ward_id
         hourly.append(h)
     return pd.concat(daily, ignore_index=True), pd.concat(hourly, ignore_index=True)
+
+
+def explanation_dict(e) -> dict:
+    """An Explanation as plain data, contributions ranked by size."""
+    return {"target": e.target, "score": round(float(e.score), 2), "level": e.level, "summary": e.summary(),
+            "contributions": [{**asdict(c), "points": round(float(c.points), 2)} for c in e.ranked()]}
 
 
 def ward_peaks(daily: pd.DataFrame, hourly: pd.DataFrame, issue_date) -> pd.DataFrame:

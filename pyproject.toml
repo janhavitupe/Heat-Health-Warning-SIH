@@ -23,9 +23,10 @@ dependencies = [
 dev = ["pytest>=8"]
 gee = ["earthengine-api>=0.1.390"]
 pdf = ["pdfplumber>=0.11"]            # scripts/extract_slums.py
+api = ["fastapi>=0.110", "uvicorn>=0.29", "apscheduler>=3.10,<4", "httpx>=0.27"]
 
 [tool.setuptools.packages.find]
-include = ["heatrisk*"]
+include = ["heatrisk*", "api*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
