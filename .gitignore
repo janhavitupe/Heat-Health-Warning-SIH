@@ -1,0 +1,18 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Large or re-downloadable raw data; scripts in scripts/ recreate it
+data/raw/*.tif
+data/raw/osm/
+
+# Secrets
+.env
+*.key
+
+# Public source copies that include personal contact details
+data/raw/web/uhc_*
+data/raw/web/amc_uhc_*
+.tmp/

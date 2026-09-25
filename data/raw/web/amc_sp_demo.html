@@ -1,0 +1,1629 @@
+
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>AMC</title>
+    <style>
+        @font-face {
+            font-family: 'icomoon';
+            src: url("wp-content/themes/district-theme/fonts/icomooncb5a.eot?y6palq");
+            src: url("wp-content/themes/district-theme/fonts/icomooncb5a.eot?y6palq#iefix") format("embedded-opentype"), url("wp-content/themes/district-theme/fonts/icomooncb5a.ttf?y6palq") format("truetype"), url("wp-content/themes/district-theme/fonts/icomooncb5a.woff?y6palq") format("woff"), url("wp-content/themes/district-theme/fonts/icomooncb5a.svg?y6palq#icomoon") format("svg");
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        .blink_me {
+            animation: blinker 1s linear infinite;
+        }
+
+        @keyframes blinker {
+            70% {
+                opacity: 0;
+            }
+        }
+		
+
+		
+    </style>
+    <link rel="profile" href="http://gmpg.org/xfn/11" />
+
+    <meta name='robots' content='max-image-preview:large' />
+    <link rel='dns-prefetch' href='http://s.w.org/' />
+    <meta name="description" content="" />
+    <meta name="keywords" content="Home" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script src="/Scripts/Custom/Common.js?r=1464530355"></script>
+    <script>
+        window._wpemojiSettings = { "baseUrl": "https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/72x72\/", "ext": ".png", "svgUrl": "https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/svg\/", "svgExt": ".svg", "source": { "concatemoji": "https:\/\/s3c4ca4238a0b923820dcc509a6f75849b.s3waas.gov.in\/wp-includes\/js\/wp-emoji-release.min.js" } };
+        !function (e, a, t) { var n, r, o, i = a.createElement("canvas"), p = i.getContext && i.getContext("2d"); function s(e, t) { var a = String.fromCharCode; p.clearRect(0, 0, i.width, i.height), p.fillText(a.apply(this, e), 0, 0); e = i.toDataURL(); return p.clearRect(0, 0, i.width, i.height), p.fillText(a.apply(this, t), 0, 0), e === i.toDataURL() } function c(e) { var t = a.createElement("script"); t.src = e, t.defer = t.type = "text/javascript", a.getElementsByTagName("head")[0].appendChild(t) } for (o = Array("flag", "emoji"), t.supports = { everything: !0, everythingExceptFlag: !0 }, r = 0; r < o.length; r++) t.supports[o[r]] = function (e) { if (!p || !p.fillText) return !1; switch (p.textBaseline = "top", p.font = "600 32px Arial", e) { case "flag": return s([127987, 65039, 8205, 9895, 65039], [127987, 65039, 8203, 9895, 65039]) ? !1 : !s([55356, 56826, 55356, 56819], [55356, 56826, 8203, 55356, 56819]) && !s([55356, 57332, 56128, 56423, 56128, 56418, 56128, 56421, 56128, 56430, 56128, 56423, 56128, 56447], [55356, 57332, 8203, 56128, 56423, 8203, 56128, 56418, 8203, 56128, 56421, 8203, 56128, 56430, 8203, 56128, 56423, 8203, 56128, 56447]); case "emoji": return !s([10084, 65039, 8205, 55357, 56613], [10084, 65039, 8203, 55357, 56613]) } return !1 }(o[r]), t.supports.everything = t.supports.everything && t.supports[o[r]], "flag" !== o[r] && (t.supports.everythingExceptFlag = t.supports.everythingExceptFlag && t.supports[o[r]]); t.supports.everythingExceptFlag = t.supports.everythingExceptFlag && !t.supports.flag, t.DOMReady = !1, t.readyCallback = function () { t.DOMReady = !0 }, t.supports.everything || (n = function () { t.readyCallback() }, a.addEventListener ? (a.addEventListener("DOMContentLoaded", n, !1), e.addEventListener("load", n, !1)) : (e.attachEvent("onload", n), a.attachEvent("onreadystatechange", function () { "complete" === a.readyState && t.readyCallback() })), (n = t.source || {}).concatemoji ? c(n.concatemoji) : n.wpemoji && n.twemoji && (c(n.twemoji), c(n.wpemoji))) }(window, document, window._wpemojiSettings);
+
+
+
+        $('.menuWrapper .container ul li').on('touchstart', function (e) {
+            'use strict'; //satisfy code inspectors
+            var link = $(this); //preselect the link
+            if (link.hasClass('hover')) {
+                return true;
+            } else {
+                link.addClass('hover');
+                $('.menuWrapper .container ul li').not(this).removeClass('hover');
+                e.preventDefault();
+                return false; //extra, and to make sure the function has consistent return points
+            }
+        });
+
+    </script>
+
+
+
+    <style>
+		
+		.gsc-control-wrapper-cse {
+            width: 100%;
+            padding-left: 330px !important;
+        }
+
+        .login-btn-div {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            height: 5% !important;
+        }
+        /* Remove borders from the search input box */
+        .gsc-input-box, input.gsc-input {
+            border: none !important;
+            padding: 8px !important;
+            width: calc(100% - 0px) !important; /* Adjusted width to accommodate button */
+            box-sizing: border-box !important;
+            font-size: 16px !important;
+            margin: 0 !important;
+            background: none !important; /* Remove background image */
+            border-radius: 25px !important;
+        }
+
+            .gsc-input-box input::placeholder {
+                color: #888888 !important; /* Set your desired placeholder color */
+                opacity: 1 !important; /* Ensure placeholder is visible */
+            }
+        /* Remove borders from the search button */
+        .gsc-search-button, input.gsc-search-button {
+            background-color: unset !important;
+            color: white !important;
+            border: none !important;
+            padding: 0 !important;
+            border-radius: 0 !important;
+            font-size: 65px !important;
+            cursor: pointer !important;
+            margin: 0 !important;
+            width: 32px !important; /* Adjust width to make it square */
+            height: 32px !important; /* Set height to match width for square shape */
+            line-height: 32px !important; /* Center text vertically */
+            text-align: center !important; /* Center text horizontally */
+            vertical-align: 19px !important;
+        }
+
+        .gsc-search-button-v2 svg {
+            fill: #007bff !important;
+        }
+
+        .gsc-search-button svg {
+            height: 30px !important; /* Set height of the SVG icon */
+            background-color: unset !important;
+            width: 30px !important;
+        }
+
+
+        /* Hide the branding */
+        .gsc-branding {
+            display: none !important;
+        }
+
+        /* Container styling */
+        .gcse-search {
+            display: flex !important;
+            justify-content: center !important;
+            margin: 0px !important;
+            border: none !important;
+        }
+
+        .gsc-control-cse {
+            width: 82% !important;
+            border: none !important;
+            background: unset !important; /* Unset background */
+        }
+
+        /* Remove borders from the overall form and table */
+        .gsc-search-box, .gsc-search-box-tools, .gsc-input, .gsc-search-button-v2 {
+            border: none !important;
+            padding: 0 !important;
+            border-spacing: 0 !important;
+        }
+
+        /* Remove borders from internal elements */
+        .gsc-input-box, .gsc-input-box * {
+            border: none !important;
+        }
+
+        /* Ensure no space between input box and button */
+        .gsc-search-box, .gsc-search-box table, .gsc-search-box tr, .gsc-search-box td {
+            padding: 0 !important;
+            border-spacing: 0 !important;
+        }
+
+        form.gsc-search-box {
+            font-size: 0px !important;
+            margin-top: 0 !important;
+            margin-right: 0 !important;
+            margin-bottom: 0px !important;
+            margin-left: 0 !important;
+            width: 100% !important;
+            height: 10px !important;
+        }
+	
+        img.wp-smiley,
+        img.emoji {
+            display: inline !important;
+            border: none !important;
+            box-shadow: none !important;
+            height: 1em !important;
+            width: 1em !important;
+            margin: 0 .07em !important;
+            vertical-align: -0.1em !important;
+            background: none !important;
+            padding: 0 !important;
+        }
+
+        .AMCtable2 {
+            overflow-x: auto;
+            width: 100%;
+        }
+
+        .toast-container {
+            position: fixed;
+            top: 0;
+            right: 0;
+            margin: 15px;
+            z-index: 9999;
+        }
+    </style>
+    <link rel="stylesheet" href="/Assets/js/jquery-ui.css">
+    <link rel="stylesheet" href="/Assets/js/dataTables.jqueryui.min.css">
+    <link rel="stylesheet" href="/Assets/js/rowReorder.jqueryui.min.css">
+    <script src="/Assets/js/jquery.dataTables.min.js"></script>
+    <script src="/Assets/js/dataTables.jqueryui.min.js"></script>
+    <script src="/Assets/js/dataTables.rowReorder.min.js"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css">
+    <link rel='stylesheet' id='theme-my-login-css' href='/Scripts/Custom/wp-content/plugins/theme-my-login/theme-my-login.css' media='all' />
+    <link rel='stylesheet' id='wp-block-library-css' href='/Scripts/Custom/wp-includes/css/dist/block-library/style.min.css' media='all' />
+    <link rel='stylesheet' id='base-css-css' href='/Scripts/Custom/wp-content/themes/district-theme/css/base.css' media='all' />
+    <link rel='stylesheet' id='extra-feature-css-css' href='/Scripts/Custom/wp-content/plugins/common_utility/css/extra.features.css' media='all' />
+    <link rel='stylesheet' id='contact-form-7-css' href='/Scripts/Custom/wp-content/plugins/contact-form-7/includes/css/styles.css' media='all' />
+    <link rel='stylesheet' id='wsl-widget-css' href='/Scripts/Custom/wp-content/plugins/wordpress-social-login/assets/css/style.css' media='all' />
+    <link rel='stylesheet' id='sliderhelper-css-css' href='/Scripts/Custom/wp-content/themes/district-theme/css/sliderhelper.css' media='all' />
+    <link rel='stylesheet' id='main-css-css' href='/Scripts/Custom/wp-content/themes/district-theme/style.css' media='all' />
+    <link rel='stylesheet' id='js_composer_front-css' href='/Scripts/Custom/wp-content/plugins/js_composer/assets/css/js_composer.min.css' media='all' />
+    <link rel='stylesheet' id='fontawesome-css' href='/Scripts/Custom/wp-content/plugins/awaas-accessibility/css/font-awsome.css' media='all' />
+    <link rel='stylesheet' id='cycle-slide-css' href='/Scripts/Custom/wp-content/plugins/awaas-accessibility/css/font-awsome.css' media='all' />
+    <link rel='stylesheet' id='extra_css-css' href='/Scripts/Custom/wp-content/plugins/awaas-accessibility/css/extra.css' media='screen' />
+    <script src='/Scripts/Custom/wp-includes/js/jquery/jquery.min.js' id='jquery-core-js'></script>
+    <script src='/Scripts/Custom/wp-includes/js/jquery/jquery-migrate.min.js' id='jquery-migrate-js'></script>
+    <script src='/Scripts/Custom/wp-content/plugins/theme-my-login/modules/themed-profiles/themed-profiles.js' id='tml-themed-profiles-js'></script>
+    <script src='/Scripts/Custom/wp-content/plugins/awaas-accessibility/js/external.js' id='external-link-js'></script>
+	<script src="/Scripts/Custom/AllowedDomain.js"></script>
+    <script src="/Assets/js/jquery.cycle2.js"></script>
+    <link rel="wlwmanifest" type="application/wlwmanifest+xml" href="/Scripts/Custom/wp-includes/wlwmanifest.xml" />
+    <link href="/Scripts/Custom/CSS/Custom.css" rel="stylesheet" />
+    <link href="/Content/slideshow.css" rel="stylesheet" />
+
+    <script src="/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <link href="/Content/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="/Content/bootstrap.min.css" rel="stylesheet" media="all">
+    <link href="/Assets/css/custom.css" rel="stylesheet" />
+    <link href="/Assets/css/custom_responsive.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/Assets/css/bootstrap.min.css">
+    
+
+    <!--New Css -->
+    <!-- Bootstrap -->
+    <link href="/Assets/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Menu Plugins css -->
+    <link href="/Assets/css/webslidemenu.css" rel="stylesheet">
+    <!-- owl carousel -->
+    <!-- Custom Css -->
+
+    <link href="/Assets/css/owl.carousel.min.css" rel="stylesheet">
+    <link href="/Assets/css/fontawesome.min.css" rel="stylesheet">
+
+    <link href="/Assets/css/style.css" rel="stylesheet">
+    <link href="/Assets/css/custom.css" rel="stylesheet">
+    <link href="/Assets/css/responsive.css" rel="stylesheet">
+    <!-- theme Css -->
+    <link href="/Assets/css/theme/black.css" title="black" rel="stylesheet alternate">
+    <link href="/Assets/css/theme/standard.css" title="standard" rel="stylesheet alternate">
+
+    <style>
+	.social-content > ul.top-menustyle li{
+                font-family: system-ui !important;
+            }
+        .faslg {
+            font-size: 1em;
+        }
+
+        .list_icon {
+            width: 35px !important;
+            height: 35px !important;
+        }
+
+        .light-white-bg, .no-bg .list-icon.light-white-bg, .list-icon.light-white-bg {
+            background-color: #FFF !important;
+            border: 1px solid #cacaca !important;
+            color: #000;
+        }
+
+        #map_canvas {
+            width: 100%;
+            height: 500px;
+            border: 2px solid #3872ac;
+            position: relative;
+        }
+
+        .formfontpage td {
+            border: none !important;
+        }
+
+        .formfontpage table {
+            border: none !important;
+        }
+    </style>
+    <noscript>
+
+        <style>
+            #topBar #accessibility ul li .goiSearch, #topBar1 #accessibility ul li .goiSearch {
+                visibility: visible;
+            }
+
+            #topBar #accessibility ul li .socialIcons ul, #topBar1 #accessibility ul li .socialIcons ul {
+                background: #fff !important;
+            }
+
+            #topBar #accessibility ul li .goiSearch, #topBar1 #accessibility ul li .goiSearch {
+                right: 0;
+                left: inherit;
+            }
+
+            .nav li a:focus > ul {
+                left: 0;
+                opacity: 0.99;
+            }
+
+            a:focus, button:focus, .carasoleflex-wrap .flexslider .slides > li a:focus, .flexslider .slides > li a:focus {
+                outline: 3px solid #ff8c00 !important;
+            }
+
+            .flexslider .slides > li {
+                display: block;
+            }
+
+            .nav li.active > a, .nav li > a:hover, .nav li > a:focus, .nav ul li a:hover,
+            .mva7-thc-activetheme-district-theme-13 .nav li:hover > a, .mva7-thc-activetheme-district-theme-13 .nav li.active > a, .home-13 .nav li:hover > a, .home-13 .nav li.active > a {
+                color: #ffffff;
+            }
+
+            .nav li:hover > a {
+                border-top: none;
+                color: #ffffff;
+            }
+
+            .nav li.active > a {
+                border: 0;
+            }
+
+            .nav ul {
+                opacity: 1;
+                left: 0;
+                position: static !important;
+                width: auto;
+                border: 0;
+            }
+
+            .nav li {
+                position: static !important;
+                display: block;
+                float: none;
+                border: 0 !important;
+            }
+
+                .nav li > a {
+                    float: none;
+                    display: block;
+                    background-color: rgba(146,38,4,0.75) !important;
+                    color: #ffffff;
+                    margin: 0;
+                    padding: 12px 20px !important;
+                    border-radius: 0;
+                    border-bottom: 1px solid #ffffff !important;
+                    position: static !important;
+                    border-top: 0;
+                    font-size: 14px !important;
+                }
+
+            .nav ul.sub-menu li > a {
+                background-color: rgba(146,38,4,1);
+                font-size: 12px !important;
+            }
+
+            ul li .socialIcons {
+                visibility: visible !important;
+            }
+
+            body.contrast {
+                background-color: #000 !important;
+            }
+
+            .contrast a, .contrast .socialIcons.select-lang a {
+                color: #ffff00 !important;
+            }
+
+            body.contrast, .contrast p, .contrast div, .contrast table {
+                color: #fff !important;
+            }
+        </style>
+
+        <style type="text/css">
+            .nopadding {
+                padding: 0;
+            }
+
+            body .page-loader-wrapper {
+                background: linear-gradient( 45deg, #ffffff1f, #e1e1e1);
+            }
+
+            .page-loader-wrapper {
+                z-index: 99999999;
+                position: fixed;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                right: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                text-align: center;
+            }
+
+                .page-loader-wrapper .loader {
+                    position: relative;
+                    top: calc(40% - 30px);
+                }
+
+            .spinner-border {
+                display: inline-block;
+                width: 2rem;
+                height: 2rem;
+                vertical-align: text-bottom;
+                border: .25em solid currentColor;
+                border-right-color: transparent;
+                border-radius: 50%;
+                -webkit-animation: spinner-border .75s linear infinite;
+                animation: spinner-border .75s linear infinite;
+            }
+
+            .page-loader-wrapper p {
+                margin-top: 10px;
+                color: #fff;
+            }
+        </style>
+    </noscript>
+
+    <link rel="alternate" href="gu/index.html" hreflang="gu" />
+
+    <!--[if lte IE 9]><link rel="stylesheet" type="text/css" href="https://s3c4ca4238a0b923820dcc509a6f75849b.s3waas.gov.in/wp-content/plugins/js_composer/assets/css/vc_lte_ie9.min.css" media="screen"><![endif]-->
+    <style data-type="vc_shortcodes-custom-css">
+    </style>
+    <link href="/Assets/css/custom.css" rel="stylesheet" />
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://s3c4ca4238a0b923820dcc509a6f75849b.s3waas.gov.in/wp-content/themes/district-theme/js/html5shiv.min.js"></script>
+    <script src="https://s3c4ca4238a0b923820dcc509a6f75849b.s3waas.gov.in/wp-content/themes/district-theme/js/respond.min.js"></script>
+    <![endif]-->
+    <script>
+        var ajaxurl = "wp-admin/admin-ajax.html";
+    </script>
+
+    <script type="text/javascript">
+
+        /**/</script>
+
+
+
+</head>
+<body data-allowed-domains="ahmedabadcity.gov.in,amcmodules.ahmedabadcity.gov.in,localhost,192.168.2.106,www.egovamc.in,test.ccavenue.com,secure.paytmpayments.com,www.sbiepay.sbi,192.168.15.154,inhouse-amcmodules.ahmedabadcity.gov.in,192.168.4.114,192.168.4.115,192.168.4.104" class="home page-template-default page page-id-2609 mva7-thc-activetheme-district-theme lang-en wpb-js-composer js-comp-ver-5.4.7 vc_responsive" style="overflow:auto;">
+    
+    <div class="page-loader-wrapper" style=" display: none;">
+        <div class="loader">
+            <div class="spinner-border"></div>
+            <p style="color:black">Please wait...</p>
+        </div>
+    </div>
+    <header>
+
+        <div class="top-header-wrapper">
+            <div class="container"  style="max-width:1460px !important;">
+                <div class="row">
+                    <div class="col-md-12 social-content">
+                        <ul class="top-menustyle">
+                            <li><a href="/Home/">Home</a></li>
+                            <li><a href="/Home/AboutTheCorporation">About Us</a></li>
+                            <li><a href="/Feedback/Index">Feedback </a></li>
+                            <li><a href="/Home/sitemap">Sitemap</a></li>
+                            
+                            <li><a target="_blank" style="text-decoration:none;" href="http://heritage.ahmedabadcity.gov.in/">Heritage Website <img src="/images/newncc.gif"></a></li>
+                            
+							<li><a target="_blank" style="text-decoration:none" href="https://gujfiresafetycop.in/">Gujarat Fire Safety COMPLIANCE Portal<img src="/images/newncc.gif"></a></li>
+                            <li><a href="https://ahmedabadcity.gov.in/StaticPage/AMCOfficersTelephoneNumber_Dynamic">Contact Us</a></li>
+                            <li><a style="font-family: 'robotomedium';" target="_blank" href="https://mail.gov.in/">E-mail</a></li>
+                            <li id="datetime">time</li>
+                        </ul>
+                        <div class="ep-header-top-right">
+                            <div class="dropdown dmenu site-menu">
+                                <a href="#" class="dropdown-toggle" id="navbardrop" data-toggle="dropdown" style="font-family: 'segoe_uiregular';">Our Site</a>
+
+                                <div class="dropdown-menu SiteMenu-dropdown" role="menu">
+                                    <ul>
+                                        
+                                        <li><a href="https://amdavadone.in/" target="_blank">BRTS/AMTS</a></li>
+										<li class="mFocus"><a href="https://sabarmatiriverfront.com/" target="_blank">Sabarmati River Front</a></li>
+                                        <li><a href="https://www.ahmedabadbrts.org/" target="_blank">BRTS</a></li>
+                                        <li><a href="http://www.nhlmmc.edu.in/" target="_blank">N.H.L Medical College</a></li>
+                                        <li><a href="http://www.amcmet.org/" target="_blank">AMC Met</a></li>
+                                        <li><a href="https://www.kankarialaketickets.com/" target="_blank">Kankaria Lakefront</a></li>
+                                        <li><a href="/Home/Amdabike" target="_blank" rel="noopener noreferrer">AmdaBike</a></li>
+                                        <li><a href="/Home/AmdaPark" target="_blank" rel="noopener noreferrer">AmdaPark</a></li>
+                                        
+										<li><a href="http://smartcityahmedabad.com/" target="_blank" rel="noopener noreferrer">Smart City</a></li>
+                                        <li><a href="http://heritage.ahmedabadcity.gov.in/" target="_blank" rel="noopener noreferrer">Heritage Website</a></li>
+										<li><a href="https://www.mjlibrary.in/" target="_blank">MJ Library</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="ep-social-visit">
+
+                                <ul>
+                                    <li class="dropdown dmenu">
+                                        <a href="#" class="dropdown-toggle" id="navbardrop" data-toggle="dropdown"><img src="/images/ep-icon1.png" alt="ep-icon" class="img-fluid"><span class="d-none">Hidden </span></a>
+                                        <div class="dropdown-menu user_accessibility" role="menu">
+                                            <a href="#" class="decreaseFont"><sup>-</sup>A</a>
+                                            <a href="#" class="resetFont">A</a>
+                                            <a href="#" class="increaseFont"><sup>+</sup>A</a>
+                                            <div class="color-switch">
+                                                <a href="#" id="black" class="black styleswitch">A</a>
+                                                <a href="#" id="standard" class="standard styleswitch">A</a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="header-top-section">
+            <div class="container" style="max-width:1460px !important;">
+                <div class="row">
+                    <div class="col-lg-5 col-md-5">
+                        <div class="logo-icon"><a href="/Home/"><img src="/images/amc-logo.png"></a></div>
+                        <div class="logo"> <a href="/"><img style="width: 70%;" src="/images/logo.png" alt="AMC"><span class="d-none">Hidden </span> </a> </div>
+                    </div>
+
+                    
+                    <div class="col-lg-7 col-md-7">
+                        <script async src="https://cse.google.com/cse.js?cx=851b6e398ddac49d5"></script>
+                        <div class="gcse-search"></div>
+                        <div class="login-btn-div">
+                            <a href="/Authentication/Login" class="login-btn btn seg-bold">Log In</a>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+        <section class="AMC-banner inner-banner">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="menu-wrapper">
+                            <!-- wsmenu -->
+                            <div class="wsmenucontainer clearfix">
+                                <div class="overlapblackbg"></div>
+                                <div class="wsmobileheader clearfix">
+                                    <a id="wsnavtoggle" class="animated-arrow"><span></span><span class="d-none">Hidden </span></a> <a href="/home/home" class="smallogo"><img src="/images/logo-sm.png" alt="" /><span class="d-none">Hidden </span></a>
+
+                                    <a class="callusicon ep-setting" href="#"><i class="fas fa-cog"></i><span class="d-none">Hidden </span></a>
+
+                                    <a class="callusicon ep-selecttool" href="#" onclick="openNav()"><i class="fas fa-ellipsis-v"></i><span class="d-none">Hidden </span></a>
+
+                                </div>
+                                <!-- Main Menu -->
+                                <div class="main-menu">
+                                    <div class="wsmain">
+
+                                        <nav class="wsmenu clearfix">
+                                            <ul class="mobile-sub wsmenu-list">
+
+                                                <nav class='menu'><ul id='menu-header-en' class='clearfix mobile-sub wsmenu-list'><li class='active'><a href='#'>The City<span> <i class='fas fa-angle-down faslg'></i></span></a><ul class='sub-menu wsmenu-submenu'><li class=''><a href='/SP/AboutAhmedabad'>About Ahmedabad</a></li><li class=''><a target='_blank' href='/StaticPage/History'>History</a></li><li class=''><a href='#'>Heritage<span><i class='fas fa-angle-right faslg' style='float:right;'></i></span></a><ul class='sub-menu wsmenu-submenu-sub'><li class=''><a href='/SP/Introduction-Heritage'>Introduction</a></li><li class=''><a href='/SP/HeritageWalk'>Heritage Walk</a></li><li class=''><a href='/SP/HeritageMonuments-Sites'>Heritage Monuments/Sites</a></li><li class=''><a target='_blank' href='/Images/Notified_Heritage_Building_Walled_City.pdf'>Notified Heritage Buildings (Walled City)</a></li></ul></li><li class=''><a href='/SP/CityTour'>AHMEDABAD City Tour</a></li><li class=''><a href='/SP/HeritageTour-Night'>Heritage Tour - Night</a></li><li class=''><a href='#'>Tourism<span><i class='fas fa-angle-right faslg' style='float:right;'></i></span></a><ul class='sub-menu wsmenu-submenu-sub'><li class=''><a href='/SP/Introduction-Tourism'>Introduction</a></li><li class=''><a href='#'>Festivals<span><i class='fas fa-angle-right faslg' style='float:right;'></i></span></a><ul class='sub-menu wsmenu-submenu-sub'><li class=''><a href='/SP/Uttarayan-Festival'>Uttrayan</a></li><li class=''><a href='/SP/Navratri-Festival'>Navratri</a></li></ul></li><li class=''><a href='#'>Lakes<span><i class='fas fa-angle-right faslg' style='float:right;'></i></span></a><ul class='sub-menu wsmenu-submenu-sub'><li class=''><a href='/SP/KankariaLake'>Kankaria Lake</a></li><li class=''><a href='/SP/VastrapurLake'>Vastrapur Lake</a></li></ul></li><li class=''><a target='_blank' href='/Tourism/ReligiousPlaces'>Religious Places</a></li><li class=''><a target='_blank' href='/StaticPage/Event'>Online Ticket Booking</a></li><li class=''><a target='_blank' href='/Tourism/Restaurants'>Restaurant</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,375'>TOURISM PLACES OF AHMEDABAD</a></li></ul></li><li class=''><a href='/SP/Demographics'>Demographics</a></li><li class=''><a href='/SP/Weather'>Weather</a></li></ul></li><li><a href='#'>Corporation<span> <i class='fas fa-angle-down faslg'></i></span></a><ul class='sub-menu wsmenu-submenu'><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/Home/AboutTheCorporation'>About The Corporation</a></li><li class=''><a href='#'>Administrative Wing<span><i class='fas fa-angle-right faslg' style='float:right;'></i></span></a><ul class='sub-menu wsmenu-submenu-sub'><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/StaticPage/AdministrativeWing_Introduction_Dynamic'>Introduction</a></li><li class=''><a target='_blank' href='/Tourism/MunicipalCommissioner_Dynamic?D=Municipal%20Commissioner'>Municipal Commissioner</a></li></ul></li><li class=''><a href='#'>Zones<span><i class='fas fa-angle-right faslg' style='float:right;'></i></span></a><ul class='sub-menu wsmenu-submenu-sub'><li class=''><a href='/SP/OrganizationStructure'>Organization Structure</a></li></ul></li><li class=''><a href='#'>Finance<span><i class='fas fa-angle-right faslg' style='float:right;'></i></span></a><ul class='sub-menu wsmenu-submenu-sub'><li class=''><a href='/SP/AboutAMCFinance'>About AMC Finance</a></li><li class=''><a href='/SP/BalanceSheet'>Balance Sheet</a></li><li class=''><a href='/SP/Budget'>Budget</a></li><li class=''><a href='/SP/StatisticalOutline'>Statistical Outline</a></li></ul></li><li class=''><a target='_blank' href='/StaticPage/Award'>Awards</a></li><li class=''><a href='#'>Secretary office<span><i class='fas fa-angle-right faslg' style='float:right;'></i></span></a><ul class='sub-menu wsmenu-submenu-sub'><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2638'>Councillor's List</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2654'>Special Committee Chairman and Deputy Chairman List</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2655'>Special Committee Member List</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/DC/CommitteeAgenda'>Committee Agenda</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2645'>Standing Committee Member List - English</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2644'>Standing Committee Member List - Gujarati</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2643'>Dignitaries List - English</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2642'>Dignitaries List - Gujarati</a></li></ul></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/staticPage/HolidayList'>List Of Holidays</a></li><li class=''><a target='_blank' href='/StaticPage/Departments'>Departments</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/admin'>Department Login</a></li><li class=''><a target='_blank' href='https://amcmodules.ahmedabadcity.gov.in/AMCCOMP/CRUD/Login'>COMPUTER/PRINTER COMPLAINT LOGIN</a></li></ul></li><li><a href='#'>Online Services<span> <i class='fas fa-angle-down faslg'></i></span></a><ul class='sub-menu wsmenu-submenu'><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ImpLinksMenu/Index?tax=Heritage'>Heritage Building</a></li><li class=''><a href='#'>Property Tax<span><i class='fas fa-angle-right faslg' style='float:right;'></i></span></a><ul class='sub-menu wsmenu-submenu-sub'><li class=''><a target='_blank' href='https://amcmodules.ahmedabadcity.gov.in/SELFASSESSMENT/propertySelftAssessment/PT_Login'>Self Assessment</a></li><li class=''><a target='_blank' href='/PTAX/DuesSearch'>Pay Property Tax</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/PTAX/PaidorDuesSearch'>Property Tax Dues</a></li><li class=''><a target='_blank' href='/PTAX/Bill'>Tax Bill Display</a></li><li class=''><a target='_blank' href='https://amcmodules.ahmedabadcity.gov.in/AMCWEBMODULE/COMPLAINTS/New_PTAX_COMPLAINT.aspx'>Apply Online for Property Tax</a></li><li class=''><a target='_blank' href='https://amcmodules.ahmedabadcity.gov.in/AMCWEBMODULE/PTAX/FrmTENE_PEC_Details.aspx'>Tax Due Certificate</a></li><li class=''><a target='_blank' href='/PTAX/PropertyTaxReceipt'>Download Property Tax Receipt</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/PTAX/NameTransferReceipt'>Name Transfer Receipt</a></li><li class=''><a target='_blank' href='https://amcmodules.ahmedabadcity.gov.in/AMCWEBMODULE/PTAX/TaxCalc.aspx'>ASSESSMENT BOOK(2026-27)</a></li><li class=''><a target='_blank' href='https://amcmodules.ahmedabadcity.gov.in/AMCWEBMODULE/PTAX/FrmTena_Mobile_Update.aspx'>Link Mobile No with Tenement No</a></li><li class=''><a target='_blank' href='/PTAX/TSFChargeSearch'>Pay Name Transfer Fees</a></li><li class=''><a target='_blank' href='https://amcmodules.ahmedabadcity.gov.in/AMCWEBMODULE/COMPLAINTS/View_Complaint_list.aspx'>Know your Application Status</a></li><li class=''><a target='_blank' href='/staticPage/tax_calc_stru'>Know your property tax calculation structure</a></li></ul></li><li class=''><a href='#'>Professional tax<span><i class='fas fa-angle-right faslg' style='float:right;'></i></span></a><ul class='sub-menu wsmenu-submenu-sub'><li class=''><a target='_blank' href='/PFSNL/DuesSearch'>Payment of professional tax</a></li><li class=''><a target='_blank' href='/PFSNL/PaidorDuesSearch'>Professional Tax Dues & Paid</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/PFSNL/DuesSearch'>Download payment receipt</a></li></ul></li><li class=''><a href='/ImpLinksMenu/Index?tax=TDO'>TDO (BPSP)<span><i class='fas fa-angle-right faslg' style='float:right;'></i></span></a><ul class='sub-menu wsmenu-submenu-sub'><li class=''><a target='_blank' href='/StaticPage/BPSPPAY'>Pay Development Permission(Rajachitthi) Fees</a></li><li class=''><a target='_blank' href='/StaticPage/BPSPSTATUS_NEW'>PAYMENT STATUS</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/StaticPage/BPSP_RAINWATER'>Pay Rainwater Fees</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/StaticPage/BPSP_TGARDAR'>Pay T-Girder Fees</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/StaticPage/BPSP_TDR'>Pay TDR Form Fee</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/StaticPage/BPSP_INFRACHARGE'>Pay Infrastructure charge</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/StaticPage/BPSP_INSTALLMENT_PAY'>Pay Chargeable FSI Installment</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/StaticPage/BPSPPAY_DIFF_FEE'>Pay Rajachitthi Difference Fees</a></li></ul></li><li class=''><a href='#'>BIRTH - DEATH & MARRIAGE DEPARTMENT<span><i class='fas fa-angle-right faslg' style='float:right;'></i></span></a><ul class='sub-menu wsmenu-submenu-sub'><li class=''><a target='_blank' href='https://marriageregistration.ahmedabadcity.gov.in'>NEW MARRIAGE REGISTRATION PORTAL (EFFECTIVE DATE 01-08-2026)</a></li></ul></li><li class=''><a href='https://amcmodules.ahmedabadcity.gov.in/HALLBOOKING/HALL_AVAILABILITY_WEB.aspx'>Hall Booking<span><i class='fas fa-angle-right faslg' style='float:right;'></i></span></a><ul class='sub-menu wsmenu-submenu-sub'><li class=''><a target='_blank' href='https://amcmodules.ahmedabadcity.gov.in/HALLBOOKING/HALL_AVAILABILITY_WEB.aspx'>View Hall Availability Details</a></li></ul></li><li class=''><a target='_blank' href='https://inhouse-amcmodules.ahmedabadcity.gov.in:8085/login'>Plot Booking - Estate</a></li><li class=''><a href='#'>Fire Department<span><i class='fas fa-angle-right faslg' style='float:right;'></i></span></a><ul class='sub-menu wsmenu-submenu-sub'><li class=''><a target='_blank' href='https://amcmodules.ahmedabadcity.gov.in/AMCFIRE/Userlogin.aspx'>Apply Online</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/staticPage/FIRENOCIMTIMENT'>Fire NOC Expiry (Intimation) List</a></li></ul></li><li class=''><a target='_blank' href='https://amcmodules.ahmedabadcity.gov.in/VEHICLE/login.aspx'>Vehicle Tax (Dealer) Module</a></li><li class=''><a target='_blank' href='/Donation/Donation'>Donation</a></li><li class=''><a href='#'>Health Department<span><i class='fas fa-angle-right faslg' style='float:right;'></i></span></a><ul class='sub-menu wsmenu-submenu-sub'><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,417'>Assembly Wise UHC/CHC/HWC list</a></li><li class=''><a target='_blank' href='https://docs.google.com/forms/d/e/1FAIpQLSffhygtyV3H-I_bAKbo0rwlDrFjUtio1geko2v45IKdQK-fKw/viewform?c=0&w=1'>Epidemic Reporting Format</a></li><li class=''><a target='_blank' href='https://docs.google.com/forms/d/11OKaFfoYOG2sTe7b7QeGKQLc1PMhswwL5vJk3kH2Izo/closedform'>Public Health Return Part 1</a></li><li class=''><a target='_blank' href='https://docs.google.com/forms/d/1X822H6mj_qKfK_Pu40f8muUQYy_VaygQv7jB94TZi6g/closedform'>Public Health Return Part 2</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,378'>Waste Collector Individual Registration Form</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,377'>Waste Collector Organisation Registration Form</a></li></ul></li><li class=''><a target='_blank' href='https://advisionamc.com/'>Advertisement Link</a></li><li class=''><a href='#'>View Form 16<span><i class='fas fa-angle-right faslg' style='float:right;'></i></span></a><ul class='sub-menu wsmenu-submenu-sub'><li class=''><a target='_blank' href='http://123.63.211.9/eHRMS/frmITForm16PartA.aspx?PF_BAL=FRM_130'>AMC Employee</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/Pension/PensionCerti'>PENSIOINER INCOME STATEMENT</a></li></ul></li><li class=''><a target='_blank' href='https://amcmodules.ahmedabadcity.gov.in/AMCMISC/TRANSACTION/Register_Complain_Against_Erring_Industry.aspx'>REGISTER COMPLAINT AGAINST ERRING INDUSTRY</a></li><li class=''><a target='_blank' href='/staticPage/CheckStatus'>Check Payment Status</a></li><li class=''><a target='_blank' href='https://inhouse-amcmodules.ahmedabadcity.gov.in/'>New Services Modules</a></li></ul></li><li><a href='#'>Citizen Facilities<span> <i class='fas fa-angle-down faslg'></i></span></a><ul class='sub-menu wsmenu-submenu'><li class=''><a target='_blank' href='https://inhouse-amcmodules.ahmedabadcity.gov.in:8023'>Know Your Ward</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/StaticPage/CityCivicCenters'>City Civic Centers</a></li><li class=''><a href='#'>Aadhar Enrollment Centers<span><i class='fas fa-angle-right faslg' style='float:right;'></i></span></a><ul class='sub-menu wsmenu-submenu-sub'><li class=''><a target='_blank' href='/ViewFile/ViewFile?TYPE=FileRepository,2226'>Center List (English)</a></li><li class=''><a target='_blank' href='/ViewFile/ViewFile?TYPE=FileRepository,2227'>Center List (Gujarati)</a></li></ul></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,301'>Janmitra Outlets</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2464'>92 Hall Rent & Deposit</a></li><li class=''><a href='#'>Health Facilities<span><i class='fas fa-angle-right faslg' style='float:right;'></i></span></a><ul class='sub-menu wsmenu-submenu-sub'><li class=''><a href='/SP/MunicipalHospitals'> Municipal Hospitals</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/StaticPage/UrbanHealthCenters'>Urban Health Centers</a></li><li class=''><a target='_blank' href='/StaticPage/citizen_Crematorium'>Crematorium</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2180'>Information on anti-rabies vaccine (ARV) centers</a></li></ul></li><li class=''><a href='#'>Education<span><i class='fas fa-angle-right faslg' style='float:right;'></i></span></a><ul class='sub-menu wsmenu-submenu-sub'><li class=''><a href='/SP/MedicalColleges'>Medical Colleges</a></li><li class=''><a target='_blank' href='http://amcschoolboard.org/index.html'>Primary Education</a></li></ul></li><li class=''><a href='#'>Libraries & Parks<span><i class='fas fa-angle-right faslg' style='float:right;'></i></span></a><ul class='sub-menu wsmenu-submenu-sub'><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2336'>Municipal Libraries</a></li><li class=''><a href='/SP/MunicipalParks'> Municipal Parks</a></li></ul></li><li class=''><a href='#'>Sports & Recreation<span><i class='fas fa-angle-right faslg' style='float:right;'></i></span></a><ul class='sub-menu wsmenu-submenu-sub'><li class=''><a href='/SP/SwimmingPools'>Swimming Pools</a></li><li class=''><a href='/SP/Gyms'>Gyms</a></li><li class=''><a href='/SP/SportsComplexFacilities'>Sports Complex / Facilities</a></li></ul></li><li class=''><a href='/SP/Museums'>Museums</a></li><li class=''><a href='#'>City Transport<span><i class='fas fa-angle-right faslg' style='float:right;'></i></span></a><ul class='sub-menu wsmenu-submenu-sub'><li class=''><a href='/SP/AMTS'>AMTS</a></li><li class=''><a href='/SP/BRTSCityTransport'>BRTS</a></li></ul></li></ul></li><li><a href='#'>Public Information<span> <i class='fas fa-angle-down faslg'></i></span></a><ul class='sub-menu wsmenu-submenu'><li class=''><a target='_blank' href='/StaticPage/Projects'>Projects</a></li><li class=''><a href='#'>Public Opinion<span><i class='fas fa-angle-right faslg' style='float:right;'></i></span></a><ul class='sub-menu wsmenu-submenu-sub'><li class=''><a target='_blank' href='ViewFile/ViewFile?TYPE=FileRepository,2382'>SOP For Hot Works - Gujarati</a></li><li class=''><a target='_blank' href='ViewFile/ViewFile?TYPE=FileRepository,2383'>SOP For Hot Works - English</a></li></ul></li><li class=''><a href='#'>Startup Policy<span><i class='fas fa-angle-right faslg' style='float:right;'></i></span></a><ul class='sub-menu wsmenu-submenu-sub'><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2613'>Ahmedabad innovation and Startup Policy 2026</a></li><li class=''><a target='_blank' href='https://docs.google.com/forms/d/e/1FAIpQLScm4B_B85w12OG-tqTJ1cfJf9bv2_KocW9pms7otpJmtbZlRw/viewform'>AISP 2026 - Expression of Interest Form</a></li></ul></li><li class=''><a href='#'>Shelters for Urban Homeless (SUH)<span><i class='fas fa-angle-right faslg' style='float:right;'></i></span></a><ul class='sub-menu wsmenu-submenu-sub'><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2639'>SUH LIST GUJARATI</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2640'>SUH LIST ENGLISH</a></li></ul></li><li class=''><a href='#'>Town Development (TDO)<span><i class='fas fa-angle-right faslg' style='float:right;'></i></span></a><ul class='sub-menu wsmenu-submenu-sub'><li class=''><a target='_blank' href='/TownDevelopment/ParkingLayoutList1'>Parking Layout List 1</a></li><li class=''><a target='_blank' href='/TownDevelopment/ParkingLayoutList2'>Parking Layout List 2</a></li><li class=''><a target='_blank' href='/TownDevelopment/ParkingLayoutList3'>Parking Layout List 3</a></li><li class=''><a target='_blank' href='/TownDevelopment/ParkingLayoutList4'>Parking Layout List 4</a></li><li class=''><a target='_blank' href='/TownDevelopment/ParkingLayoutList5'>Parking Layout List 5</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,305'>List of agency for cleaning and maintenance of percolating well / Pit</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2446'>Guidelines For HOSTEL LODGING AND BOARDING</a></li></ul></li><li class=''><a href='#'>Estate<span><i class='fas fa-angle-right faslg' style='float:right;'></i></span></a><ul class='sub-menu wsmenu-submenu-sub'><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2634'>BHAYAJANAK NOTICE 120/5/2026</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2637'>Comprehensive Policy to address issues of Traffic, Road safety, Encroachment and Cattle Menace</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2695'>Ahmedabad Outdoor Advertisement Policy 2023</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,344'>Ahmedabad Outdoor Advertisement Policy 2026(Draft)</a></li><li class=''><a target='_blank' href='https://inhouse-amcmodules.ahmedabadcity.gov.in:8020/'>Self Declaration for Parking Space</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2631'>Published Notice - Khushalnagar</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,335'>Parking  Locations</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,336'>Paladi Notice with sketch</a></li><li class=''><a target='_blank' href='/ViewFile/ViewFile?TYPE=FileRepository,2232'>Sabarmati-Riverfront-Land-Disposal-Policy-2024</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2633'>Published Notice - Subhashnagar</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,337'>Roadline Public Notice</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2632'>Slum Clearance Area Notice - 2</a></li><li class=''><a href='#'>Revised parking policy and General  parking control (management) by law, 2023<span><i class='fas fa-angle-right faslg' style='float:right;'></i></span></a><ul class='sub-menu wsmenu-submenu-sub'><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,339'>Adhisuchna</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,340'>Revised Ahmedabad Parking Policy</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,341'>General parking control (management) by laws, 2023</a></li></ul></li><li class=''><a target='_blank' href='/ViewFile/ViewFile?TYPE=FileRepository,2396'>Akabarnagar alternative arrangement</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2476'>Jaherat 30-10-2025</a></li></ul></li><li class=''><a href='#'>Estate Roadline Notice<span><i class='fas fa-angle-right faslg' style='float:right;'></i></span></a><ul class='sub-menu wsmenu-submenu-sub'><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2202'>Roadline Notice-1</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2461'>Roadline Notice- 2</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2494'>Roadline Notice- 3</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2514'>Roadline Notice-4</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2599'>Roadline Notice-5</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2601'>Roadline Notice-6</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2602'>Roadline Notice-7</a></li><li class=''><a target='_blank' href='/ViewFile/ViewFile?TYPE=FileRepository,2713'>Roadline Notice-8</a></li><li class=''><a target='_blank' href='/ViewFile/ViewFile?TYPE=FileRepository,2692'>Roadline Notice-9</a></li><li class=''><a target='_blank' href='/ViewFile/ViewFile?TYPE=FileRepository,2691'>Roadline Notice-10</a></li></ul></li><li class=''><a href='#'>City Planning<span><i class='fas fa-angle-right faslg' style='float:right;'></i></span></a><ul class='sub-menu wsmenu-submenu-sub'><li class=''><a target='_blank' href='/ViewFile/ViewFile?TYPE=FileRepository,2307'>DTPS No. 157/G (Badrabad), as Submit to Govt on Date:29-10-2024</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,312'>DTPS-160(PIPLAJ-LAXMIPURA-LAMBHA) PUBLISHED  DT 23-01-2024</a></li><li class=''><a target='_blank' href='ViewFile/ViewFile?TYPE=FileRepository,2300'>DTPS No.233 (Tragad) First varied , as PUBLISHED on Date_30-11-2024</a></li><li class=''><a href='/SP/TPSchemeInformation'>TP Scheme Information</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2108'> DTPS No.154/G(KAMOD), SUBMIT Date_19-03-2024 </a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,306'>TPS-152-G-SHILAJ Plan No.3</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,307'>DTPS-158-G  (FATEHWADI-OKAF)</a></li><li class=''><a target='_blank' href='/ViewFile/ViewFile?TYPE=FileRepository,308'>DTPS-156-G(Bakrol-Badrabad)_publish_Dt_21.02.2023</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,309'>DTPS-159-Fatehwadi-Okaf Published_Dt_24.01.2023</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,310'>DTPS-32(SHAHWADI-BAHERAMPURA)_submit_Dt.16.06.2023</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,311'>155 G(PIPLAG-SAIJPUR-GOPALPUR)_SUBMIT_DT.16.06.2023</a></li></ul></li><li class=''><a href='#'>Road Works<span><i class='fas fa-angle-right faslg' style='float:right;'></i></span></a><ul class='sub-menu wsmenu-submenu-sub'><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2628'>Road Resurfaced Year 2025-26</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2424'>Road Resurfaced Year 2024-25</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2693'>Road Resurfaced year 2023-24</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,319'>Road Resurface Year 2022-23</a></li><li class=''><a target='_blank' href='/Uploads/FileRepository/2021-22_70e34025-d218-4cfa-9d1e-e006dbf2fcc4.pdf'>Road Resurfaced year 2021-22</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,316'>Road Resurfaced Year 2018-19</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,315'>Road Resurfaced Year 2017-18</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,317'>Road Resurfaced year 2019-20</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,318'>Road Resurfaced year 2020-21</a></li></ul></li><li class=''><a href='#'>CNCD<span><i class='fas fa-angle-right faslg' style='float:right;'></i></span></a><ul class='sub-menu wsmenu-submenu-sub'><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2667'>Dog Adoption Form</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2675'>Smruti Patra-1 Paripatra 77-18</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2676'>Smruti Patra-1 CNCD Circular 77-16</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2677'>Smruti Patra-1 Paripatra 77-15</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2678'>Form PRIPATRA AMC 2025 Nodal Officer</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2679'>CNCD Circular No.77-18</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2680'>ABC SUO MOTO Circular No.15</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,302'>CNCD Office Order 77-1</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2512'>77-16 CNCD Action plan of the operation</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2449'>77-13 CNCD Agtyano Paripatra ABC SOP 2025-26 SD​</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,303'>CNCD Office Order 77-3</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,304'>CNCD Office Order 77-4</a></li><li class=''><a target='_blank' href='/ViewFile/ViewFile?TYPE=FileRepository,2423'>CNCD OFFICE ORDER 77-11</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2630'>CNCD Office Order 09-2026/27</a></li><li class=''><a target='_blank' href='ViewFile/ViewFile?TYPE=FileRepository,2425'>CNCD OFFICE ORDER 77-12</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2430'>CNCD Office Order 08/2025-26</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2582'>CNCD Office Order 34/2025-26</a></li></ul></li><li class=''><a href='#'>List of TDRC Holders<span><i class='fas fa-angle-right faslg' style='float:right;'></i></span></a><ul class='sub-menu wsmenu-submenu-sub'><li class=''><a target='_blank' href='/ViewFile/ViewFile?TYPE=FileRepository,2705'>Slum Policy - 2010</a></li><li class=''><a target='_blank' href='/ViewFile/ViewFile?TYPE=FileRepository,2706'>Slum Policy - 2013</a></li><li class=''><a target='_blank' href='/ViewFile/ViewFile?TYPE=FileRepository,2707'>Public Housing Policy - 2016</a></li><li class=''><a target='_blank' href='/ViewFile/ViewFile?TYPE=FileRepository,2708'>Heritage TDR</a></li><li class=''><a target='_blank' href='/ViewFile/ViewFile?TYPE=FileRepository,2709'>Roadline TDR</a></li><li class=''><a target='_blank' href='/ViewFile/ViewFile?TYPE=FileRepository,2710'>SRFDCL TDR</a></li><li class=''><a target='_blank' href='/ViewFile/ViewFile?TYPE=FileRepository,2711'>GHB_RPH_ POLICY_2016</a></li></ul></li><li class=''><a href='#'>RTI<span><i class='fas fa-angle-right faslg' style='float:right;'></i></span></a><ul class='sub-menu wsmenu-submenu-sub'><li class=''><a target='_blank' href='/StaticPage/RTI'>RTI</a></li><li class=''><a href='/SP/CitizenCharter'>Citizen Charter</a></li><li class=''><a target='_blank' href='/StaticPage/RCPS'>RCPS</a></li></ul></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/StaticPage/PAD'>PRO ACTIVE DISCLOSURE</a></li><li class=''><a href='#'>Contact Numbers<span><i class='fas fa-angle-right faslg' style='float:right;'></i></span></a><ul class='sub-menu wsmenu-submenu-sub'><li class=''><a href='/SP/ImportantTelephoneNumbers'>Important Telephone Numbers</a></li><li class=''><a target='_blank' href='/StaticPage/AMCOfficersTelephoneNumber_Dynamic'>AMC Officer's Telephone Numbers</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,326'>Monsoon Helpline</a></li><li class=''><a target='_blank' href='/ViewFile/ViewFile?TYPE=FileRepository,2343'>Sub-Zonal Officers Details</a></li></ul></li><li class=''><a target='_blank' href='https://amcmodules.ahmedabadcity.gov.in/AMCWEBREC/HRMS/FRMVACANCYDETAIL.ASPX?_HIDE&ID=1'>Recruitment & Results</a></li><li class=''><a href='/SP/HighRiseBuildingNOCDueIntimation'>High Rise Building NOC due intimation</a></li><li class=''><a href='#'>Key Projects<span><i class='fas fa-angle-right faslg' style='float:right;'></i></span></a><ul class='sub-menu wsmenu-submenu-sub'><li class=''><a target='_blank' href='http://www.ahmedabadbrts.org/'>BRTS</a></li><li class=''><a target='_blank' href='https://sabarmatiriverfront.com/'>S R F D C L</a></li><li class=''><a target='_blank' href='http://www.kankarialakefront.in/'>Kankaria Lake Front</a></li><li class=''><a target='_blank' href='http://www.kidscityamdavad.com/'>Kankaria Kids City</a></li><li class=''><a target='_blank' href='https://www.ahmedabadzoo.in/'>Kankaria Zoo</a></li></ul></li><li class=''><a href='#'>Useful Links<span><i class='fas fa-angle-right faslg' style='float:right;'></i></span></a><ul class='sub-menu wsmenu-submenu-sub'><li class=''><a href='/SP/UsefulLinks'>Useful Links</a></li><li class=''><a href='#'>Programs & Schemes<span><i class='fas fa-angle-right faslg' style='float:right;'></i></span></a><ul class='sub-menu wsmenu-submenu-sub'><li class=''><a target='_blank' href='#'>Primary Education Schemes</a></li><li class=''><a href='/SP/UEVRP-DRM'>UEVRP-DRM</a></li></ul></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,328'>AMC Simankan Prathmik Prasiddhi-2020</a></li><li class=''><a target='_blank' href='/Home/Healthwellness'>Health & Wellness</a></li><li class=''><a href='#'>Tax<span><i class='fas fa-angle-right faslg' style='float:right;'></i></span></a><ul class='sub-menu wsmenu-submenu-sub'><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,329'>Mobile Van Property Tax collection schedule</a></li></ul></li></ul></li><li class=''><a href='#'>Health Department<span><i class='fas fa-angle-right faslg' style='float:right;'></i></span></a><ul class='sub-menu wsmenu-submenu-sub'><li class=''><a target='_blank' href='/Uploads/FileRepository/Information_Of_Health_Malaria_Department_6a118b4b-e81a-4f2d-bc8c-2beb8236abd7.7z'>Health Malaria Department</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2598'>HEAT ACTION PLAN</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,330'>Family  Welfare Schemes(National Health Mission)</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,331'>Non Communicable Disease</a></li><li class=''><a href='#'>TB Department<span><i class='fas fa-angle-right faslg' style='float:right;'></i></span></a><ul class='sub-menu wsmenu-submenu-sub'><li class=''><a target='_blank' href='/Uploads/FileRepository/Basic_Information_About_TB_a68f5901-59e5-4f8d-b72c-4b47f717b40f.pdf'>Basic Information About TB</a></li><li class=''><a target='_blank' href='/Uploads/FileRepository/Dot_directory_of_TB_28ba43bb-7f6a-43fd-9385-18fcc2ff0495.pdf'>Dot directory of TB</a></li></ul></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2233'>Record reconstruction notification,RBD</a></li></ul></li><li class=''><a href='#'>ICDS-AANGANWADI<span><i class='fas fa-angle-right faslg' style='float:right;'></i></span></a><ul class='sub-menu wsmenu-submenu-sub'><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,345'>THR Vangi Book</a></li></ul></li><li class=''><a href='#'>Air Quality Management<span><i class='fas fa-angle-right faslg' style='float:right;'></i></span></a><ul class='sub-menu wsmenu-submenu-sub'><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2588'>Naroda Road Dust Assessment</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,332'>Air quality data from 2018-21</a></li><li class=''><a target='_blank' href='/Images/Source Apportionment Study.pdf'>Source Apportionment Study</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,333'>Ahmedabad Air Plan</a></li></ul></li><li class=''><a href='#'>UCD<span><i class='fas fa-angle-right faslg' style='float:right;'></i></span></a><ul class='sub-menu wsmenu-submenu-sub'><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2694'>SMILE PROGRAM</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,347'>E-Auto Advertisement</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,348'>E-Auto Application Form</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/StaticPage/BPL'>B.P.L. YADI</a></li></ul></li><li class=''><a target='_blank' href='/ViewFile/ViewFile?TYPE=FileRepository,2429'>Excavated Area</a></li><li class=''><a target='_blank' href='https://docs.google.com/forms/d/e/1FAIpQLSc74qKR_1qWzdc3adIyvKFKKkPMgfDbvtQ2VjAT2bNwPwao4A/viewform'>Kitchen Garden & Garden Maintenance</a></li><li class=''><a target='_blank' href='/StaticPage/arcp'>Gujarat Resilient Cities Partnership : Ahmedabad City Resilience Project (G-ARCP)</a></li></ul></li><li><a href='#'>Downloads<span> <i class='fas fa-angle-down faslg'></i></span></a><ul class='sub-menu wsmenu-submenu'><li class=''><a href='/DC/Circular'>Circular/Office Orders</a></li><li class=''><a href='#'>Public Notice<span><i class='fas fa-angle-right faslg' style='float:right;'></i></span></a><ul class='sub-menu wsmenu-submenu-sub'><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2668'>Guidelines for Bulk Waste Generator</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,351'>Property Tax Public Notice</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,350'>Solid Waste Management Department - Public Notice</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2504'>Subhash bridge closure press note</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2522'>Road_Closure_Notice</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2636'>Public Notice regarding Samadhan Samaroh, 2026 (Special Lok Adalat)-English</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2505'>Subhash bridge closure traffic diversion</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2635'>Public Notice regarding Samadhan Samaroh, 2026 (Special Lok Adalat)-Gujarati</a></li></ul></li><li class=''><a target='_blank' href='/StaticPage/Forms_Dynamic'>Forms & Fonts</a></li><li class=''><a href='/DC/Tenders'>Tenders</a></li><li class=''><a target='_blank' href='/SORGCC/Index'>SOR & GCC</a></li><li class=''><a target='_blank' href='/StaticPage/AuctionNotice'>Property Tax Auction Notice</a></li><li class=''><a target='_blank' href='/ViewFile/ViewFile?TYPE=FileRepository,2384'>AMC Pocket Diary</a></li><li class=''><a href='/DC/CommitteeAgenda'>Committee Agenda</a></li><li class=''><a target='_blank' href='/ViewFile/ViewFile?TYPE=FileRepository,2385'>AMC Diary</a></li><li class=''><a href='#'>GRUDO-2022<span><i class='fas fa-angle-right faslg' style='float:right;'></i></span></a><ul class='sub-menu wsmenu-submenu-sub'><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,361'>Ordinance Gujarati</a></li><li class=''><a target='_blank' href='ViewFile/ViewFile?TYPE=FileRepository,2240'>Gruda Act FSI GAMATAL</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,362'>Ordinance English</a></li><li class=''><a target='_blank' href='ViewFile/ViewFile?TYPE=FileRepository,2241'>Gruda Parking Fee</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,363'>Rules English</a></li><li class=''><a target='_blank' href='ViewFile/ViewFile?TYPE=FileRepository,2381'>Amendment in parking Fee</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,364'>Rate Notification</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,367'>Registered Enginner Structural Enginner Willing To Work For GRUDO-2023</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,368'>Gruda FAQ</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,369'>Structural Enginner Application GRUDO 2022</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,371'>List of Registered Enginners Willing to Work for GRUDO-2022</a></li><li class=''><a target='_blank' href='/Uploads/FileRepository/GRUDA SD 060923_97d256a9-f94a-4f1d-94c5-fda7d16695bd.pdf'>List of Registered Structural Enginners Willing to Work for GRUDO-2022</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,372'>GRUDA ACT 2022</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,2376'>GRUDA LOK DARBAR 2025</a></li></ul></li><li class=''><a href='#'>Energy Efficiency Cell<span><i class='fas fa-angle-right faslg' style='float:right;'></i></span></a><ul class='sub-menu wsmenu-submenu-sub'><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,373'>GBY Policy Circular</a></li><li class=''><a target='_blank' href='https://ahmedabadcity.gov.in/ViewFile/ViewFile?TYPE=FileRepository,374'>GBY  Application Form</a></li></ul></li></ul></li><li><a href='#'>Help<span> <i class='fas fa-angle-down faslg'></i></span></a><ul class='sub-menu wsmenu-submenu'><li class=''><a href='#'>FAQs<span><i class='fas fa-angle-right faslg' style='float:right;'></i></span></a><ul class='sub-menu wsmenu-submenu-sub'><li class=''><a href='/DC/General'>General</a></li></ul></li></ul></li><li><a href='#'>SBM<span> <i class='fas fa-angle-down faslg'></i></span></a><ul class='sub-menu wsmenu-submenu'><li class=''><a target='_blank' href='/Home/SwachhBharatMission'>Swachh Bharat Mission</a></li></ul></li></ul></nav>
+
+
+
+                                            </ul>
+                                            <div class="login-btn-div-md">
+                                                <a href="/Authentication/Login" class="login-btn btn seg-bold">Log In</a>
+                                            </div>
+                                        </nav>
+
+
+                                    </div>
+                                </div>
+                                <!-- End Main Menu -->
+                            </div>
+                            <!-- End wsmenu -->
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <div class="banner-text">
+                            <h1><b>Ahmedabad City</b> as India's Best <br> City to live-in, in terms of infrastructure</h1>
+                            <p class="seg-semibold">A Times of India survey ranks</p>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </section>
+
+        <div class="clearfix"></div>
+        <div id="overflowMenu">
+            <div class="ofMenu">
+                <ul></ul>
+            </div>
+            <a title="Close" href="javascript:void(0);" class="closeMenu"><span class="icon-close" aria-hidden="true"></span>Close</a>
+        </div>
+    </header>
+    <div class="clearfix"></div>
+    <div class="">
+
+        <div class="row">
+            <div class="common_wrapper_box">
+                
+
+<style type="text/css">
+    /* button:hover, button:focus, button.focus {
+        color: #f3b45b !important;
+    }   */
+</style>
+
+<div class="container home-1">
+    <div class="row">
+        <div class="col-xs-12 nomargin">
+            <div id="post-2609" class="post-2609 page type-page status-publish hentry">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <span class="col-xs-1 nomargin" style="width: 35px; padding-top:10px;"><i class="fas fa-home" style="font-size: 1.4em;color:#9e6b22;"></i></span>
+                        <p class="col-xs-11 nomargin">  <a href="/SP/Demographics"> Demographics </a> </p>
+                        <div class="smallwebline"></div>
+                    </div>                   
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="row">
+                            <div class="col-lg-9">
+                                <div style="box-shadow: 0 0 10px rgb(0 0 0 / 15%);">
+                                    <div class="pageheader">
+                                        <p>Demographics</p>
+                                    </div>
+                                    <div class="pagecontent new_page_content">
+                                        <div class="col-xs-12">
+                                            <div class="row">
+                                                <div
+class="contentcontainercontenttitle"
+style="
+background-image: initial;
+background-position: initial;
+background-size: initial;
+background-repeat: initial;
+background-attachment: initial;
+background-origin: initial;
+background-clip: initial;
+float: left;
+position: relative;
+width: 695.078px;
+margin: 6.9375px 0px 0px;
+font-family: Arial, Helvetica, sans-serif;
+font-size: 13px;
+font-weight: bold;
+color: rgb(0, 0, 0);
+"
+>
+<h6>Data Of Amdavad Municipal Corporation Area - Census 2011</h6>
+</div>
+<div
+class="smallblueline"
+style="
+float: left;
+width: 695.078px;
+position: relative;
+background: rgb(45, 83, 108);
+height: 1px;
+margin: 0px auto;
+color: rgb(0, 0, 0);
+font-family: 'Times New Roman';
+font-size: medium;
+"
+></div>
+<div
+class=""
+style="
+background-image: initial;
+background-position: initial;
+background-size: initial;
+background-repeat: initial;
+background-attachment: initial;
+background-origin: initial;
+background-clip: initial;
+float: left;
+position: relative;
+margin: 6.9375px 0px 0px;
+font-size: 13.33px;
+width: 695.078px;
+color: rgb(0, 0, 0);
+font-family: 'Times New Roman';
+"
+>
+<div
+class="AMCtable"
+style="
+margin: 0px;
+padding: 0px;
+width: 695.078px;
+float: left;
+position: relative;
+border: 0px solid rgb(68, 68, 68);
+font-size: 13px;
+"
+>
+<table
+style="
+border-spacing: 0px;
+width: 695.078px;
+height: 343px;
+margin: 0px;
+padding: 0px;
+"
+>
+<tbody>
+<tr>
+<td
+style="
+vertical-align: middle;
+border: 1px solid rgb(68, 68, 68);
+font-family: Arial, Helvetica, sans-serif;
+color: rgb(68, 68, 68);
+padding-left: 5px;
+"
+>
+Total no. of House Holds:
+</td>
+<td
+style="
+vertical-align: middle;
+border: 1px solid rgb(68, 68, 68);
+font-family: Arial, Helvetica, sans-serif;
+color: rgb(68, 68, 68);
+padding-left: 5px;
+"
+>
+1179823
+</td>
+</tr>
+<tr>
+<td
+style="
+vertical-align: middle;
+border: 1px solid rgb(68, 68, 68);
+font-family: Arial, Helvetica, sans-serif;
+color: rgb(68, 68, 68);
+padding-left: 5px;
+"
+>
+Total Population:
+</td>
+<td
+style="
+vertical-align: middle;
+border: 1px solid rgb(68, 68, 68);
+font-family: Arial, Helvetica, sans-serif;
+color: rgb(68, 68, 68);
+padding-left: 5px;
+"
+>
+5577940
+</td>
+</tr>
+<tr>
+<td
+style="
+vertical-align: middle;
+border: 1px solid rgb(68, 68, 68);
+font-family: Arial, Helvetica, sans-serif;
+color: rgb(68, 68, 68);
+padding-left: 5px;
+"
+>
+Total Male Population:
+</td>
+<td
+style="
+vertical-align: middle;
+border: 1px solid rgb(68, 68, 68);
+font-family: Arial, Helvetica, sans-serif;
+color: rgb(68, 68, 68);
+padding-left: 5px;
+"
+>
+2938985
+</td>
+</tr>
+<tr>
+<td
+style="
+vertical-align: middle;
+border: 1px solid rgb(68, 68, 68);
+font-family: Arial, Helvetica, sans-serif;
+color: rgb(68, 68, 68);
+padding-left: 5px;
+"
+>
+Total Female Population:
+</td>
+<td
+style="
+vertical-align: middle;
+border: 1px solid rgb(68, 68, 68);
+font-family: Arial, Helvetica, sans-serif;
+color: rgb(68, 68, 68);
+padding-left: 5px;
+"
+>
+2638955
+</td>
+</tr>
+<tr>
+<td
+style="
+vertical-align: middle;
+border: 1px solid rgb(68, 68, 68);
+font-family: Arial, Helvetica, sans-serif;
+color: rgb(68, 68, 68);
+padding-left: 5px;
+"
+>
+Total Population between 0 to 6 years:
+</td>
+<td
+style="
+vertical-align: middle;
+border: 1px solid rgb(68, 68, 68);
+font-family: Arial, Helvetica, sans-serif;
+color: rgb(68, 68, 68);
+padding-left: 5px;
+"
+>
+621034
+</td>
+</tr>
+<tr>
+<td
+style="
+vertical-align: middle;
+border: 1px solid rgb(68, 68, 68);
+font-family: Arial, Helvetica, sans-serif;
+color: rgb(68, 68, 68);
+padding-left: 5px;
+"
+>
+Total Male Population between 0 to 6 years:
+</td>
+<td
+style="
+vertical-align: middle;
+border: 1px solid rgb(68, 68, 68);
+font-family: Arial, Helvetica, sans-serif;
+color: rgb(68, 68, 68);
+padding-left: 5px;
+"
+>
+336063
+</td>
+</tr>
+<tr>
+<td
+style="
+vertical-align: middle;
+border: 1px solid rgb(68, 68, 68);
+font-family: Arial, Helvetica, sans-serif;
+color: rgb(68, 68, 68);
+padding-left: 5px;
+"
+>
+Total Female Population between 0 to 6 years:
+</td>
+<td
+style="
+vertical-align: middle;
+border: 1px solid rgb(68, 68, 68);
+font-family: Arial, Helvetica, sans-serif;
+color: rgb(68, 68, 68);
+padding-left: 5px;
+"
+>
+284971
+</td>
+</tr>
+<tr>
+<td
+style="
+vertical-align: middle;
+border: 1px solid rgb(68, 68, 68);
+font-family: Arial, Helvetica, sans-serif;
+color: rgb(68, 68, 68);
+padding-left: 5px;
+"
+>
+Total SC Population:
+</td>
+<td
+style="
+vertical-align: middle;
+border: 1px solid rgb(68, 68, 68);
+font-family: Arial, Helvetica, sans-serif;
+color: rgb(68, 68, 68);
+padding-left: 5px;
+"
+>
+594523
+</td>
+</tr>
+<tr>
+<td
+style="
+vertical-align: middle;
+border: 1px solid rgb(68, 68, 68);
+font-family: Arial, Helvetica, sans-serif;
+color: rgb(68, 68, 68);
+padding-left: 5px;
+"
+>
+Total SC Male Population:
+</td>
+<td
+style="
+vertical-align: middle;
+border: 1px solid rgb(68, 68, 68);
+font-family: Arial, Helvetica, sans-serif;
+color: rgb(68, 68, 68);
+padding-left: 5px;
+"
+>
+312622
+</td>
+</tr>
+<tr>
+<td
+style="
+vertical-align: middle;
+border: 1px solid rgb(68, 68, 68);
+font-family: Arial, Helvetica, sans-serif;
+color: rgb(68, 68, 68);
+padding-left: 5px;
+"
+>
+Total SC Female Population:
+</td>
+<td
+style="
+vertical-align: middle;
+border: 1px solid rgb(68, 68, 68);
+font-family: Arial, Helvetica, sans-serif;
+color: rgb(68, 68, 68);
+padding-left: 5px;
+"
+>
+281901
+</td>
+</tr>
+<tr>
+<td
+style="
+vertical-align: middle;
+border: 1px solid rgb(68, 68, 68);
+font-family: Arial, Helvetica, sans-serif;
+color: rgb(68, 68, 68);
+padding-left: 5px;
+"
+>
+Total ST Population:
+</td>
+<td
+style="
+vertical-align: middle;
+border: 1px solid rgb(68, 68, 68);
+font-family: Arial, Helvetica, sans-serif;
+color: rgb(68, 68, 68);
+padding-left: 5px;
+"
+>
+66846
+</td>
+</tr>
+<tr>
+<td
+style="
+vertical-align: middle;
+border: 1px solid rgb(68, 68, 68);
+font-family: Arial, Helvetica, sans-serif;
+color: rgb(68, 68, 68);
+padding-left: 5px;
+"
+>
+Total ST Male Population:
+</td>
+<td
+style="
+vertical-align: middle;
+border: 1px solid rgb(68, 68, 68);
+font-family: Arial, Helvetica, sans-serif;
+color: rgb(68, 68, 68);
+padding-left: 5px;
+"
+>
+35490
+</td>
+</tr>
+<tr>
+<td
+style="
+vertical-align: middle;
+border: 1px solid rgb(68, 68, 68);
+font-family: Arial, Helvetica, sans-serif;
+color: rgb(68, 68, 68);
+padding-left: 5px;
+"
+>
+Total ST Female Population:
+</td>
+<td
+style="
+vertical-align: middle;
+border: 1px solid rgb(68, 68, 68);
+font-family: Arial, Helvetica, sans-serif;
+color: rgb(68, 68, 68);
+padding-left: 5px;
+"
+>
+31356
+</td>
+</tr>
+<tr>
+<td
+style="
+vertical-align: middle;
+border: 1px solid rgb(68, 68, 68);
+font-family: Arial, Helvetica, sans-serif;
+color: rgb(68, 68, 68);
+padding-left: 5px;
+"
+>
+Total Literate Population:
+</td>
+<td
+style="
+vertical-align: middle;
+border: 1px solid rgb(68, 68, 68);
+font-family: Arial, Helvetica, sans-serif;
+color: rgb(68, 68, 68);
+padding-left: 5px;
+"
+>
+4376393
+</td>
+</tr>
+<tr>
+<td
+style="
+vertical-align: middle;
+border: 1px solid rgb(68, 68, 68);
+font-family: Arial, Helvetica, sans-serif;
+color: rgb(68, 68, 68);
+padding-left: 5px;
+"
+>
+Total Literate Male Population:
+</td>
+<td
+style="
+vertical-align: middle;
+border: 1px solid rgb(68, 68, 68);
+font-family: Arial, Helvetica, sans-serif;
+color: rgb(68, 68, 68);
+padding-left: 5px;
+"
+>
+2402523
+</td>
+</tr>
+<tr>
+<td
+style="
+vertical-align: middle;
+border: 1px solid rgb(68, 68, 68);
+font-family: Arial, Helvetica, sans-serif;
+color: rgb(68, 68, 68);
+padding-left: 5px;
+"
+>
+Total Literate Female Population:
+</td>
+<td
+style="
+vertical-align: middle;
+border: 1px solid rgb(68, 68, 68);
+font-family: Arial, Helvetica, sans-serif;
+color: rgb(68, 68, 68);
+padding-left: 5px;
+"
+>
+1973870
+</td>
+</tr>
+<tr>
+<td
+style="
+vertical-align: middle;
+border: 1px solid rgb(68, 68, 68);
+font-family: Arial, Helvetica, sans-serif;
+color: rgb(68, 68, 68);
+padding-left: 5px;
+"
+>
+Total Illiterate Population:
+</td>
+<td
+style="
+vertical-align: middle;
+border: 1px solid rgb(68, 68, 68);
+font-family: Arial, Helvetica, sans-serif;
+color: rgb(68, 68, 68);
+padding-left: 5px;
+"
+>
+1201547
+</td>
+</tr>
+<tr>
+<td
+style="
+vertical-align: middle;
+border: 1px solid rgb(68, 68, 68);
+font-family: Arial, Helvetica, sans-serif;
+color: rgb(68, 68, 68);
+padding-left: 5px;
+"
+>
+Total Illiterate Male Population:
+</td>
+<td
+style="
+vertical-align: middle;
+border: 1px solid rgb(68, 68, 68);
+font-family: Arial, Helvetica, sans-serif;
+color: rgb(68, 68, 68);
+padding-left: 5px;
+"
+>
+536462
+</td>
+</tr>
+<tr>
+<td
+style="
+vertical-align: middle;
+border: 1px solid rgb(68, 68, 68);
+font-family: Arial, Helvetica, sans-serif;
+color: rgb(68, 68, 68);
+padding-left: 5px;
+"
+>
+Total Illiterate Female Population:
+</td>
+<td
+style="
+vertical-align: middle;
+border: 1px solid rgb(68, 68, 68);
+font-family: Arial, Helvetica, sans-serif;
+color: rgb(68, 68, 68);
+padding-left: 5px;
+"
+>
+665085
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div
+class=""
+style="
+background-image: initial;
+background-position: initial;
+background-size: initial;
+background-repeat: initial;
+background-attachment: initial;
+background-origin: initial;
+background-clip: initial;
+float: left;
+position: relative;
+margin: 6.9375px 0px 0px;
+font-size: 13.33px;
+width: 695.078px;
+color: rgb(0, 0, 0);
+font-family: 'Times New Roman';
+"
+>
+<p
+style="
+float: left;
+font-family: Arial;
+margin: 6.9375px 0px;
+text-align: justify;
+font-size: 13.33px;
+color: rgb(68, 68, 68);
+line-height: 1.3;
+"
+>
+Click&nbsp;<a
+href="https://ahmedabadcity.gov.in/portal/web?requestType=ApplicationRH&amp;actionVal=viewAttachment&amp;queryType=Select&amp;screenId=2900003&amp;AttachmentFileName=Ward-wise%20Data%20of%20AMC%20Area%20Census%202011.xls"
+style="color: rgb(6, 69, 173); line-height: 1.3; font-size: 13.33px"
+>here</a
+>&nbsp;to download Ward-wise Data of AMC Area: Census 2011.
+</p>
+</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $(".new_page_content p, .new_page_content div, .new_page_content h3, .new_page_content ol, .new_page_content ul, .new_page_content ul li, .new_page_content ul li a, .new_page_content table, .new_page_content td, .new_page_content th, .new_page_content h1, .new_page_content img, .new_page_content span").removeAttr("style");
+    });
+</script>
+
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+
+    <footer id="ep-footer">
+        <section class="footer-top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 col-sm-6">
+                        <div class="footer-text footer-1">
+                            <h5>Amdavad <br> Municipal Corporation</h5>
+                            <address>
+                                Central Zone Office, Sardar Patel Bhavan,<br> Municipal Corporation, Danapith - Khamasa,<br> Ahmedabad, 380001
+                            </address>
+
+                            <p><label>Phone No:</label> 079- 25391811</p>
+                            
+                            <p><label>Email:</label> <a href="mailto:feedback@ahmedabadcity.gov.in">feedback@ahmedabadcity.gov.in</a></p>
+
+                            <ul class="socialList">
+                                <li><a href="https://www.facebook.com/AhmedabadAMC" target="_blank"><i class="fab fa-facebook"></i></a></li>
+                                <li><a href="https://twitter.com/i/flow/login?redirect_after_login=%2FAmdavadAMC" target="_blank"><i class="fab fa-twitter"></i></a></li>
+                                <li><a href="https://www.youtube.com/c/AMCOfficial" class="text-danger" target="_blank"><i class="fab fa-youtube"></i></a></li>
+<li><a href="https://www.instagram.com/p/C4ry4nas5uy/?utm_source=ig_embed&ig_rid=b815f0e7-9dbe-4431-97be-7c55acaf36ac" class="text-danger" target="_blank"><i class="fab fa-instagram"></i></a></li>
+<li><a href="https://wa.me/+917567855303" class="text-green" target="_blank"><i class="fab fa-whatsapp" style="color: green;"></i></a></li>                            
+</ul>
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-6 col-lg-4">
+                        <div class="footer-text footer-2">
+                            <h5>Other Links</h5>
+
+                            <ul>
+                                <li><a href="/">Home</a></li>
+                                <li><a href="/Home/AboutTheCorporation">About Us</a></li>
+                                <li><a href="/StaticPage/AMCOfficersTelephoneNumber_Dynamic">Contact Us</a></li>
+                                <li><a href="/Feedback/Index">Feedback</a></li>
+                                <li><a href="/Content/Sitemap.xml" target="_blank">Sitemap</a></li>
+                                <li><a href="/Home/">Privacy Policy </a></li>
+                                <li><a href="/Home/">Payment Policy</a></li>
+                                <li><a href="/Home/">Browser Compatibility</a></li>
+								<li>INET115</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-md-5 col-lg-4">
+                        <div class="footer-text footer-3">
+                            <h5>Contact</h5>
+                            
+                            <p class="seg-semibold" style=" margin-bottom: 0px;">
+                                For any query regarding online payment of Property and Professional Tax, please fill and submit the following Form
+                            </p>
+                            <a href="https://forms.gle/hzoMUzN1gnTHugKg6" target="_blank">Online Payment Query Form</a><br />
+                            <p class="seg-semibold">or contact on :</p>
+                            <ul>
+                                
+                                <li>+91-9227898608</li>
+                                <li>+91-9227898610</li>
+                            </ul>
+                            <p style="margin-top: 5%; color: black; ">
+                                Or Send Email to : -
+                                <a href="mailto:feedback@ahmedabadcity.gov.in">feedback@ahmedabadcity.gov.in</a><br />
+                                along with Transaction Details
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="home-footer-logo-div font-txt">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="footer-logo">
+                                <h2 class="d-none">Hide</h2>
+                                <div id="ep-logocarousel" class="owl-carousel">
+                                    <div class="ep-logos-img">
+                                        <a href="https://data.gov.in/" target="_blank" title="Open Government Data (OGD)  Platform India">
+                                            <img src="/IMAGES/2017053014.png" alt="data.gov.in" />
+                                        </a>
+                                    </div>
+
+                                    <div class="ep-logos-img">
+                                        <a href="https://www.incredibleindia.org/" target="_blank" title="Incredible India">
+                                            <img src="/IMAGES/2017053094.png" alt="Incredible India Site" />
+                                        </a>
+                                    </div>
+
+                                    <div class="ep-logos-img">
+
+                                        <a href="https://www.mygov.in/" target="_blank" title="My Government">
+                                            <img src="/IMAGES/2017053017.png" alt="mygov" />
+                                        </a>
+                                    </div>
+
+                                    <div class="ep-logos-img">
+                                        <a href="https://www.pmnrf.gov.in/" target="_blank" title="Prime Minister&#8217;s National Relief Fund">
+                                            <img src="/IMAGES/2017053039.png" alt="PMNRF" />
+                                        </a>
+                                    </div>
+
+                                    <div class="ep-logos-img">
+                                        <a href="http://www.pmindia.gov.in/en/" target="_blank" title="Prime Minister of India">
+                                            <img src="/IMAGES/2017110781.png" alt="pmindia" />
+                                        </a>
+                                    </div>
+
+                                    <div class="ep-logos-img">
+                                        <a href="https://www.india.gov.in/" target="_blank" title="The National Portal of India">
+                                            <img src="/IMAGES/2019052293.png" alt="india.gov.in" />
+                                        </a>
+                                    </div>
+                                    <div class="ep-logos-img">
+                                        <a href="http://www.digitalindia.gov.in/" target="_blank" title="Digital India">
+                                            <img src="/IMAGES/2017072418.png" alt="digital-india" />
+                                        </a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <section class="footer-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 col-lg-5">
+                        <div class="footer-bottomtext footer-bot-1">
+                            <p>Copyright © 2023. Amdavad Municipal Corporation</p>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-xs-6 col-lg-3">
+                        <div class="footer-bottomtext footer-bot-2">
+                            <p></p>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-lg-4">
+                        <div class="footer-bottomtext footer-bot-3">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </footer>
+	 
+  
+    
+
+    
+    <link rel='stylesheet' id='flexslider-css' href='/Scripts/Custom/wp-content/plugins/js_composer/assets/lib/bower/flexslider/flexslider.min.css' media='all' />
+    <link rel='stylesheet' id='custom-flexslider-css' href='/Scripts/Custom/wp-content/plugins/awas-shortcode/assets/css/custom-flexslider.css' media='all' />
+    <link rel='stylesheet' id='list-style-css' href='/Scripts/Custom/wp-content/plugins/awas-shortcode/assets/css/list-style.min.css' media='all' />
+    <link rel='stylesheet' id='component-helper-css' href='/Scripts/Custom/wp-content/plugins/awas-shortcode/assets/css/component-helper.css' media='all' />
+    <link rel='stylesheet' id='events-css-css' href='/Scripts/Custom/wp-content/plugins/awas-shortcode/assets/css/events.css' media='all' />
+    <link rel='stylesheet' id='vc_tta_style-css' href='/Scripts/Custom/wp-content/plugins/js_composer/assets/css/js_composer_tta.min.css' media='all' />
+    <link rel='stylesheet' id='min-profile-css' href='/Scripts/Custom/wp-content/plugins/awas-shortcode/assets/css/profile-hm.css' media='all' />
+    <link rel='stylesheet' id='services-style-css' href='/Scripts/Custom/wp-content/plugins/awas-shortcode/assets/css/list-style.min.css' media='all' />
+    <link rel='stylesheet' id='services-tabs-style-css' href='/Scripts/Custom/wp-content/plugins/awas-shortcode/assets/css/service-tabs.css' media='all' />
+    <link rel='stylesheet' id='font-awesome-css' href='/Scripts/Custom/wp-content/plugins/js_composer/assets/lib/bower/font-awesome/css/font-awesome.min.css' media='all' />
+    <link rel='stylesheet' id='home-gallery-css' href='/Scripts/Custom/wp-content/plugins/awas-shortcode/assets/css/photo-gallery-home.css' media='all' />
+    <link rel='stylesheet' id='footer-style-css' href='/Scripts/Custom/wp-content/plugins/awas-shortcode/assets/css/footer-logo-carousel.css' media='all' />
+    <link href="/Assets/css/custom.css" rel="stylesheet" />
+    <script id='utility-common-js-js-extra'>
+        var AwaasData = { "ajaxUrl": "https:\/\/s3c4ca4238a0b923820dcc509a6f75849b.s3waas.gov.in\/wp-admin\/admin-ajax.php" };
+    </script>
+    <script src='/Scripts/Custom/wp-content/plugins/common_utility/js/common.js' id='utility-common-js-js'></script>
+    <script src='/Scripts/Custom/wp-includes/js/jquery/ui/core.min.js' id='jquery-ui-core-js'></script>
+    <script src='/Scripts/Custom/wp-content/themes/district-theme/js/jquery.flexslider.js' id='jquery-flexslider-js-js'></script>
+    <script src='/Scripts/Custom/wp-content/themes/district-theme/js/easyResponsiveTabs.js' id='easyResponsiveTabs-js-js'></script>
+    <script src='/Scripts/Custom/wp-content/themes/district-theme/js/jquery.fancybox.js' id='jquery-fancybox-js-js'></script>
+    <script src='/Scripts/Custom/wp-content/themes/district-theme/js/style.switcher.js' id='style-switcher-js-js'></script>
+    <script src='/Scripts/Custom/wp-content/themes/district-theme/js/menu.js' id='mega-menu-js-js'></script>
+    <script src='/Scripts/Custom/wp-content/themes/district-theme/js/table.min.js' id='table-min-js-js'></script>
+    <script src='/Scripts/Custom/wp-content/themes/district-theme/js/custom.js' id='custom-js-js'></script>
+    <script src='/Scripts/Custom/wp-content/themes/district-theme/js/extra.js' id='extra-js-js'></script>
+    <script src='/Scripts/Custom/wp-content/plugins/js_composer/assets/js/dist/js_composer_front.min.js' id='wpb_composer_front_js-js'></script>
+    <script src='/Scripts/Custom/wp-content/plugins/js_composer/assets/lib/bower/flexslider/jquery.flexslider-min.js' id='flexslider-js'></script>
+    <script src='/Scripts/Custom/wp-content/plugins/js_composer/assets/lib/vc_accordion/vc-accordion.min.js' id='vc_accordion_script-js'></script>
+    <script src='/Scripts/Custom/wp-content/plugins/js_composer/assets/lib/vc-tta-autoplay/vc-tta-autoplay.min.js' id='vc_tta_autoplay_script-js'></script>
+    <script src='/Scripts/Custom/wp-content/plugins/js_composer/assets/lib/vc_tabs/vc-tabs.min.js' id='vc_tabs_script-js'></script>
+	
+	
+	    
+	
+    <script>
+        //setInterval(AutoBindCSS, 2000); // Call myFunction every 2 seconds
+        //function AutoBindCSS() {
+        //    $('.AMCtable2').css({
+        //        'width': '100% !important'
+        //    });
+        //}
+		  window.onload = function () {
+            var interval = setInterval(function () {
+                var input = document.querySelector('.gsc-input-box input.gsc-input');
+                if (input) {
+                    input.setAttribute('placeholder', 'Search in Website for...');
+                    clearInterval(interval);
+                }
+            }, 100);
+        };
+    </script>
+    <script>
+        function updateDateTime() {
+            const datetimeElement = document.getElementById("datetime");
+            const now = new Date();
+
+            const day = String(now.getDate()).padStart(2, '0');
+            const month = new Intl.DateTimeFormat('en-US', { month: 'short' }).format(now);
+            const year = now.getFullYear();
+
+            let hours = now.getHours();
+            const meridiem = hours >= 12 ? 'PM' : 'AM';
+            hours = (hours % 12) || 12; // Convert to 12-hour format
+
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+
+            const formattedDate = `${day}-${month}-${year} ${hours}:${minutes}:${seconds} ${meridiem}`;
+
+            datetimeElement.textContent = formattedDate;
+        }
+
+        // Call the function initially to set the initial content
+        updateDateTime();
+        // Update the date and time every second
+        setInterval(updateDateTime, 1000);
+    </script>
+    <script>
+        //jQuery(document).ready(function ($) {
+        //    $.post({
+        //        url: ajaxurl,
+        //        method: 'POST',
+        //        dataType: 'JSON',
+        //        data: { time: new Date().getTime(), 'lang': 'en', action: 's3waas_pll_lang_cookie' },
+        //        success: function (responseResults) { }
+        //    })
+        //})
+        $("body").removeClass("contrast");
+        $(document).on("click", ".LanguageCange a", function (e) {
+            var id = $(this).attr('id');
+            var text = $(this).text();
+            //var link = $(this).attr('href');
+            ShowLoader();
+            $.ajax({
+                url: "/Home/SetSessionValue?id=" + id + "&text=" + text,
+                success: function (data) {
+                    HideLoader();
+                    window.location.reload();
+                }
+            });
+        });
+    </script>
+    <script>
+        $(document).on('addClass', 'body.contrast', function () {
+            $('body').removeClass('contrast');
+        });
+        var observer = new MutationObserver(function (mutations) {
+            mutations.forEach(function (mutation) {
+                if (mutation.attributeName === 'class' && mutation.target.classList.contains('contrast')) {
+                    $('body').removeClass('contrast');
+                }
+            });
+        });
+
+        observer.observe(document.querySelector('body'), { attributes: true });
+
+    </script>
+    <script>
+        /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
+        var dropdown = document.getElementsByClassName("dropdown-btn");
+        var i;
+
+        for (i = 0; i < dropdown.length; i++) {
+            dropdown[i].addEventListener("click", function () {
+                this.classList.toggle("active");
+                var dropdownContent = this.nextElementSibling;
+                if (dropdownContent.style.display === "block") {
+                    dropdownContent.style.display = "none";
+                } else {
+                    dropdownContent.style.display = "block";
+                }
+            });
+        }
+        try {
+            var mainMenuText = $('p.col-11, p.nomargin')[0].innerText.split('|')[0].trim();
+            var selectedInnerAnchor = $('[id="menu-header-en"]>li>a:contains("' + mainMenuText + '"):first');
+            if (selectedInnerAnchor !== undefined) {
+                $('[id="menu-header-en"]>li>a').parent().removeClass('active');
+                $(selectedInnerAnchor).parent().addClass('active');
+            }
+        }
+        catch (ex) { }
+    </script>
+     
+ 
+    
+    <script src="/Assets/js/bootstrap.min.js"></script>
+    <!-- External Js -->
+    <script src="/Assets/js/webslidemenu.js"></script>
+
+
+    <!-- fswit color theme Js -->
+
+    <script src="/Assets/js/owl.carousel.min.js"></script>
+
+    <script src="/Assets/js/function.js"></script>
+
+<style>
+    .popup {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+
+    .popup-content {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        width: 400px;
+    }
+
+    .popup-buttons {
+        margin-top: 20px;
+    }
+
+        .popup-buttons button {
+            margin: 0 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+        }
+
+            .popup-buttons button:first-child {
+                background-color: #4CAF50;
+                color: white;
+            }
+
+            .popup-buttons button:last-child {
+                background-color: #f44336;
+                color: white;
+            }
+
+    .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 20px;
+        cursor: pointer;
+    }
+</style>
+<div id="confirmationPopup" class="popup" style="display:none;">
+    <div class="popup-content">
+        <span class="close-btn" onclick="closePopupLink()">&times;</span>
+
+        <div class="popup-logo">
+            <img src="/images/amc-logo.png" alt="AMC Logo">
+        </div>
+
+        <p>
+            <b>
+                You are being redirected to an external website. Please note that this website cannot be held responsible for external website content & privacy policies.
+            </b>
+        </p>
+
+        <div class="popup-buttons">
+            <button onclick="proceedToLink()">Yes</button>
+            <button onclick="closePopupLink()">No</button>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,149 @@
+# Heat-Health Early Warning Platform — model configuration
+#
+# Every weight, threshold, and category band used by the scoring engine lives
+# here. Values are literature-informed defaults for the prototype, not clinically
+# calibrated. Section references (§) point to Heat_Health_Project_Proposal.md.
+#
+# Change log: record every change to a weight or threshold in docs/weights_changelog.md.
+
+version: 0.1.0
+
+city:
+  name: Ahmedabad
+  state: Gujarat
+  authority: Ahmedabad Municipal Corporation (AMC)
+  timezone: Asia/Kolkata
+  centre: {lat: 23.0225, lon: 72.5714}
+  bbox: {west: 72.44, south: 22.90, east: 72.71, north: 23.15}
+  crs_metric: EPSG:32643          # UTM 43N, for areas and distances
+  regional_language: gu           # Gujarati; advisories also in en and hi
+
+# §6.1 Ward-level downscaling
+# T_ward = T_grid + beta × (LST_ward − LST_city mean), by day and by night.
+# See docs/downscaling_validation.md for the evidence behind these values.
+downscaling:
+  beta_night: 0.3                 # literature default; airport station agrees in sign (night MAE 1.49 → 1.41 °C)
+  beta_day: 0.0                   # daytime LST anomaly worsens airport MAE and does not track land cover
+  day_transition_wm2: 400         # offset moves from night to day value as GHI rises to this
+  beta_source: literature_default # only one station with data; set to "fitted" once more stations are added
+  lst_season_months: [4, 5, 6]    # April–June summer composites
+  # Cross-ward fits of the LST anomaly (°C) on one predictor each, used by scenarios (§6.12).
+  # NDVI and built-up share are collinear (r = −0.88), so they are not fitted together.
+  # Daytime LST shows no relationship with either (R² ≈ 0.01), so daytime fits are null.
+  lst_regression:
+    night_ndvi: {intercept: 1.938, slope: -11.33, r2: 0.54}
+    night_builtup_frac: {intercept: -2.385, slope: 3.192, r2: 0.81}
+    day_ndvi: null
+    day_builtup_frac: null
+  tree_cover_mrt_reduction: 0.5   # share of the direct beam blocked per unit tree cover (people are not always in shade)
+
+# §6.2–6.3 Thermal stress indicators → 0–100
+thermal_stress:
+  daily_aggregation: max_3h_mean  # mean of the 3 hottest hours of the day
+  normalization:                  # linear map: value at 0 → value at 100 (clamped)
+    utci: {zero: 26.0, full: 46.0}
+    wbgt: {zero: 25.0, full: 33.0}
+    heat_index: {zero: 27.0, full: 54.0}
+  weights: {utci: 0.5, wbgt: 0.3, heat_index: 0.2}
+  # Inputs are clamped to the UTCI polynomial's valid wind range (10 m wind, m/s)
+  wind_limits: {min: 0.5, max: 17.0}
+  # Simplified outdoor mean radiant temperature model for a standing person
+  # (direct beam on projected area + diffuse sky + reflected ground + longwave).
+  mrt:
+    shortwave_absorptivity: 0.7
+    body_emissivity: 0.97
+    ground_albedo: 0.2
+    ground_emissivity: 0.95
+    sky_view_factor: 0.6          # share of upper hemisphere that is open sky in a city
+    ground_excess_per_wm2: 0.01   # ground surface warmer than air by 0.01 °C per W/m² of sun
+    night_ground_excess_c: 2.0    # stored heat keeps urban ground warmer than air at night
+
+htsi:
+  categories:                     # inclusive upper bounds
+    low: 20
+    moderate: 40
+    high: 60
+    very_high: 80
+    extreme: 100
+  night:                          # P_night: lack of overnight recovery
+    tmin_threshold_c: 28.0
+    tmin_full_c: 31.0             # P_night reaches max at this ward-adjusted Tmin
+    max_points: 10
+  persistence:                    # P_persist: consecutive days with base score ≥ high
+    min_base_score: 41
+    points_per_day: 2.5
+    max_points: 10
+  indoor:                         # P_indoor (Innovation 1): heat-trapping roofs
+    max_points: 10                # P_indoor = max_points × roof_sheet_share
+    min_base_score: 41            # only applied on High days or worse
+    night_multiplier: 1.5         # when P_night > 0 (sheet roofs release heat slowly)
+
+# §6.4 Population Vulnerability Index (min-max normalized across wards)
+pvi:
+  weights:
+    elderly_share: 0.25
+    outdoor_worker_share: 0.20
+    healthcare_access_gap: 0.20   # higher = worse access
+    informal_housing_share: 0.15
+    under5_share: 0.10
+    population_density: 0.10
+
+# §6.5 Mortality and hospitalization risk
+risk:
+  vulnerability_floor: 0.4        # risk = HTSI × (floor + (1 - floor) × PVI/100) × factor
+  historical_factor: {min: 0.8, max: 1.2, default: 1.0}     # H_m
+  capacity_factor: {min: 0.8, max: 1.3, default: 1.0}       # C_h
+
+# §6.6 Alert levels (IMD colour scheme); inclusive upper bounds on MRI/HRI
+alerts:
+  levels:
+    green: 40
+    yellow: 60
+    orange: 80
+    red: 100
+
+# §6.9 Probabilistic alerts (Innovation 2)
+ensemble:
+  models: [ecmwf_ifs025, gfs025]  # Open-Meteo ensemble model identifiers
+  confidence: {high: 0.70, medium: 0.40}
+  triggers:
+    - {when: p_red, at_least: 0.40, lead_days_max: 3, action: orange_preparedness}
+
+# §6.10 Safe work windows (Innovation 4)
+# Maximum WBGT (°C) for each share of time spent working in an hour, by workload.
+# ACGIH heat-stress TLV (acclimatized) and Action Limit (unacclimatized),
+# as reproduced by CCOHS from ACGIH "2026 TLVs and BEIs", p.242
+# (https://www.ccohs.ca/oshanswers/phys_agents/heat/heat_control.html).
+# null = work not advised at any WBGT.
+work_windows:
+  acclimatized_default: true
+  unacclimatized_first_days: 3
+  workloads: [light, moderate, heavy, very_heavy]
+  thresholds_verified: true
+  work_fractions: ["75-100%", "50-75%", "25-50%", "0-25%"]
+  acclimatized:
+    light:      [31.0, 31.0, 32.0, 32.5]
+    moderate:   [28.0, 29.0, 30.0, 31.5]
+    heavy:      [null, 27.5, 29.0, 30.5]
+    very_heavy: [null, null, 28.0, 30.0]
+  unacclimatized:
+    light:      [28.0, 28.5, 29.5, 30.0]
+    moderate:   [25.0, 26.0, 27.0, 29.0]
+    heavy:      [null, 24.0, 25.5, 28.0]
+    very_heavy: [null, null, 24.5, 27.0]
+
+# §6.11 Cooling access (Innovation 5)
+cooling:
+  walk_minutes: 15
+  walk_speed_kmh: 4.5
+  point_types: [cooling_centre, drinking_water, park, hospital, clinic, public_building]
+  candidate_site_types: [school, community_centre, library, ward_office]
+  new_sites_k: 5
+
+# §6.13 Health-worker feedback (Innovation 6)
+feedback:
+  anomaly_ratio: 2.0              # flag when reported cases ≥ 2× expected
+  min_reports: 3                  # ignore tiny counts
+  auto_apply_recalibration: false # proposals only; authority must approve
+
+data_labels: [live, census, satellite_derived, historical, model_estimate, scenario_estimate]

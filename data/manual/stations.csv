@@ -1,0 +1,13 @@
+station_id,name,operator,lat,lon,ward_id,coord_quality,variables,data_access,period_available,notes
+42647,Ahmedabad Airport (VAAH),IMD,23.0667,72.6333,AMC-14,station_metadata,"temp,dwpt,rhum,wspd,pres",https://bulk.meteostat.net/v2/hourly/42647.csv.gz (Meteostat bulk; free),1944-01-01 to 2026-02-19,"Primary reference station. May 2024 hourly complete; max 46.2 °C on 2024-05-23. Downloaded to data/raw/web/meteostat_42647.csv.gz"
+42654,Gandhinagar,IMD,23.2333,72.7167,,station_metadata,"temp,rhum",https://bulk.meteostat.net/v2/hourly/42654.csv.gz,check,"Outside AMC (~26 km); rural/peri-urban contrast for the heat-island check"
+CPCB-MANINAGAR,Maninagar CAAQMS,GPCB (linked to CPCB),22.99866,72.6114,AMC-37,locality_geocode,"AT,RH,WS (+ pollutants)",https://app.cpcbccr.com (Advanced Search > Gujarat > Ahmedabad; manual CSV export),check,"Coordinates are locality centre - replace with exact station location from CPCB station list"
+CPCB-VATVA,GIDC Vatva CAAQMS,GPCB (linked to CPCB),22.95567,72.63675,AMC-48,locality_geocode,"AT,RH,WS (+ pollutants)",https://app.cpcbccr.com,check,"Industrial estate; coordinates approximate"
+SAFAR-BOPAL,Bopal,IITM SAFAR / AMC,23.03858,72.45878,,locality_geocode,"temp,RH (+ pollutants)",https://safar.tropmet.res.in (request data from IITM),check,"Just outside AMC western boundary"
+SAFAR-SATELLITE,Satellite,IITM SAFAR / AMC,23.02309,72.53647,AMC-18,locality_geocode,"temp,RH (+ pollutants)",https://safar.tropmet.res.in,check,"Geocoded to Satellite Road; station may be in Jodhpur ward (AMC-20)"
+SAFAR-PIRANA,Pirana,IITM SAFAR / AMC,22.96617,72.55748,AMC-46,locality_geocode,"temp,RH (+ pollutants)",https://safar.tropmet.res.in,check,"Near landfill/industrial area"
+SAFAR-RAIKHAD,Raikhad,IITM SAFAR / AMC,,,,not_found,"temp,RH (+ pollutants)",https://safar.tropmet.res.in,check,"Old city (Jamalpur/Khadia area); add coordinates manually"
+SAFAR-NAVRANGPURA,Navrangpura,IITM SAFAR / AMC,23.036,72.56434,AMC-18,locality_geocode,"temp,RH (+ pollutants)",https://safar.tropmet.res.in,check,
+SAFAR-RAKHIAL,Rakhial,IITM SAFAR / AMC,23.02027,72.62815,AMC-25,locality_geocode,"temp,RH (+ pollutants)",https://safar.tropmet.res.in,check,
+SAFAR-CHANDLODIYA,Chandlodiya,IITM SAFAR / AMC,23.07516,72.54404,AMC-02,locality_geocode,"temp,RH (+ pollutants)",https://safar.tropmet.res.in,check,
+SAFAR-AIRPORT,Airport,IITM SAFAR / AMC,,,AMC-14,not_found,"temp,RH (+ pollutants)",https://safar.tropmet.res.in,check,"Co-located area with IMD 42647"
