@@ -1,0 +1,100 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     72.57272,
+     22.97988
+    ]
+   },
+   "properties": {
+    "rank": 1,
+    "name": "Brighton Primary English School",
+    "layer": "school",
+    "ward_id": "AMC-35",
+    "people_newly_covered": 20206,
+    "vulnerability_weighted_gain": 12306.3,
+    "ward_name": "Baherampura"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     72.63628,
+     23.0095
+    ]
+   },
+   "properties": {
+    "rank": 2,
+    "name": "VIVEKANAND VIDYALAYA",
+    "layer": "school",
+    "ward_id": "AMC-39",
+    "people_newly_covered": 15295,
+    "vulnerability_weighted_gain": 8110.3,
+    "ward_name": "Amraiwadi"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     72.54798,
+     23.07228
+    ]
+   },
+   "properties": {
+    "rank": 3,
+    "name": "Gyanda Girls High School",
+    "layer": "school",
+    "ward_id": "AMC-07",
+    "people_newly_covered": 15652,
+    "vulnerability_weighted_gain": 7988.0,
+    "ward_name": "Ghatlodia"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     72.61114,
+     23.03841
+    ]
+   },
+   "properties": {
+    "rank": 4,
+    "name": "GCS Medical college",
+    "layer": "school",
+    "ward_id": "AMC-22",
+    "people_newly_covered": 11736,
+    "vulnerability_weighted_gain": 6468.9,
+    "ward_name": "India Colony"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     72.58887,
+     23.05158
+    ]
+   },
+   "properties": {
+    "rank": 5,
+    "name": "Kendriya Vidyalaya, Shahibaug",
+    "layer": "school",
+    "ward_id": "AMC-17",
+    "people_newly_covered": 5496,
+    "vulnerability_weighted_gain": 2773.3,
+    "ward_name": "Shahpur"
+   }
+  }
+ ]
+}

@@ -17,12 +17,15 @@ dependencies = [
     "requests>=2.31",
     "thermofeel>=2.3",
     "pythermalcomfort>=3.0",
+    "networkx>=3.2",
+    "scipy>=1.11",
 ]
 
 [project.optional-dependencies]
 dev = ["pytest>=8"]
 gee = ["earthengine-api>=0.1.390"]
 pdf = ["pdfplumber>=0.11"]            # scripts/extract_slums.py
+access = ["osmnx>=2.0"]                # scripts/build_walk_network.py, build_access.py
 api = ["fastapi>=0.110", "uvicorn>=0.29", "apscheduler>=3.10,<4", "httpx>=0.27"]
 
 [tool.setuptools.packages.find]

@@ -12,12 +12,12 @@ const dark = window.matchMedia?.('(prefers-color-scheme: dark)').matches
 const BASEMAP = `https://tiles.openfreemap.org/styles/${dark ? 'dark' : 'positron'}`
 const CENTER = [72.585, 23.03]
 
-export default function MapView({ data, layer, selected, onSelect }) {
+export default function MapView({ data, layer, selected, cooling, onSelect }) {
   const box = useRef(null)
   const map = useRef(null)
   const ready = useRef(false)
-  const latest = useRef({ data, layer, selected, onSelect })
-  latest.current = { data, layer, selected, onSelect }
+  const latest = useRef({ data, layer, selected, cooling, onSelect })
+  latest.current = { data, layer, selected, cooling, onSelect }
 
   useEffect(() => {
     const m = new maplibregl.Map({ container: box.current, style: BASEMAP, center: CENTER, zoom: 10.6, attributionControl: { compact: true } })
@@ -34,6 +34,19 @@ export default function MapView({ data, layer, selected, onSelect }) {
         paint: { 'line-color': dark ? '#c3c2b7' : '#52514e', 'line-width': 1.2, 'line-dasharray': [2, 2] } }, labels)
       m.addLayer({ id: 'selected', type: 'line', source: 'wards', filter: ['==', ['get', 'ward_id'], ''],
         paint: { 'line-color': dark ? '#ffffff' : '#0b0b0b', 'line-width': 2.5 } })
+      // Cooling layer extras: existing AMC cooling places (small dots) and recommended new sites (ranked)
+      const none = { type: 'FeatureCollection', features: [] }
+      m.addSource('cool-pts', { type: 'geojson', data: none })
+      m.addSource('cool-sites', { type: 'geojson', data: none })
+      m.addLayer({ id: 'cool-pts', type: 'circle', source: 'cool-pts',
+        paint: { 'circle-radius': 3, 'circle-color': dark ? '#3987e5' : '#2a78d6', 'circle-stroke-width': 1,
+          'circle-stroke-color': dark ? '#1a1a19' : '#fcfcfb' } })
+      m.addLayer({ id: 'cool-sites', type: 'circle', source: 'cool-sites',
+        paint: { 'circle-radius': 9, 'circle-color': dark ? '#199e70' : '#1baf7a', 'circle-stroke-width': 3,
+          'circle-stroke-color': dark ? '#ffffff' : '#0b0b0b' } })
+      m.addLayer({ id: 'cool-sites-label', type: 'symbol', source: 'cool-sites',
+        layout: { 'text-field': ['to-string', ['get', 'rank']], 'text-size': 11, 'text-allow-overlap': true,
+          'text-font': ['Noto Sans Bold'] }, paint: { 'text-color': '#ffffff' } })
       ready.current = true
       render()
     })
@@ -72,9 +85,12 @@ export default function MapView({ data, layer, selected, onSelect }) {
     }))
     m.getSource('wards').setData({ type: 'FeatureCollection', features })
     m.setFilter('selected', ['==', ['get', 'ward_id'], selected ?? ''])
+    const none = { type: 'FeatureCollection', features: [] }
+    m.getSource('cool-pts').setData(latest.current.cooling?.existing_points ?? none)
+    m.getSource('cool-sites').setData(latest.current.cooling?.recommended_sites ?? none)
   }
 
-  useEffect(render, [data, layer, selected])
+  useEffect(render, [data, layer, selected, cooling])
 
   return <div className="map" ref={box} role="region" aria-label="Ward risk map" />
 }

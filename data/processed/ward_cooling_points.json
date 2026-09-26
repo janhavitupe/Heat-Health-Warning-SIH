@@ -1,0 +1,638 @@
+{
+ "AMC-01": [
+  {
+   "name": "New Gota Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Gota Oghnaj Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Gota Ward Office",
+   "layer": "ward_office"
+  }
+ ],
+ "AMC-02": [
+  {
+   "name": "CHANDLODIA Ward Office",
+   "layer": "ward_office"
+  },
+  {
+   "name": "Botanical Garden",
+   "layer": "park"
+  },
+  {
+   "name": "Chandlodiya Garden 1",
+   "layer": "park"
+  }
+ ],
+ "AMC-03": [
+  {
+   "name": "Kali Near Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Chandkheda Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Chandkheda Ward Office",
+   "layer": "ward_office"
+  }
+ ],
+ "AMC-04": [
+  {
+   "name": "Stadium Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Sabarmati Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Mahatmagandhi Muni Library",
+   "layer": "library"
+  }
+ ],
+ "AMC-05": [
+  {
+   "name": "New Ranip Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Ranip Ward Office",
+   "layer": "ward_office"
+  }
+ ],
+ "AMC-06": [
+  {
+   "name": "Juna Wadaj Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Nava Wadaj Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Chandrakant Baxi Library",
+   "layer": "library"
+  }
+ ],
+ "AMC-07": [
+  {
+   "name": "Pandit Dindayal Upadhyay Muni.Library",
+   "layer": "library"
+  },
+  {
+   "name": "Ghtalodiya Ward Office",
+   "layer": "ward_office"
+  }
+ ],
+ "AMC-08": [
+  {
+   "name": "Thaltej Opposite Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Thaltej Ward Office",
+   "layer": "ward_office"
+  },
+  {
+   "name": "park",
+   "layer": "park"
+  }
+ ],
+ "AMC-09": [
+  {
+   "name": "Sola Library",
+   "layer": "library"
+  },
+  {
+   "name": "Chandrakant Library,Vijay Nagar",
+   "layer": "library"
+  },
+  {
+   "name": "Sheth Maneklal Jethalal Sanchalit Library",
+   "layer": "library"
+  }
+ ],
+ "AMC-10": [
+  {
+   "name": "Ranip Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Morarji Desai Park",
+   "layer": "park"
+  },
+  {
+   "name": "riverfront garden",
+   "layer": "park"
+  }
+ ],
+ "AMC-11": [
+  {
+   "name": "Sardarnagar Urban Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Sardarnagar - Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Kubernagar 1 Urban Health Centre",
+   "layer": "uhc"
+  }
+ ],
+ "AMC-12": [
+  {
+   "name": "Naroda Muthiya Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Rakhiyal Rakhial Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Krishnanagar Near Urban Health Centre",
+   "layer": "uhc"
+  }
+ ],
+ "AMC-13": [
+  {
+   "name": "Saijpur Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Vir Savarkar Muni.Library",
+   "layer": "library"
+  },
+  {
+   "name": "Saijpur Library",
+   "layer": "library"
+  }
+ ],
+ "AMC-14": [
+  {
+   "name": "Kanaiyalal Nathuram Library,Kubernagar",
+   "layer": "library"
+  },
+  {
+   "name": "Saijpur Ward Office",
+   "layer": "ward_office"
+  },
+  {
+   "name": "Majmudar common plot",
+   "layer": "park"
+  }
+ ],
+ "AMC-15": [
+  {
+   "name": "Koutilya Muni Library",
+   "layer": "library"
+  },
+  {
+   "name": "dayanand Sarshwati Muni Library",
+   "layer": "library"
+  },
+  {
+   "name": "Asarva Ward Office",
+   "layer": "ward_office"
+  }
+ ],
+ "AMC-16": [
+  {
+   "name": "Girdharnagar Girhdar Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Kavi Narmad Muni.Library",
+   "layer": "library"
+  },
+  {
+   "name": "Trithkar Udhyan Muni.Library",
+   "layer": "library"
+  }
+ ],
+ "AMC-17": [
+  {
+   "name": "Shahpur Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Dariyapur Urban Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Jayotindra Dave Muni Library",
+   "layer": "library"
+  }
+ ],
+ "AMC-18": [
+  {
+   "name": "Naranpura Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Navrangpura Devpath Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "New Ambawadi Urban Health Centre",
+   "layer": "uhc"
+  }
+ ],
+ "AMC-19": [
+  {
+   "name": "Ghatlodiya Under Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Chandlodiya Under Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Bodakdev Urban Health Centre",
+   "layer": "uhc"
+  }
+ ],
+ "AMC-20": [
+  {
+   "name": "New Vejalpur Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Jodhpur Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Vejalpur Urban Health Centre",
+   "layer": "uhc"
+  }
+ ],
+ "AMC-21": [
+  {
+   "name": "Chimanlal PurshottAMdas Gajjar Muni Library",
+   "layer": "library"
+  },
+  {
+   "name": "RA.B.GI.U Library",
+   "layer": "library"
+  },
+  {
+   "name": "Dariyapur Ward Office",
+   "layer": "ward_office"
+  }
+ ],
+ "AMC-22": [
+  {
+   "name": "Naroda Road Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Kavi Shree ManBhatt Premanand Library,Naroda",
+   "layer": "library"
+  },
+  {
+   "name": "Naroda Road , SubZonal Office",
+   "layer": "ward_office"
+  }
+ ],
+ "AMC-23": [
+  {
+   "name": "Thakkarbapanagar Library",
+   "layer": "library"
+  },
+  {
+   "name": "Thakkarbapa Nagar Ward Office",
+   "layer": "ward_office"
+  }
+ ],
+ "AMC-24": [
+  {
+   "name": "Nava Nikol Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Nikol (Nava Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Nikol New Office",
+   "layer": "ward_office"
+  }
+ ],
+ "AMC-25": [
+  {
+   "name": "Viratnagar Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Kavi ramanlal vasantlal Desai,Nikol",
+   "layer": "library"
+  }
+ ],
+ "AMC-26": [
+  {
+   "name": "Bapunagar Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Ishawarlal Kachrabhai Parmar Muni.Library",
+   "layer": "library"
+  },
+  {
+   "name": "Chnadrkant Bakshi Muni.Library",
+   "layer": "library"
+  }
+ ],
+ "AMC-27": [
+  {
+   "name": "V.N.Shah Library,Rakhiyal",
+   "layer": "library"
+  },
+  {
+   "name": "sureshBhai Ramkumar Joshi Library,Sarspur",
+   "layer": "library"
+  },
+  {
+   "name": "SARASPUR Ward Office",
+   "layer": "ward_office"
+  }
+ ],
+ "AMC-28": [
+  {
+   "name": "Kalupur 1St Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Khadiya Mu Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Dudeshwar New Urban Health Centre",
+   "layer": "uhc"
+  }
+ ],
+ "AMC-29": [
+  {
+   "name": "Madhupura Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Jamalpur Ground Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Swa.Lalbhai Kundivala Muni.Library",
+   "layer": "library"
+  }
+ ],
+ "AMC-30": [
+  {
+   "name": "Paldi Fatehpura Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Paldi Ward Office",
+   "layer": "ward_office"
+  },
+  {
+   "name": "Sardar Vallabhbhai Patel Institute of Medical Sciences and Research (SVP)",
+   "layer": "public_hospital"
+  }
+ ],
+ "AMC-31": [
+  {
+   "name": "New Vasna Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Old Vasna Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "K.K.Shastri Muni.Library",
+   "layer": "library"
+  }
+ ],
+ "AMC-32": [
+  {
+   "name": "Vejalpur Ward Office",
+   "layer": "ward_office"
+  }
+ ],
+ "AMC-33": [
+  {
+   "name": "Sarkhej Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Sarkhej Ward Office",
+   "layer": "ward_office"
+  },
+  {
+   "name": "Pancha Talav",
+   "layer": "park"
+  }
+ ],
+ "AMC-34": [
+  {
+   "name": "Maktampura Ward Office",
+   "layer": "ward_office"
+  }
+ ],
+ "AMC-35": [
+  {
+   "name": "New Behrampura Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Behrampura Behrahpura Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Kaniyalal NathurAM Bhil Muni.Library",
+   "layer": "library"
+  }
+ ],
+ "AMC-36": [
+  {
+   "name": "Danilimda Near Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Bhikhubhai Chavda Muni Library",
+   "layer": "library"
+  },
+  {
+   "name": "New Muster Office Danilimda",
+   "layer": "ward_office"
+  }
+ ],
+ "AMC-37": [
+  {
+   "name": "Kankariya Kankaria Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Maninagar Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "GorvardhanrAM Tripathi Muni Library",
+   "layer": "library"
+  }
+ ],
+ "AMC-38": [
+  {
+   "name": "Gomtipur Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Pannalal Patel Muni Library",
+   "layer": "library"
+  },
+  {
+   "name": "Rajpur Ward Office",
+   "layer": "ward_office"
+  }
+ ],
+ "AMC-39": [
+  {
+   "name": "Gomtipur Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Rajpur Opp-Chakudiya Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Dr. Babasaheb Ambedkar Muni.Library",
+   "layer": "library"
+  }
+ ],
+ "AMC-40": [
+  {
+   "name": "Odhav Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Umashankar Joshi Muni.Library",
+   "layer": "library"
+  },
+  {
+   "name": "Odhav Ward Office",
+   "layer": "ward_office"
+  }
+ ],
+ "AMC-41": [
+  {
+   "name": "Vastral Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Arbudanagar Opp Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Vastral Ward Office",
+   "layer": "ward_office"
+  }
+ ],
+ "AMC-42": [
+  {
+   "name": "Indrapuri Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Kaka Kalekar Muni.Library.",
+   "layer": "library"
+  },
+  {
+   "name": "Indrapuri Ward Office",
+   "layer": "ward_office"
+  }
+ ],
+ "AMC-43": [
+  {
+   "name": "Amraiwadi Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Bhaipura Ward Office",
+   "layer": "ward_office"
+  }
+ ],
+ "AMC-44": [
+  {
+   "name": "Khokhara Balbhavan Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Shree RAManlal Nilkhanth Muni Library",
+   "layer": "library"
+  },
+  {
+   "name": "Kavi Suresh HariPrashad Joshi Muni.Library",
+   "layer": "library"
+  }
+ ],
+ "AMC-45": [
+  {
+   "name": "Ghodashar Ghodasar Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Piplaj Urban Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Isanpur Ward Office",
+   "layer": "ward_office"
+  }
+ ],
+ "AMC-46": [
+  {
+   "name": "Isanpur Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Lambha Juni Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Narol Opp/Shreeram Urban Health Centre",
+   "layer": "uhc"
+  }
+ ],
+ "AMC-47": [
+  {
+   "name": "Vatva Madninagar Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Vatva Smruti Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Vatva Chc Urban Health Centre",
+   "layer": "uhc"
+  }
+ ],
+ "AMC-48": [
+  {
+   "name": "Vatva Madninagar Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Ramol Urban Health Centre",
+   "layer": "uhc"
+  },
+  {
+   "name": "Vatva Chc Urban Health Centre",
+   "layer": "uhc"
+  }
+ ]
+}

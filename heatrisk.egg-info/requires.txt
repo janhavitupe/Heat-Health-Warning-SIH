@@ -7,6 +7,11 @@ shapely>=2
 requests>=2.31
 thermofeel>=2.3
 pythermalcomfort>=3.0
+networkx>=3.2
+scipy>=1.11
+
+[access]
+osmnx>=2.0
 
 [api]
 fastapi>=0.110

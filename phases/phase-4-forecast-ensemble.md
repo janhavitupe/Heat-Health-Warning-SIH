@@ -22,7 +22,7 @@ Add the time dimension: 3–5 day risk trajectories, peak identification, heatwa
 - [x] Performance check: all members × all wards × 5 days completes within the refresh window. *122 × 48 × 8 days ≈ 4 min.*
 
 ### Reliability check (§9.4)
-- [x] Using archived or reanalysis-driven hindcasts over the backtest period where available, compute Brier score and a reliability diagram. If archived ensemble forecasts are unavailable, document this and plan evaluation for the live season. *Archived ensembles unavailable; used archived deterministic forecasts (Previous Runs API) as a 9-member lagged multi-model ensemble: Brier skill 0.44–0.53 at 1–5 days. Model choice tested on a blind 2025 season. Live-ensemble reliability to be measured in the 2027 season.*
+- [x] Using archived or reanalysis-driven hindcasts over the backtest period where available, compute Brier score and a reliability diagram. If archived ensemble forecasts are unavailable, document this and plan evaluation for the live season. *Archived ensembles unavailable; used archived deterministic forecasts (Previous Runs API) as a 9-member lagged multi-model ensemble: Brier skill 0.43–0.52 at 1–5 days (after Phase 6). Model choice tested on a blind 2025 season. Live-ensemble reliability to be measured in the 2027 season.*
 
 ## Deliverables
 - `heatrisk/ensemble.py` and forecast runner

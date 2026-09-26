@@ -18,4 +18,10 @@ export const api = {
   wards: (day, replay) => get('/wards', { day, replay }),
   ward: (id, replay) => get(`/ward/${encodeURIComponent(id)}`, { replay }),
   events: (replay) => get('/events', { replay }),
+  actions: (id, day, replay) => get(`/ward/${encodeURIComponent(id)}/actions`, { day, replay }),
+  workWindows: (id, day, replay, acclimatized) => get(`/ward/${encodeURIComponent(id)}/work-windows`, { day, replay, acclimatized }),
+  advisories: (id, day, replay) => get(`/ward/${encodeURIComponent(id)}/advisories`, { day, replay }),
+  priorities: (day, replay, view) => get('/priorities', { day, replay, view }),
+  cooling: () => get('/cooling'),
+  allocation: (day, replay, cooling_units, ambulances) => get('/allocation', { day, replay, cooling_units, ambulances }),
 }

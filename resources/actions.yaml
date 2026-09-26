@@ -1,0 +1,110 @@
+# Action rules (Phase 6). Wording and departments follow the Ahmedabad Heat Action Plan 2019,
+# "departmental wise suggested activities during heatwave days" (pages 13-21 of the NRDC PDF:
+# https://www.nrdc.org/sites/default/files/ahmedabad-heat-action-plan-2019-update.pdf).
+#
+# A rule fires for a ward-day when:
+#   level      the ward's alert (MRI, or HRI when target: hri) is at least this level
+#   until      optional: at most this level (a stronger rule takes over above it)
+#   when       optional extra condition, one of
+#                contribution: <explanation key>, min_points: N    (a driver of this ward's score)
+#                attribute: <ward column>, min_rank: 0..1         (ward is in the top share of the city)
+#                flag: <ward column>                               (true/false column, e.g. cooling_desert)
+#                min_hot_days: N                                   (consecutive heat-alert days)
+#                metric: <daily column>, min: X                    (e.g. WBGT at or above a limit)
+#   scope      ward (act in this ward) or city (city-wide measure; listed once per day)
+# `reason` is shown to officials next to the action.
+
+rules:
+  # ---------- city-wide measures by alert level
+  - {id: nodal_yellow, level: yellow, until: yellow, scope: city, department: AMC Nodal Officer, lead: same day,
+     action: "Distribute multilingual heat-prevention pamphlets to hospitals, schools and associations; brief NGOs and slum leaders.",
+     reason: "Yellow alert (Hot Day Advisory)"}
+  - {id: nodal_orange, level: orange, until: orange, scope: city, department: AMC Nodal Officer, lead: same day,
+     action: "Re-engage state and local agencies; meet NGOs and slum leaders; plan special measures for the elderly and infants; report all-cause deaths daily.",
+     reason: "Orange alert (Heat Alert Day)"}
+  - {id: press_orange, level: orange, until: orange, scope: city, department: Media and AMC Press Officer, lead: same day,
+     action: "Increase public messaging: multilingual pamphlets, advertisements and press briefings on heat illness.",
+     reason: "Orange alert (Heat Alert Day)"}
+  - {id: nodal_red, level: red, scope: city, department: AMC Nodal Officer, lead: same day,
+     action: "Convene key agency leaders; activate cooling centres (temples, public buildings, malls); daily coordination call.",
+     reason: "Red alert (Extreme Heat Alert Day)"}
+  - {id: press_red, level: red, scope: city, department: Media and AMC Press Officer, lead: same day,
+     action: "Inform all citizens by bulk SMS, WhatsApp and FM radio; SMS alert to private practitioners.",
+     reason: "Red alert"}
+  - {id: power_red, level: red, scope: city, department: Electricity Board, lead: same day,
+     action: "No power cuts; prioritise supply to hospitals and UHCs.",
+     reason: "Red alert"}
+  - {id: schools_red, level: red, scope: city, department: School Board and Education Department, lead: 1 day before,
+     action: "Close schools and colleges on heatwave days; allow school premises to be used as daytime shelters.",
+     reason: "Red alert"}
+  - {id: water_red, level: red, scope: city, department: Water Department, lead: same day,
+     action: "Supply drinking water at locations across the city.",
+     reason: "Red alert"}
+
+  # ---------- ward actions by level
+  - {id: health_orange, level: orange, until: orange, scope: ward, department: AMC Health Department, lead: same day,
+     action: "Adopt heat-focused examination at local hospitals and UHCs; distribute reusable ice packs.",
+     reason: "Orange alert in this ward"}
+  - {id: health_red, level: red, scope: ward, department: AMC Health Department, lead: same day,
+     action: "Keep UHCs open till 7 PM; ensure ice packs and medical supplies; increase link-worker outreach.",
+     reason: "Red alert in this ward"}
+  - {id: announce_red, level: red, scope: ward, department: AMC Nodal Officer / Ward office, lead: same day,
+     action: "Announce the Red alert in slum and semi-slum areas (auto-rickshaw publicity); inform ward councillors and NGOs.",
+     reason: "Red alert in this ward"}
+  - {id: parks_red, level: red, scope: ward, department: Garden and Parks Department, lead: same day,
+     action: "Keep gardens and parks open; provide drinking water, shelter and ORS.",
+     reason: "Red alert in this ward"}
+
+  # ---------- driver-specific actions
+  - {id: workers_orange, level: orange, scope: ward, department: Real Estate Department, lead: same day,
+     when: {metric: wbgt, min: 30.5},
+     action: "Mandatory buttermilk/water for all workers at construction sites.",
+     reason: "WBGT at or above 30.5 °C: heavy work unsafe even at 15 min per hour (ACGIH)"}
+  - {id: workers_red, level: red, scope: ward, department: AMC Labour & Employment Department, lead: same day,
+     when: {metric: wbgt, min: 30.5},
+     action: "Stop outdoor and construction work 12:00-16:00; shift schedules away from 13:00-17:00; portable drinking water at sites.",
+     reason: "WBGT at or above 30.5 °C: heavy work unsafe even at 15 min per hour (ACGIH)"}
+  - {id: road_red, level: red, scope: ward, department: Transport Department / AMTS / BRTS, lead: same day,
+     when: {metric: wbgt, min: 30.5},
+     action: "Keep road-site jobs closed 12:00-16:00; water and buttermilk for labourers; shade, water and ORS at bus and auto stands.",
+     reason: "WBGT at or above 30.5 °C: heavy work unsafe even at 15 min per hour (ACGIH)"}
+  - {id: cleaners_orange, level: orange, scope: ward, department: Solid Waste Management Department, lead: same day,
+     when: {metric: wbgt, min: 30.5},
+     action: "Move public-facility cleaners' shifts to start at 16:30 instead of 15:00.",
+     reason: "WBGT at or above 30.5 °C: heavy work unsafe even at 15 min per hour (ACGIH)"}
+  - {id: nights_orange, level: orange, scope: ward, department: AMC Nodal Officer, lead: same day,
+     when: {contribution: night, min_points: 5},
+     action: "Keep AMC night shelters open day and night for people without water or electricity.",
+     reason: "Hot nights: little overnight recovery"}
+  - {id: indoor_orange, level: orange, scope: ward, department: AMC Nodal Officer / Estate Department, lead: same day,
+     when: {contribution: indoor, min_points: 3},
+     action: "Open night-time cooling shelters for households under metal/asbestos roofs; promote cool-roof painting.",
+     reason: "Heat-trapping sheet roofs"}
+  - {id: slums_orange, level: orange, scope: ward, department: AMC Health Department (link workers), lead: same day,
+     when: {attribute: informal_housing_share, min_rank: 0.75},
+     action: "Link-worker and ASHA outreach in slum settlements; distribute ORS and water.",
+     reason: "Among the city's top quarter for slum population"}
+  - {id: elderly_red, level: red, scope: ward, department: Women and Child Development / ICDS, lead: same day,
+     when: {attribute: population_density, min_rank: 0.5},
+     action: "Special cooling measures for old people and infants; door-to-door welfare checks via anganwadi and community groups.",
+     reason: "Dense ward: many elderly and infants exposed"}
+  - {id: cooling_desert, level: orange, scope: ward, department: AMC Nodal Officer, lead: 1 day before,
+     when: {flag: cooling_desert},
+     action: "Activate extra cooling centres in public buildings or deploy mobile cooling units; this ward is a cooling desert.",
+     reason: "Most residents are more than a 15-minute walk from a cooling place"}
+  - {id: persist_red, level: red, scope: ward, department: 108 Emergency Service, lead: same day,
+     when: {min_hot_days: 3},
+     action: "Pre-position ambulances with ice packs and IV fluids; SMS warnings to residents.",
+     reason: "Several consecutive heat-alert days"}
+
+  # ---------- hospitalization risk (healthcare view)
+  - {id: hospital_red, level: red, target: hri, scope: ward, department: AMC Health Department / Hospitals, lead: same day,
+     action: "Hospital surge protocol: extra staff for heat-stroke emergencies; confirm cooling and IV stocks.",
+     reason: "Hospitalization risk is Red"}
+
+# Actions triggered by forecast probability (ensemble.triggers) rather than today's level
+triggers:
+  orange_preparedness:
+    - {department: AMC Nodal Officer, action: "Re-engage state and local agencies; follow-up meetings with NGOs and slum leaders; plan special measures for the elderly and infants."}
+    - {department: AMC Health Department, action: "Stock reusable ice packs for UHCs, 108 centres, ambulances and hospitals; brief doctors on heat illness."}
+    - {department: 108 Emergency Service, action: "Stock ice packs and IV fluids in ambulances."}

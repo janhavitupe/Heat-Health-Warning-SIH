@@ -1,0 +1,87 @@
+# Public advisory templates (Phase 6). Advice follows the Ahmedabad Heat Action Plan 2019
+# ("Community Groups and Individuals"; Labour and Transport departments) and NDMA heat-wave
+# do's and don'ts: drink water often, stay out of the sun 12:00-16:00, light cotton clothes,
+# check on the elderly and infants, call 108 for heat illness.
+#
+# review_status: English is final wording for the prototype. Hindi and Gujarati are DRAFTS
+# written for the prototype and must be verified by a native speaker before any real use.
+#
+# Placeholders: {ward} {day} {sender} {window} (heavy-work restriction, e.g. "11:00-16:00")
+#               {cooling} (nearest named AMC cooling place) {peak} (hottest hour)
+# SMS limits (checked by tests with the longest ward name): English 160 characters (one SMS);
+# Hindi/Gujarati 134 characters (two Unicode SMS parts).
+
+review_status: {en: final, hi: draft_needs_native_review, gu: draft_needs_native_review}
+
+level_names:
+  en: {yellow: "YELLOW heat advisory", orange: "ORANGE heat alert", red: "RED heat alert"}
+  hi: {yellow: "पीली गर्मी सलाह", orange: "नारंगी हीट अलर्ट", red: "लाल हीट अलर्ट"}
+  gu: {yellow: "પીળી ગરમી સલાહ", orange: "નારંગી હીટ એલર્ટ", red: "લાલ હીટ એલર્ટ"}
+
+sms:
+  en:
+    public:
+      yellow: "{level} {day}, {ward}: drink water often, avoid sun 12-4pm, wear light cotton. Feeling unwell in heat? Call 108. -{sender}"
+      orange: "{level} {day}, {ward}: stay indoors 12-4pm, drink water every hour, check on elders. Heatstroke signs? Call 108. -{sender}"
+      red: "{level} {day}, {ward}: stay in 12-4pm, drink water often, check elders. Cool place: {cooling}. Call 108 -{sender}"
+    workers:
+      yellow: "{level} {day}, {ward}: outdoor workers drink water every 20 min, rest in shade. Dizzy? Stop work, call 108. -{sender}"
+      orange: "{level} {day}, {ward}: heavy outdoor work only with long rests {window}. Water every 20 min. Dizzy? Call 108 -{sender}"
+      red: "{level} {day}, {ward}: NO heavy outdoor work {window}. Rest in shade, water every 20 min. Confused/dizzy? Call 108 -{sender}"
+    elderly:
+      yellow: "{level} {day}, {ward}: give elders and infants water often, keep them out of the sun. Unwell? Call 108. -{sender}"
+      orange: "{level} {day}, {ward}: keep elders and infants indoors and cool, water often, check twice a day. Call 108 -{sender}"
+      red: "{level} {day}, {ward}: keep elders and infants cool, visit twice a day. Cool place: {cooling}. Call 108 -{sender}"
+  hi:
+    public:
+      yellow: "{level} {day}, {ward}: बार-बार पानी पिएं, दोपहर 12-4 धूप से बचें। तबीयत बिगड़े तो 108 पर कॉल करें। -{sender}"
+      orange: "{level} {day}, {ward}: दोपहर 12-4 घर में रहें, हर घंटे पानी पिएं, बुज़ुर्गों का ध्यान रखें। लू लगे तो 108 -{sender}"
+      red: "{level} {day}, {ward}: दोपहर 12-4 बाहर न निकलें, बार-बार पानी पिएं, बुज़ुर्गों की देखभाल करें। लू लगे तो 108 -{sender}"
+    workers:
+      yellow: "{level} {day}, {ward}: बाहर काम करने वाले हर 20 मिनट पानी पिएं, छांव में आराम करें। चक्कर आए तो 108 -{sender}"
+      orange: "{level} {day}, {ward}: {window} भारी काम में लंबा आराम लें, हर 20 मिनट पानी पिएं। चक्कर आए तो 108 -{sender}"
+      red: "{level} {day}, {ward}: {window} भारी बाहरी काम न करें। छांव में रहें, पानी पिएं। चक्कर आए तो 108 -{sender}"
+    elderly:
+      yellow: "{level} {day}, {ward}: बुज़ुर्गों व शिशुओं को बार-बार पानी दें, धूप से बचाएं। तबीयत बिगड़े तो 108 -{sender}"
+      orange: "{level} {day}, {ward}: बुज़ुर्गों व शिशुओं को घर में ठंडा रखें, पानी दें, दिन में दो बार देखें। 108 -{sender}"
+      red: "{level} {day}, {ward}: बुज़ुर्गों व शिशुओं को ठंडी जगह रखें, दिन में दो बार मिलें। तबीयत बिगड़े तो 108 -{sender}"
+  gu:
+    public:
+      yellow: "{level} {day}, {ward}: વારંવાર પાણી પીઓ, બપોરે 12-4 તડકાથી બચો. તબિયત બગડે તો 108 પર કૉલ કરો. -{sender}"
+      orange: "{level} {day}, {ward}: બપોરે 12-4 ઘરમાં રહો, દર કલાકે પાણી પીઓ, વડીલોનું ધ્યાન રાખો. લૂ લાગે તો 108 -{sender}"
+      red: "{level} {day}, {ward}: બપોરે 12-4 બહાર ન નીકળો, વારંવાર પાણી પીઓ, વડીલોની કાળજી લો. લૂ લાગે તો 108 -{sender}"
+    workers:
+      yellow: "{level} {day}, {ward}: બહાર કામ કરનારા દર 20 મિનિટે પાણી પીઓ, છાંયે આરામ કરો. ચક્કર આવે તો 108 -{sender}"
+      orange: "{level} {day}, {ward}: {window} ભારે કામમાં લાંબો આરામ લો, દર 20 મિનિટે પાણી પીઓ. ચક્કર આવે તો 108 -{sender}"
+      red: "{level} {day}, {ward}: {window} ભારે બહારનું કામ ન કરો. છાંયે રહો, પાણી પીઓ. ચક્કર આવે તો 108 -{sender}"
+    elderly:
+      yellow: "{level} {day}, {ward}: વડીલો અને બાળકોને વારંવાર પાણી આપો, તડકાથી બચાવો. તબિયત બગડે તો 108 -{sender}"
+      orange: "{level} {day}, {ward}: વડીલો અને બાળકોને ઘરમાં ઠંડા રાખો, પાણી આપો, દિવસમાં બે વાર જુઓ. 108 -{sender}"
+      red: "{level} {day}, {ward}: વડીલો અને બાળકોને ઠંડી જગ્યાએ રાખો, દિવસમાં બે વાર મળો. તબિયત બગડે તો 108 -{sender}"
+
+# Longer WhatsApp / voice text: headline + ward facts + advice for the audience.
+long:
+  en:
+    headline: "{level} for {ward} on {day}."
+    facts: "Hottest around {peak}. Nearest cooling places: {cooling_list}."
+    public: "Stay indoors or in shade from 12 to 4 pm. Drink water every hour even if not thirsty; buttermilk, lassi and ORS help. Wear light cotton clothes and cover your head outdoors. Check on elderly neighbours and never leave children in parked vehicles. Signs of heatstroke: confusion, very hot dry skin, fainting. Call 108 immediately."
+    workers: "Heavy outdoor work: {work_summary}. Drink a glass of water every 20 minutes and rest in shade. New workers and those back from leave need extra rest in the first days. Stop work and tell your supervisor if you feel dizzy, weak or confused. Call 108 for heatstroke."
+    elderly: "Keep elderly people, infants and the sick in the coolest room; use wet cloths and fans. Give water often, even without thirst. Visit or call older relatives and neighbours at least twice a day. If they seem confused, stop sweating or faint, call 108 and cool them with water while waiting."
+  hi:
+    headline: "{ward} के लिए {day} को {level}।"
+    facts: "सबसे ज़्यादा गर्मी लगभग {peak} बजे। नज़दीकी ठंडी जगहें: {cooling_list}।"
+    public: "दोपहर 12 से 4 बजे तक घर के अंदर या छांव में रहें। प्यास न लगे तब भी हर घंटे पानी पिएं; छाछ, लस्सी और ORS लाभदायक हैं। हल्के सूती कपड़े पहनें और बाहर सिर ढकें। पड़ोस के बुज़ुर्गों का हाल पूछें और बच्चों को खड़ी गाड़ी में कभी न छोड़ें। लू के लक्षण: भ्रम, बहुत गर्म सूखी त्वचा, बेहोशी। तुरंत 108 पर कॉल करें।"
+    workers: "भारी बाहरी काम: {work_summary}। हर 20 मिनट में एक गिलास पानी पिएं और छांव में आराम करें। नए मज़दूर और छुट्टी से लौटे लोग शुरुआती दिनों में ज़्यादा आराम लें। चक्कर, कमज़ोरी या भ्रम हो तो काम रोकें और सुपरवाइज़र को बताएं। लू लगने पर 108 पर कॉल करें।"
+    elderly: "बुज़ुर्गों, शिशुओं और बीमारों को घर के सबसे ठंडे कमरे में रखें; गीले कपड़े और पंखे का उपयोग करें। प्यास न हो तब भी बार-बार पानी दें। बुज़ुर्ग रिश्तेदारों और पड़ोसियों से दिन में कम से कम दो बार मिलें या फ़ोन करें। भ्रम, पसीना बंद होना या बेहोशी हो तो 108 पर कॉल करें और तब तक पानी से ठंडा करें।"
+  gu:
+    headline: "{ward} માટે {day} ના રોજ {level}."
+    facts: "સૌથી વધુ ગરમી આશરે {peak} વાગ્યે. નજીકની ઠંડી જગ્યાઓ: {cooling_list}."
+    public: "બપોરે 12 થી 4 સુધી ઘરમાં અથવા છાંયે રહો. તરસ ન લાગે તો પણ દર કલાકે પાણી પીઓ; છાશ, લસ્સી અને ORS ફાયદાકારક છે. હળવાં સુતરાઉ કપડાં પહેરો અને બહાર માથું ઢાંકો. પડોશના વડીલોની ખબર પૂછો અને બાળકોને ઊભેલા વાહનમાં ક્યારેય એકલાં ન છોડો. લૂના લક્ષણો: મૂંઝવણ, ખૂબ ગરમ સૂકી ચામડી, બેભાન થવું. તરત 108 પર કૉલ કરો."
+    workers: "ભારે બહારનું કામ: {work_summary}. દર 20 મિનિટે એક ગ્લાસ પાણી પીઓ અને છાંયે આરામ કરો. નવા કામદારો અને રજા પરથી પાછા આવેલા લોકો શરૂઆતના દિવસોમાં વધુ આરામ લે. ચક્કર, નબળાઈ કે મૂંઝવણ લાગે તો કામ બંધ કરો અને સુપરવાઇઝરને જણાવો. લૂ લાગે તો 108 પર કૉલ કરો."
+    elderly: "વડીલો, બાળકો અને બીમાર લોકોને ઘરના સૌથી ઠંડા ઓરડામાં રાખો; ભીનાં કપડાં અને પંખાનો ઉપયોગ કરો. તરસ ન હોય તો પણ વારંવાર પાણી આપો. વડીલ સંબંધીઓ અને પડોશીઓને દિવસમાં ઓછામાં ઓછું બે વાર મળો અથવા ફોન કરો. મૂંઝવણ, પરસેવો બંધ થવો કે બેભાન થવું જણાય તો 108 પર કૉલ કરો અને ત્યાં સુધી પાણીથી ઠંડા કરો."
+
+# Work-schedule phrases used in {work_summary} (from work_windows)
+work_phrases:
+  en: {none: "normal work all day", not_advised: "not advised", rest_45: "45 min rest per hour", rest_30: "30 min rest per hour", rest_15: "15 min rest per hour"}
+  hi: {none: "पूरे दिन सामान्य काम", not_advised: "न करें", rest_45: "हर घंटे 45 मिनट आराम", rest_30: "हर घंटे 30 मिनट आराम", rest_15: "हर घंटे 15 मिनट आराम"}
+  gu: {none: "આખો દિવસ સામાન્ય કામ", not_advised: "ન કરો", rest_45: "દર કલાકે 45 મિનિટ આરામ", rest_30: "દર કલાકે 30 મિનિટ આરામ", rest_15: "દર કલાકે 15 મિનિટ આરામ"}

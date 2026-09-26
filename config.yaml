@@ -95,7 +95,10 @@ pvi:
   weights:
     elderly_share: 0.25
     outdoor_worker_share: 0.20
-    healthcare_access_gap: 0.20   # higher = worse access
+    # Access (0.20) split between walking distance to health care and cooling access (Phase 6):
+    # both measured on the street network from 100 m population cells (scripts/build_access.py)
+    healthcare_access_gap: 0.10   # population-weighted walking km to the nearest health facility
+    cooling_access_gap: 0.10      # share of residents beyond a 15-min walk of an AMC cooling option
     informal_housing_share: 0.15
     under5_share: 0.10
     population_density: 0.10
@@ -154,7 +157,8 @@ forecast:
 # null = work not advised at any WBGT.
 work_windows:
   acclimatized_default: true
-  unacclimatized_first_days: 3
+  unacclimatized_first_days: 3      # first days of a heatwave event use the Action Limit (NIOSH/OSHA: up to 14 days to adapt)
+  day_hours: [6, 20]                # working hours shown in schedules (hour ending after 06:00 up to 20:00)
   workloads: [light, moderate, heavy, very_heavy]
   thresholds_verified: true
   work_fractions: ["75-100%", "50-75%", "25-50%", "0-25%"]
@@ -172,9 +176,15 @@ work_windows:
 # §6.11 Cooling access (Innovation 5)
 cooling:
   walk_minutes: 15
-  walk_speed_kmh: 4.5
-  point_types: [cooling_centre, drinking_water, park, hospital, clinic, public_building]
-  candidate_site_types: [school, community_centre, library, ward_office]
+  walk_speed_kmh: 4.0             # 1.1 m/s: older adults 60-79 walk ~1.1-1.3 m/s (Bohannon & Andrews 2011); 15 min ≈ 1 km
+  # Existing cooling options AMC controls and can activate (Heat Action Plan: public buildings,
+  # shaded areas, drinking water, health centres). Point layers in data/processed/cooling_points.geojson.
+  existing_layers: [library, ward_office, uhc, public_hospital, park, drinking_water, brts_station]
+  # Named as cooling centres in the Heat Action Plan but not AMC-run: sensitivity analysis only
+  community_layers: [place_of_worship, mall]
+  candidate_layers: [school, community_centre]
+  health_layers: [hospital, clinic, uhc, public_hospital]     # for the PVI healthcare-access indicator
+  desert_gap: 0.5                 # cooling desert: most residents (> 50%) beyond the walking threshold
   new_sites_k: 5
 
 # §6.13 Health-worker feedback (Innovation 6)

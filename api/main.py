@@ -9,6 +9,13 @@ Endpoints (all accept ?replay=<name> to serve a past event, e.g. ?replay=may2024
   GET /forecast?day=       all wards for a day, without geometry
   GET /events              heatwave events
   GET /config              every weight and threshold, plus the data source label of each ward column
+  Decision layer (Phase 6):
+  GET /ward/{id}/actions       recommended actions for the ward-day (Heat Action Plan departments)
+  GET /ward/{id}/work-windows  safe work schedule by workload (ACGIH WBGT limits)
+  GET /ward/{id}/advisories    public advisories: 3 audiences × en/hi/gu, SMS and long text
+  GET /priorities              wards ranked for action (municipal: MRI, healthcare: HRI) + city actions
+  GET /cooling                 cooling gap per ward, deserts, existing cooling places, recommended new sites
+  GET /allocation              where to send N mobile cooling units and M ambulances
 
 Run:  uvicorn api.main:app --reload            (API only)
       HEAT_SCHEDULER=1 uvicorn api.main:app    (with hourly forecast / daily ensemble refresh)
@@ -30,7 +37,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
-from api import db, jobs
+from api import db, decisions, jobs
 from heatrisk import load_config
 from heatrisk.config import ROOT
 
@@ -190,6 +197,7 @@ def wards(day: str | None = None, replay: str | None = None):
             props = {"ward_id": w["ward_id"], "ward_no": w["ward_no"], "ward_name": w["ward_name"], "zone": w["zone"],
                      "roof_sheet_share": attrs.get("roof_sheet_share"),
                      "informal_housing_share": attrs.get("informal_housing_share"),
+                     "cooling_gap": attrs.get("cooling_gap"), "cooling_desert": attrs.get("cooling_desert"),
                      **scores.get(w["ward_id"], {}), **probs.get((w["ward_id"], day), {})}
             feats.append({"type": "Feature", "geometry": json.loads(w["geometry"]), "properties": props})
     return {"type": "FeatureCollection", "day": day, "meta": _meta(run, prob_run, replay), "features": feats}
@@ -245,6 +253,66 @@ def config():
             "ward_columns": sources[["column", "description", "source", "year", "is_estimate", "label"]]
             .to_dict("records")}
 
+
+
+# ---------- decision layer (Phase 6)
+
+def _run_and_day(conn, replay, day):
+    run, prob_run = _runs(conn, replay)
+    return run, prob_run, day or _default_day(conn, run, replay)
+
+
+def _ward_exists(conn, ward_id):
+    if conn.execute("SELECT 1 FROM wards WHERE ward_id=?", (ward_id,)).fetchone() is None:
+        raise HTTPException(404, f"unknown ward '{ward_id}'")
+
+
+@app.get("/ward/{ward_id}/actions")
+def ward_actions(ward_id: str, day: str | None = None, replay: str | None = None):
+    with db.connect() as conn:
+        _ward_exists(conn, ward_id)
+        run, _, day = _run_and_day(conn, replay, day)
+        return {"ward_id": ward_id, "day": day, **decisions.ward_actions(conn, run["run_id"], ward_id, day)}
+
+
+@app.get("/ward/{ward_id}/work-windows")
+def ward_work_windows(ward_id: str, day: str | None = None, replay: str | None = None,
+                      acclimatized: bool | None = None):
+    with db.connect() as conn:
+        _ward_exists(conn, ward_id)
+        run, _, day = _run_and_day(conn, replay, day)
+        return {"ward_id": ward_id, "day": day, **decisions.schedule(conn, run["run_id"], ward_id, day, acclimatized)}
+
+
+@app.get("/ward/{ward_id}/advisories")
+def ward_advisories(ward_id: str, day: str | None = None, replay: str | None = None,
+                    lang: str | None = Query(None, pattern="^(en|hi|gu)$")):
+    with db.connect() as conn:
+        _ward_exists(conn, ward_id)
+        run, _, day = _run_and_day(conn, replay, day)
+        return {"ward_id": ward_id, "day": day, **decisions.ward_advisories(conn, run["run_id"], ward_id, day, lang)}
+
+
+@app.get("/priorities")
+def priorities(day: str | None = None, replay: str | None = None,
+               view: str = Query("municipal", pattern="^(municipal|healthcare)$")):
+    with db.connect() as conn:
+        run, prob_run, day = _run_and_day(conn, replay, day)
+        return {"day": day, **decisions.priorities(conn, run["run_id"], day, _probs(conn, prob_run, day), view)}
+
+
+@app.get("/cooling")
+def cooling():
+    with db.connect() as conn:
+        return decisions.cooling_summary(conn)
+
+
+@app.get("/allocation")
+def allocation_plan(day: str | None = None, replay: str | None = None,
+                    cooling_units: int = Query(5, ge=0, le=100), ambulances: int = Query(10, ge=0, le=500)):
+    with db.connect() as conn:
+        run, _, day = _run_and_day(conn, replay, day)
+        return decisions.allocation_plan(conn, run["run_id"], day, cooling_units, ambulances)
 
 # ---------- frontend (built React app), if present
 

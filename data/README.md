@@ -10,6 +10,10 @@ Every column in `processed/wards.parquet` is listed with its source, year, and w
 python scripts/fetch_osm.py                                 # OSM facilities & cooling points (~2 min)
 python gee/export_ward_stats.py --project <gcp-project>     # WorldPop + satellite (needs Earth Engine)
 python scripts/extract_slums.py                             # slum huts per ward from the AMC Slum Free City Plan (needs .[pdf])
+python scripts/geocode_uhcs.py                              # place AMC Urban Health Centres (Nominatim; cached in the CSV)
+python gee/export_pop_grid.py --project <gcp-project>       # WorldPop 100 m cells (Earth Engine)
+python scripts/build_walk_network.py                        # OSM walking network (~1 min, 63 MB, not committed)
+python scripts/build_access.py                              # cooling gap, deserts, new sites, walking access to health care
 python scripts/build_wards.py                               # assemble wards.parquet + completeness report
 pytest                                                      # data checks
 ```
@@ -69,3 +73,9 @@ Until then these columns stay empty, and the scoring treats them as neutral (mid
 - **Old → new wards:** 65 old ward names. Most match directly; the rest were placed by the slums' Town Planning scheme or by geocoding the old locality (see the crosswalk's `evidence` column). Mahavirnagar is split 50/50 between Amraiwadi and Bhaipura-Hatkeshwar by TP scheme.
 - **Known bias:** the survey counts slums, not the formal resettlement (BSUP) flats where about 11,000 Sabarmati Riverfront families were moved in 2006–2014. **Vatva**, which holds about half of those flats, and Odhav are therefore understated. Chawls (old mill-worker tenements), common in eastern wards such as Viratnagar, are also not counted as slums.
 - **Years differ:** 2010 slum counts over 2020 population. Only the ward's percentile rank enters PVI, so the share is used as a relative indicator.
+
+### Cooling and health access (Phase 6)
+- **Population grid:** `processed/pop_grid.parquet`, 47,622 populated WorldPop 2020 100 m cells (unconstrained product, 6.10 M people). Only the distribution within wards is used; totals are rescaled to the ward table.
+- **Walking network:** OpenStreetMap footpaths and streets for the city plus 1 km (`scripts/build_walk_network.py`).
+- **Cooling places:** AMC libraries and ward offices (public buildings), Urban Health Centres (70 of 79 geocoded; 20 only by ward name, see `coord_quality` in `manual/amc_uhc_list.csv`), the 5 public hospitals, OSM parks, drinking water and BRTS stations. Temples, mosques and malls (OSM) are a sensitivity tier; OSM maps only 179 places of worship, far below reality.
+- **Outputs:** `processed/ward_access.csv` (cooling_gap, cooling_gap_with_community, cooling_desert, health_walk_km), `processed/cooling_sites.geojson` (5 recommended sites), `processed/ward_cooling_points.json` (named places used in advisories).

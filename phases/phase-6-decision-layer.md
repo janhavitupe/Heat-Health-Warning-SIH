@@ -1,6 +1,6 @@
 # Phase 6 — Decision Layer
 
-**Effort:** L · **MVP:** ✅ · **Depends on:** Phase 4 (and Phase 0 cooling data) · **Unblocks:** Phase 7
+**Effort:** L · **MVP:** ✅ · **Depends on:** Phase 4 (and Phase 0 cooling data) · **Unblocks:** Phase 7 · **Status:** ✅ complete ([write-up](../docs/decision_layer_phase6.md)); Hindi/Gujarati need native-speaker review
 
 ## Goal
 Turn risk into decisions: ward-specific recommended actions, priority rankings, hour-by-hour **safe work windows** (*Innovation 4*), **cooling-desert** analysis with new-site selection (*Innovation 5*), and multilingual public advisories.
@@ -8,32 +8,32 @@ Turn risk into decisions: ward-specific recommended actions, priority rankings, 
 ## Tasks
 
 ### Action Recommendation Engine
-- [ ] `actions.py`: rule table in config keyed by (top risk driver × alert level) → actions, owner department, and lead time. Examples:
+- [x] `actions.py`: rule table in config keyed by (top risk driver × alert level) → actions, owner department, and lead time. *`resources/actions.yaml`.* Examples:
   - outdoor workers × Orange → shift outdoor work hours; water/shade at worksites
   - elderly × Red → door-to-door welfare checks; cooling-centre transport
   - indoor heat × Orange → open night-time cooling shelters in affected wards
   - HRI × Red → hospital surge protocol; pre-position ambulances
-- [ ] Align action wording with the pilot city's Heat Action Plan departments.
-- [ ] Priority-ward ranking by MRI (municipal view) and HRI (healthcare view), with probability as tie-breaker.
+- [x] Align action wording with the pilot city's Heat Action Plan departments. *From the plan's departmental tables (pp. 13–21).*
+- [x] Priority-ward ranking by MRI (municipal view) and HRI (healthcare view), with probability as tie-breaker.
 
 ### Safe work windows (§6.10)
-- [ ] `work_windows.py`: hourly ward WBGT → status per workload (light / moderate / heavy): continuous, work/rest ratio, or not advised; thresholds from config (ACGIH TLV / ISO 7243).
-- [ ] Acclimatized (default) and unacclimatized modes; auto-suggest unacclimatized for the first 2–3 days of a heatwave event.
-- [ ] Output compact schedule per ward per day, and a plain-language line for advisories.
+- [x] `work_windows.py`: hourly ward WBGT → status per workload (light / moderate / heavy): continuous, work/rest ratio, or not advised; thresholds from config (ACGIH TLV / ISO 7243). *Plus very heavy.*
+- [x] Acclimatized (default) and unacclimatized modes; auto-suggest unacclimatized for the first 2–3 days of a heatwave event. *First 3 days (NIOSH/OSHA).*
+- [x] Output compact schedule per ward per day, and a plain-language line for advisories.
 
 ### Cooling access and deserts (§6.11)
-- [ ] Run OSRM locally (Docker) on the city's OSM extract with the walking profile.
-- [ ] `cooling.py`: walking-time zones (default 15 min) around cooling points; compute Cooling Gap per ward using PVI-weighted WorldPop cells.
-- [ ] Flag cooling deserts; feed cooling access back into PVI's accessibility component.
-- [ ] Greedy maximum-coverage site selection: choose best *k* candidate sites (schools, community halls) to minimize vulnerable population beyond reach.
+- [x] ~~Run OSRM locally (Docker)~~ *Docker unavailable: same OSM walking network routed in Python (osmnx + networkx), `scripts/build_walk_network.py`.*
+- [x] `cooling.py`: walking-time zones (default 15 min) around cooling points; compute Cooling Gap per ward using PVI-weighted WorldPop cells. *47,622 cells; 4 km/h walking speed.*
+- [x] Flag cooling deserts; feed cooling access back into PVI's accessibility component. *8 deserts (gap > 50%); PVI access weight split: walking distance to health care 0.10 + cooling gap 0.10.*
+- [x] Greedy maximum-coverage site selection: choose best *k* candidate sites (schools, community halls) to minimize vulnerable population beyond reach. *Top 5 bring about 68,000 people within reach.*
 
 ### Resource Allocation Engine
-- [ ] Given limited resources (e.g., N mobile cooling units, M ambulances), allocate across wards by priority and coverage gain; show the ranked plan with reasons.
+- [x] Given limited resources (e.g., N mobile cooling units, M ambulances), allocate across wards by priority and coverage gain; show the ranked plan with reasons. *Greedy coverage (units), D'Hondt by population × HRI (ambulances).*
 
 ### Public Advisory Generator
-- [ ] Templates for three audiences (general public, outdoor workers, elderly/caregivers) × four alert levels, parameterized with ward name, peak time, safe work window, nearest cooling point.
-- [ ] Human-verified translations in Hindi and Gujarati (or the pilot city's language); Bhashini only as fallback for non-core text.
-- [ ] Short SMS versions (≤160 characters) and longer WhatsApp versions; scripts for voice (used in Phase 7).
+- [x] Templates for three audiences (general public, outdoor workers, elderly/caregivers) × four alert levels, parameterized with ward name, peak time, safe work window, nearest cooling point. *Green: no advisory.*
+- [ ] Human-verified translations in Hindi and Gujarati (or the pilot city's language); Bhashini only as fallback for non-core text. *Drafts written and flagged `draft_needs_native_review` everywhere; **native-speaker review still needed**.*
+- [x] Short SMS versions (≤160 characters) and longer WhatsApp versions; scripts for voice (used in Phase 7). *English ≤160 GSM-only; Hindi/Gujarati ≤134 (two Unicode parts); tested.*
 
 ## Deliverables
 - `heatrisk/actions.py`, `work_windows.py`, `cooling.py`

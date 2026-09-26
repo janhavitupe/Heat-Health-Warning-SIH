@@ -43,10 +43,11 @@ GEE_COLUMNS = [
     "lst_day", "lst_night", "ndvi", "builtup_frac", "tree_cover",
 ]
 
-# KML folder name -> (layer, role)
+# KML folder name -> (layer, role). Public buildings are existing cooling options: the Heat
+# Action Plan activates "temples, public buildings, malls" as cooling centres during alerts.
 KML_LAYERS = {
-    "library": ("library", "candidate_site"),
-    "Ward Office": ("ward_office", "candidate_site"),
+    "library": ("library", "cooling_point"),
+    "Ward Office": ("ward_office", "cooling_point"),
 }
 
 
@@ -60,6 +61,13 @@ def load_wards() -> gpd.GeoDataFrame:
     g["ward_id"] = g["ward_no"].map(lambda n: f"AMC-{n:02d}")
     g = g.drop(columns="Name").sort_values("ward_no").reset_index(drop=True)
     return g[["ward_id", "ward_no", "ward_name", "geometry"]]
+
+
+def _kml_name(name: str | None, layer: str) -> str | None:
+    """AMC ward offices are named by ward only ("Odhav"); make the place type explicit."""
+    if name and layer == "ward_office" and "office" not in name.lower():
+        return f"{name.strip()} Ward Office"
+    return name
 
 
 def load_kml_points() -> gpd.GeoDataFrame:
@@ -80,12 +88,30 @@ def load_kml_points() -> gpd.GeoDataFrame:
                     "osm_id": None,
                     "layer": layer,
                     "role": role,
-                    "name": pm.findtext("k:name", default=None, namespaces=KML_NS),
+                    "name": _kml_name(pm.findtext("k:name", default=None, namespaces=KML_NS), layer),
                     "beds": None,
                     "source": "AMC via DataMeet",
                     "geometry": Point(lon, lat),
                 }
             )
+    return gpd.GeoDataFrame(rows, crs="EPSG:4326")
+
+
+def load_public_health_points() -> gpd.GeoDataFrame:
+    """AMC Urban Health Centres (geocoded by scripts/geocode_uhcs.py) and the major public hospitals."""
+    rows = []
+    uhc = pd.read_csv(MANUAL / "amc_uhc_list.csv")
+    for r in uhc.dropna(subset=["lat", "lon"]).itertuples():
+        words = r.area_name.title().split()
+        if len(words) == 2 and words[0] == words[1]:          # the AMC list repeats "<ward> <ward>"
+            words = words[:1]
+        rows.append({"osm_id": None, "layer": "uhc", "role": "health_facility",
+                     "name": " ".join(words) + " Urban Health Centre",
+                     "beds": None, "source": f"AMC UHC list 2024 ({r.coord_quality})", "geometry": Point(r.lon, r.lat)})
+    beds = pd.read_csv(MANUAL / "hospital_beds.csv")
+    for r in beds.dropna(subset=["lat", "lon"]).itertuples():
+        rows.append({"osm_id": None, "layer": "public_hospital", "role": "health_facility", "name": r.name,
+                     "beds": r.beds, "source": "data/manual/hospital_beds.csv", "geometry": Point(r.lon, r.lat)})
     return gpd.GeoDataFrame(rows, crs="EPSG:4326")
 
 
@@ -108,7 +134,7 @@ def main() -> None:
 
     # Points: OSM + AMC
     osm = gpd.read_file(OUT / "osm_points.geojson")
-    pts = pd.concat([osm, load_kml_points()], ignore_index=True)
+    pts = pd.concat([osm, load_kml_points(), load_public_health_points()], ignore_index=True)
     pts = gpd.GeoDataFrame(pts, crs="EPSG:4326")
     pts.to_file(OUT / "cooling_points.geojson", driver="GeoJSON")
 
@@ -153,6 +179,16 @@ def main() -> None:
         print("gee_ward_stats.csv not found - population and satellite columns left empty")
         for col in GEE_COLUMNS:
             wards[col] = pd.NA
+    # Walking access to cooling and health care (scripts/build_access.py)
+    access_path = OUT / "ward_access.csv"
+    if access_path.exists():
+        wards = wards.merge(pd.read_csv(access_path, dtype={"ward_id": str}), on="ward_id", how="left",
+                            validate="one_to_one")
+    else:
+        print("ward_access.csv not found - run scripts/build_access.py; access columns left empty")
+        for col in ("cooling_gap", "cooling_gap_with_community", "health_walk_km", "cooling_desert"):
+            wards[col] = pd.NA
+
     # Slum share from the AMC 2010-11 slum survey (scripts/extract_slums.py). Wards with no
     # listed slum get 0. The survey counted people in 2010; WorldPop is 2020, so the share is
     # a relative indicator (PVI min-max normalizes it), capped at 1.

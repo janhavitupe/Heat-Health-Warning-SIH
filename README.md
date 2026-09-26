@@ -38,6 +38,7 @@ data/             raw, manual, and processed data
 tests/            unit and data tests
 docs/             status report, calibration, backtest, changelog
 backtest/         May 2024 replay, sensitivity analysis, forecast skill, results
+resources/        action rules and advisory templates (Phase 6)
 api/              FastAPI service, SQLite storage, scheduled refresh
 frontend/         React + MapLibre ward map
 phases/           development plan

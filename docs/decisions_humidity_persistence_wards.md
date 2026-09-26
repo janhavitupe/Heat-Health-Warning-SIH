@@ -109,7 +109,7 @@ Decision 2's next step is done.
 
 Highest mean risk at the May 2024 peak: Amraiwadi, Odhav, Jamalpur, Asarwa, Indrapuri, Baherampura, India Colony, Bodakdev. Lowest: Isanpur, Sarkhej, Paldi, Nikol, Jodhpur. Bodakdev, an affluent western ward, ranks high because the 2010 survey lists five slums there (4,054 huts). That is real data but worth checking locally.
 
-**Effect on the backtest** (final numbers in [backtest_may2024.md](backtest_may2024.md)): every dangerous day is still caught (11 of 11), lead time before IMD's alert is 4 days, and exact agreement with the Heat Action Plan is 67%. The earlier 74% was helped by the off-centre PVI quietly lowering all wards. Ward rankings are now very stable (ρ ≥ 0.976 under every ±20% weight change).
+**Effect on the backtest** (final numbers in [backtest_may2024.md](backtest_may2024.md)): every dangerous day is still caught (11 of 11), lead time before IMD's alert is 4 days, and exact agreement with the Heat Action Plan is 67%. The earlier 74% was helped by the off-centre PVI quietly lowering all wards. Ward rankings are now very stable (ρ ≥ 0.976 under every ±20% weight change). *(After the Phase 6 access update: lead time 3 days, ρ ≥ 0.963; see backtest_may2024.md.)*
 
 Additional sources:
 - Flanagan BE, et al. (2011). A social vulnerability index for disaster management. *Journal of Homeland Security and Emergency Management* 8(1). https://atsdr.cdc.gov/place-health/media/pdfs/2024/07/Flanagan_2011_SVIforDisasterManagement-508.pdf

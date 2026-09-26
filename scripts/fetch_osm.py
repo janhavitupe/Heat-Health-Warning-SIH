@@ -37,6 +37,11 @@ LAYERS: dict[str, tuple[list[str], str]] = {
     "park": (['nwr["leisure"~"^(park|garden)$"]'], "cooling_point"),
     "school": (['nwr["amenity"~"^(school|college)$"]'], "candidate_site"),
     "community_centre": (['nwr["amenity"="community_centre"]'], "candidate_site"),
+    # BRTS / bus stations: the Heat Action Plan distributes drinking water there
+    "brts_station": (['nwr["amenity"="bus_station"]', 'nwr["public_transport"="station"]["bus"="yes"]'], "cooling_point"),
+    # Named as cooling centres in the Heat Action Plan but not run by AMC: sensitivity layer only
+    "mall": (['nwr["shop"="mall"]'], "community_cooling"),
+    "place_of_worship": (['nwr["amenity"="place_of_worship"]'], "community_cooling"),
 }
 
 

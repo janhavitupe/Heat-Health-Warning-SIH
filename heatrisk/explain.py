@@ -30,7 +30,8 @@ HEAT_LABELS = {
 PVI_LABELS = {
     "elderly_share": "Elderly population (60+)",
     "outdoor_worker_share": "Outdoor workers",
-    "healthcare_access_gap": "Distance to hospital care",
+    "healthcare_access_gap": "Walking distance to health care",
+    "cooling_access_gap": "Far from cooling places",
     "informal_housing_share": "Informal housing",
     "under5_share": "Young children (under 5)",
     "population_density": "Population density",

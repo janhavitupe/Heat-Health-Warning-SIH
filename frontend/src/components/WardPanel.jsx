@@ -5,6 +5,7 @@ import {
 } from 'recharts'
 import { api } from '../api.js'
 import { ALERTS, ALERT_COLOR, ALERT_LABEL, DATA_LABELS, SERIES } from '../theme.js'
+import { Actions, Advisories, WorkWindows } from './DecisionSections.jsx'
 
 const dark = window.matchMedia?.('(prefers-color-scheme: dark)').matches
 const S = dark ? SERIES.dark : SERIES.light
@@ -12,8 +13,9 @@ const INK2 = dark ? '#c3c2b7' : '#52514e'
 const GRID = dark ? '#2c2c2a' : '#e1e0d9'
 const GROUPS = { heat: { label: 'Heat', color: S[0] }, vulnerability: { label: 'Vulnerability', color: S[2] }, factor: { label: 'Local factor', color: S[1] } }
 const PVI_NAMES = {
-  elderly_share: 'Elderly (60+)', outdoor_worker_share: 'Outdoor workers', healthcare_access_gap: 'Distance to hospital',
+  elderly_share: 'Elderly (60+)', outdoor_worker_share: 'Outdoor workers', healthcare_access_gap: 'Walk to health care',
   informal_housing_share: 'Slum population', under5_share: 'Children under 5', population_density: 'Population density',
+  cooling_access_gap: 'Far from cooling places',
 }
 const shortDate = (d) => new Date(`${d}T00:00:00`).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })
 const axis = { stroke: GRID, tick: { fill: INK2, fontSize: 11 }, tickLine: false }
@@ -99,6 +101,15 @@ export default function WardPanel({ wardId, day, target, replay }) {
 
       <h3>Why this score</h3>
       <Contributions ex={ex} />
+
+      <h3>What to do</h3>
+      <Actions wardId={wardId} day={row.date} replay={replay} />
+
+      <h3>Safe outdoor work hours</h3>
+      <WorkWindows wardId={wardId} day={row.date} replay={replay} />
+
+      <h3>Public advisories</h3>
+      <Advisories wardId={wardId} day={row.date} replay={replay} />
 
       <h3>{replay ? 'Risk over the event' : 'Risk over the forecast'}{hasProbs ? ' (band: 10–90% of forecast runs)' : ''}</h3>
       <div className="chart">

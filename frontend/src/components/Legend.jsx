@@ -15,6 +15,10 @@ export default function Legend({ layer, hasConfidence }) {
       {def.kind === 'alert' && hasConfidence && (
         <div className="row"><span className="dash" />Low forecast confidence</div>
       )}
+      {layer === 'cooling' && (<>
+        <div className="row"><span className="pt" />Existing AMC cooling place</div>
+        <div className="row"><span className="site" />Recommended new site (rank)</div>
+      </>)}
       <div className="note">Model estimate, not a clinical prediction.</div>
     </div>
   )

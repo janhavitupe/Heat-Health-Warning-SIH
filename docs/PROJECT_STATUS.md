@@ -1,7 +1,7 @@
 # Project Status Report — Heat-Health Early Warning Platform
 
 SIH 2026 · Problem Statement 26083 · Pilot city: **Ahmedabad** (48 wards)
-Status as of **25 September 2026**. Phases 0, 1 and 2 are done. Phases 3, 4 and 5 are complete. Phases 6–9 have not started.
+Status as of **25 September 2026**. Phases 0, 1 and 2 are done. Phases 3 to 6 are complete. Phases 7–9 have not started.
 
 This report explains everything built so far: what the platform is meant to do, what data was collected and where it came from, how each score is calculated, what was tested, what problems were found, and what is still missing.
 
@@ -17,6 +17,7 @@ This report explains everything built so far: what the platform is meant to do, 
    - [Phase 3 — Calibration and backtest](#5b-phase-3--calibration-and-backtest)
    - [Phase 4 — Forecasts and probabilistic alerts](#5c-phase-4--forecasts-and-probabilistic-alerts)
    - [Phase 5 — API and ward map](#5d-phase-5--api-and-ward-map)
+   - [Phase 6 — Decision layer](#5e-phase-6--decision-layer)
 6. [Tests](#6-tests)
 7. [Real-data results so far](#7-real-data-results-so-far)
 8. [Known problems and open questions](#8-known-problems-and-open-questions)
@@ -61,7 +62,10 @@ Forecast: 5-day outlook, peaks, events, alert probabilities ← Phase 4
 API + ward map (layers, day slider, explanations, replay)    ← Phase 5
    │
    ▼
-Actions, dashboard, voice alerts, what-if simulator          ← Phases 6–9 (not started)
+Decisions: actions, work hours, cooling, allocation, advisories ← Phase 6
+   │
+   ▼
+Alert approval + delivery, what-if simulator, demo            ← Phases 7–9 (not started)
 ```
 
 **Guiding principle:** get one honest number right before building anything around it. The scoring library is built and tested first. The API, map, dashboard and simulator will all call the same library, so the explanation shown to a user always matches the score.
@@ -78,12 +82,12 @@ Actions, dashboard, voice alerts, what-if simulator          ← Phases 6–9 (n
 | 3 | Multi-ward scoring & backtest | ✅ Done. Calibrated, backtested on May 2024, sensitivity checked, both open questions decided from research |
 | 4 | Forecast & ensemble probabilities | ✅ Done. Daily 5-day ward forecast, 122-member ensemble probabilities, peaks, heatwave events; skill checked on 2024 and 2025 |
 | 5 | API & GIS map | ✅ Done. FastAPI + SQLite with hourly/daily refresh, May 2024 replay, React map with layers, day slider and ward explanations (Docker untested) |
-| 6 | Decision layer (work windows, cooling deserts) | Not started |
+| 6 | Decision layer (work windows, cooling deserts) | ✅ Done. Actions (Heat Action Plan departments), safe work hours, cooling deserts and new sites, resource allocation, advisories in en/hi/gu (hi/gu need native review) |
 | 7 | Dashboard & alert delivery | Not started |
 | 8 | What-if simulator & health-worker feedback | Not started |
 | 9 | Validation, polish, demo | Not started |
 
-**Code:** a Python package `heatrisk/` with 9 modules, 3 data scripts, 1 Earth Engine script, 3 backtest scripts, 75 passing tests.
+**Code:** a Python package `heatrisk/` with 9 modules, 3 data scripts, 1 Earth Engine script, 3 backtest scripts, 131 passing tests.
 **Git:** nothing is committed yet. All files are untracked on branch `master`.
 
 ---
@@ -284,7 +288,8 @@ Categories: Low ≤ 20, Moderate ≤ 40, High ≤ 60, Very High ≤ 80, Extreme 
 |---|---|---|
 | Elderly (60+) share | 0.25 | elderly_share |
 | Outdoor worker share | 0.20 | outdoor_worker_share |
-| Healthcare access gap | 0.20 | nearest_hospital_km (temporary) |
+| Healthcare access gap | 0.10 | health_walk_km (walking distance to nearest health facility, Phase 6) |
+| Cooling access gap | 0.10 | cooling_gap (share beyond a 15-min walk of AMC cooling, Phase 6) |
 | Informal housing share | 0.15 | informal_housing_share |
 | Under-5 share | 0.10 | under5_share |
 | Population density | 0.10 | population_density |
@@ -293,18 +298,19 @@ Each indicator is ranked across the 48 wards by percentile, so the worst ward ge
 
 **Honesty rule:** if an indicator is missing, or almost the same in every ward (coefficient of variation below 1%), every ward gets 0.5 for it and it is marked "neutral". Stretching tiny or unknown differences to the full 0–1 range would invent differences the data doesn't support.
 
-**Current state:** 3 of 6 indicators are used:
+**Current state:** 4 of 7 indicators are used:
 
 | Indicator | Status |
 |---|---|
 | Elderly share | Neutral — no variation across wards (WorldPop) |
 | Outdoor workers | Neutral — data missing |
-| Healthcare access | **Used** |
+| Healthcare access (walking) | **Used** |
+| Cooling access | **Used** |
 | Informal housing (slums) | **Used** (AMC slum survey 2010-11) |
 | Under-5 share | Neutral — no variation across wards |
 | Population density | **Used** |
 
-So 55% of the PVI weight is still held at the midpoint. PVI ranges from **37.5 to 62.8** (mean 50).
+So 55% of the PVI weight is still held at the midpoint. PVI ranges from about **38 to 61** (mean 50).
 
 ### 4.5 MRI and HRI — risk scores — [heatrisk/risk.py](../heatrisk/risk.py)
 
@@ -475,8 +481,8 @@ The model reaches Orange **3 days before** IMD's red alert, and Red one day afte
 | Against the IMD red alert (20–24 May) | Result |
 |---|---|
 | IMD red days with any ward at Orange+ | 5 of 5 |
-| IMD red days with any ward at Red | 4 of 5 (21–24 May) |
-| Lead time (days at Orange+ before 20 May) | 4 |
+| IMD red days with any ward at Red | 3 of 5 (22–24 May) |
+| Lead time (days at Orange+ before 20 May) | 3 |
 | Days outside the window with any ward at Red | 5 of 41 (25–29 May; airport hit 45.0 °C on 27 May) |
 
 | Day by day against the Heat Action Plan rule on observed airport Tmax (46 days) | Result |
@@ -490,9 +496,9 @@ The model reaches Orange **3 days before** IMD's red alert, and Red one day afte
 
 ### Sensitivity ([backtest/sensitivity.py](../backtest/sensitivity.py))
 
-- Ward rankings stay stable under every ±20% weight change (Spearman ρ ≥ 0.976; target 0.8).
-- The only change that reshuffles rankings is turning on daytime downscaling (β_day = 0.3, ρ 0.76), which is off on station evidence.
-- Alert counts are more fragile than rankings: the number of wards at Red on peak days swings widely (UTCI weight ±20% → 197–352 Red ward-days vs 288), because many sit just above the Red line.
+- Ward rankings stay stable under every ±20% weight change (Spearman ρ ≥ 0.963; target 0.8).
+- The only change that reshuffles rankings is turning on daytime downscaling (β_day = 0.3, ρ 0.72), which is off on station evidence.
+- Alert counts are more fragile than rankings: the number of wards at Red on peak days swings widely (UTCI weight ±20% → 195–350 Red ward-days vs 302), because many sit just above the Red line.
 
 ### Which wards rank worst
 
@@ -523,10 +529,10 @@ Full details: [docs/forecast_phase4.md](forecast_phase4.md).
 
 | | 1 day ahead | 3 days | 5 days |
 |---|---|---|---|
-| ECMWF: Orange+ hit rate / false alarms | 79% / 18% | 84% / 27% | 81% / 29% |
-| Combined probability: Brier skill vs climatology | 0.53 | 0.47 | 0.44 |
+| ECMWF: Orange+ hit rate / false alarms | 79% / 19% | 82% / 27% | 81% / 30% |
+| Combined probability: Brier skill vs climatology | 0.52 | 0.46 | 0.43 |
 
-- **GFS understates Ahmedabad heat stress** (hit rate 19–44%) because its afternoon winds are 44% too strong. **ICON overstates it** (winds too calm).
+- **GFS understates Ahmedabad heat stress** (hit rate 17–42%) because its afternoon winds are 44% too strong. **ICON overstates it** (winds too calm).
 - Combined with equal weight, the three models beat any single model or pair, in 2024 and in a blind 2025 test.
 - A wind bias correction didn't help out of sample, so none is applied.
 
@@ -554,16 +560,38 @@ Full details: [docs/api_map_phase5.md](api_map_phase5.md).
 
 ---
 
+## 5e. Phase 6 — Decision layer
+
+Full details: [docs/decision_layer_phase6.md](decision_layer_phase6.md).
+
+| Part | What it does | Key result |
+|---|---|---|
+| **Safe work hours** (Innovation 4) | Hourly WBGT vs ACGIH limits → normal / rest ratio / not advised, per workload. Stricter limits for the first 3 days of a heatwave (NIOSH/OSHA acclimatization) | 23 May 2024: heavy work not advised 08:00–16:00 |
+| **Cooling access** (Innovation 5) | Walking distance on the OSM street network from 47,622 population cells to AMC cooling places (public buildings, health centres, parks, water, BRTS), at 4 km/h | 30.5% of residents beyond a 15-min walk; 8 cooling deserts; 5 new sites bring ~68,000 people within reach |
+| **Vulnerability update** | Access weight split: walking distance to health care (0.10) + cooling gap (0.10), replacing straight-line hospital distance | Bodakdev (affluent) 7th → 34th; Vatva 23rd → 17th |
+| **Actions** | Rule table from the Heat Action Plan's departmental tables: city-wide and ward actions by level, plus driver-specific ones (outdoor-work WBGT, hot nights, slums, cooling desert, persistence, hospital surge) | Baherampura on 23 May: 12 actions from 9 departments |
+| **Allocation** | Mobile cooling units (greedy coverage) and ambulances (D'Hondt by population × HRI) | Ranked plan with reasons |
+| **Advisories** | Public / outdoor workers / elderly × Yellow–Red × English, Hindi, Gujarati, as SMS and WhatsApp/voice text | Every SMS within limits; **Hindi and Gujarati are drafts needing native-speaker review** |
+
+In the app: "What to do", "Safe outdoor work hours" and "Public advisories" in the ward panel, a **Cooling access gap** map layer with existing and recommended sites, and a **Plan** tab.
+
+---
+
 ## 6. Tests
 
-**75 tests, all passing** (`pytest`, about 15 seconds): 73 test functions, some run with several inputs. Most use synthetic weather, so they run without internet.
+**131 tests, all passing** (`pytest`, about 16 seconds): 95 test functions, several run with many inputs, some run with several inputs. Most use synthetic weather, so they run without internet.
 
 | File | Test functions | What they check |
 |---|---|---|
 | `test_config.py` | 7 | Config loads; bad weights, bands and ranges are rejected |
 | `test_thermal.py` | 8 | Sun position, MRT higher by day than night, agreement with pythermalcomfort, extreme wind and saturated air |
 | `test_scoring.py` | 23 | Normalization, persistence counting and resets (only heat-alert-level days count), roof points gating and caps, neutral PVI indicators, percentile-rank scaling, risk multiplier centred on the average ward, Red reachable, alert band edges, city-wide batch table, explanations add up exactly, a "golden day" with known output |
-| `test_api.py` | 5 | GeoJSON with scores and probabilities, ward detail explanation adds up, days and events, config disclosed, error codes (temporary database, no network) |
+| `test_api.py` | 8 | GeoJSON with scores and probabilities, ward detail explanation adds up, days and events, config disclosed, error codes, actions / work windows / advisories / priorities / cooling / allocation endpoints (temporary database, no network) |
+| `test_work_windows.py` | 4 | ACGIH limits, schedule merging and working hours, unacclimatized stricter, first days of a heatwave |
+| `test_cooling.py` | 3 | Network distance and snapping, gap as population share, greedy site selection |
+| `test_actions.py` | 5 | Red replaces Orange rules, driver conditions, HRI rules, city actions and triggers, priority tie-break |
+| `test_allocation.py` | 2 | Cooling units go to uncovered high-risk people, ambulances by D'Hondt |
+| `test_advisories.py` | 5 | Every SMS fits with the longest names (27 cases), GSM-only English (9 cases), no advisory on Green, work window used, translations flagged |
 | `test_access.py` | 4 | Distance decay, E2SFCA conserves capacity, farther wards get less access, capacity factor centred and bounded |
 | `test_ensemble.py` | 6 | Probabilities monotonic and equal to member share, model weighting, confidence labels, trigger lead window, member splitting and trimming |
 | `test_forecast.py` | 3 | Event rules (consecutive days, ward share, open-ended), peaks and peak hour |
@@ -644,7 +672,9 @@ Phase 3 is done (§5b), including both decisions.
 
 ~~**Phase 5 — API & GIS map.**~~ Done: see [api_map_phase5.md](api_map_phase5.md).
 
-**Phase 6 — Decision layer** (next): safe work windows for outdoor workers (Innovation 4), cooling deserts and new cooling-centre sites (Innovation 5), and rule-based action recommendations.
+~~**Phase 6 — Decision layer.**~~ Done: see [decision_layer_phase6.md](decision_layer_phase6.md). **Open:** native-speaker review of the Hindi and Gujarati advisories.
+
+**Phase 7 — Command dashboard & alert delivery** (next): human review and approval of alerts, simulated SMS / WhatsApp / IVR voice dispatch, and an audit trail.
 
 In parallel: chase the census crosswalk and the CPCB/SAFAR station data, and consider replaying May 2010 (published daily mortality).
 
@@ -680,6 +710,12 @@ python -m api.cli all                                     # wards, forecast, ens
 cd frontend && npm install && npm run build && cd ..
 HEAT_SCHEDULER=1 uvicorn api.main:app                     # refreshes hourly/daily by itself
 
+# Phase 6 access data (after the ward build)
+python scripts/geocode_uhcs.py
+python gee/export_pop_grid.py --project heat-health-sih
+python scripts/build_walk_network.py
+python scripts/build_access.py && python scripts/build_wards.py
+
 # Daily forecast files only (writes data/forecast/<date>/)
 python scripts/run_forecast.py                            # ~4 min with the 122-member ensemble
 python backtest/forecast_skill.py                         # forecast skill by lead time (May 2024)
@@ -713,6 +749,11 @@ heat/
 │   ├── risk.py                       MRI, HRI, alert levels
 │   ├── access.py                     E2SFCA spatial access (hospital beds; cooling points in Phase 6)
 │   ├── forecast.py                   ward peaks, hourly curves, heatwave events
+│   ├── work_windows.py               safe work hours (ACGIH WBGT limits)
+│   ├── cooling.py                    walking access, cooling gap, deserts, new-site selection
+│   ├── actions.py                    action rules (Heat Action Plan departments), priority ranking
+│   ├── allocation.py                 mobile cooling units and ambulances
+│   ├── advisories.py                 SMS / WhatsApp / voice advisories, en/hi/gu
 │   ├── ensemble.py                   ensemble probabilities, confidence, triggers
 │   ├── explain.py                    exact score breakdown
 │   └── pipeline.py                   score_ward() and score_city(): the whole chain
@@ -723,8 +764,13 @@ heat/
 │   ├── build_climatology.py          1991–2020 summer climate record
 │   ├── calibrate_htsi.py             derive HTSI thresholds from the climate record
 │   ├── run_forecast.py               daily forecast run (deterministic + ensemble)
+│   ├── geocode_uhcs.py               place AMC Urban Health Centres
+│   ├── build_walk_network.py         OSM walking network
+│   ├── build_access.py               cooling gap, deserts, sites, health access
 │   └── score_ward.py                 print a ward's explained score
 ├── gee/export_ward_stats.py          satellite + population per ward
+├── gee/export_pop_grid.py            WorldPop 100 m cells (Phase 6)
+├── resources/                        action rules and advisory templates (Phase 6)
 ├── backtest/
 │   ├── may2024.py                    replay May 2024, metrics vs IMD and the Heat Action Plan
 │   ├── sensitivity.py                ranking stability under ±20% changes
@@ -744,9 +790,10 @@ heat/
 │   ├── decisions_humidity_persistence_wards.md   research-based decisions
 │   ├── forecast_phase4.md            Phase 4 forecasts, probabilities and skill
 │   ├── api_map_phase5.md             Phase 5 API and map
+│   ├── decision_layer_phase6.md      Phase 6 decision layer
 │   └── weights_changelog.md          every config change and why
 ├── phases/                           plan for phases 0–9
-└── tests/                            75 tests
+└── tests/                            131 tests
 ```
 
 *All scores are model estimates, not clinical predictions.*

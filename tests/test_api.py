@@ -82,3 +82,34 @@ def test_errors(client):
     assert client.get("/wards?replay=nope").status_code == 404
     assert client.get("/wards?replay=may2024").status_code == 503      # not built in this database
     assert client.get("/wards?day=1999-01-01").status_code == 404
+
+
+# ---------- decision layer (Phase 6)
+
+def test_ward_actions_and_work_windows(client):
+    a = client.get("/ward/AMC-40/actions?day=2024-05-21").json()
+    assert a["alert_mri"] in ("orange", "red") and a["actions"]
+    assert all({"department", "action", "reason", "lead"} <= set(x) for x in a["actions"])
+    w = client.get("/ward/AMC-40/work-windows?day=2024-05-21").json()
+    assert w["available"] and set(w["workloads"]) == {"light", "moderate", "heavy", "very_heavy"}
+    assert w["workloads"]["heavy"]["restricted"]                          # a 46.5 °C day restricts heavy work
+    un = client.get("/ward/AMC-40/work-windows?day=2024-05-21&acclimatized=false").json()
+    assert un["acclimatized"] is False
+
+
+def test_ward_advisories(client):
+    j = client.get("/ward/AMC-40/advisories?day=2024-05-21").json()
+    assert len(j["advisories"]) == 9 and all(a["sms_fits"] for a in j["advisories"])
+    gu = client.get("/ward/AMC-40/advisories?day=2024-05-21&lang=gu").json()["advisories"]
+    assert {a["lang"] for a in gu} == {"gu"}
+    assert client.get("/ward/AMC-40/advisories?lang=fr").status_code == 422
+
+
+def test_priorities_cooling_allocation(client):
+    p = client.get("/priorities?day=2024-05-21&view=healthcare").json()
+    assert [w["priority"] for w in p["wards"][:3]] == [1, 2, 3] and p["city_actions"]
+    c = client.get("/cooling").json()
+    assert len(c["wards"]) == 48 and "recommended_sites" in c
+    al = client.get("/allocation?day=2024-05-21&cooling_units=3&ambulances=7").json()
+    assert len(al["cooling_units"]) <= 3 and sum(x["ambulances"] for x in al["ambulances"]) == 7
+    assert client.get("/allocation?cooling_units=-1").status_code == 422

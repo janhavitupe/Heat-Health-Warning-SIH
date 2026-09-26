@@ -18,3 +18,8 @@ Every change to a value in `config.yaml` is recorded here with its reason (propo
 | 2026-09-25 | ensemble.models | [ecmwf_ifs025, gfs025] | [ecmwf_ifs025, gfs025, icon_seamless] | Three-model combination had the best probability skill in 2024 and a blind 2025 test (docs/forecast_phase4.md) | Phase 4 |
 | 2026-09-25 | ensemble.weighting (new) | — | model | Each model equally weighted, the tested combination; per-member weighting would give ECMWF 42% | Phase 4 |
 | 2026-09-25 | forecast (new) | — | days 5, past_days 3, event_min_share 0.25, event_min_days 2 | Event rule: IMD 2-consecutive-day heatwave criterion; a quarter of wards = city-scale. Finds exactly the 17–30 May 2024 heatwave | Phase 4 |
+| 2026-09-26 | pvi.weights.healthcare_access_gap | 0.20 (straight-line km to nearest hospital) | 0.10 (population-weighted walking km to nearest health facility) | Phase 6 network access replaces the centroid distance behind the Maktampura artefact | Phase 6 |
+| 2026-09-26 | pvi.weights.cooling_access_gap (new) | — | 0.10 | Phase plan: feed cooling access into PVI's access component; share of residents beyond a 15-min walk of AMC cooling | Phase 6 |
+| 2026-09-26 | cooling.walk_speed_kmh | 4.5 | 4.0 | Older adults walk ~1.1-1.3 m/s (Bohannon & Andrews 2011); 15 min ≈ 1 km | Phase 6 |
+| 2026-09-26 | cooling.* layers (new) | point_types / candidate_site_types | existing / community / candidate / health layers; desert_gap 0.5 | Two-tier cooling definition from the Heat Action Plan | Phase 6 |
+| 2026-09-26 | work_windows.day_hours (new) | — | [6, 20] | Working hours shown in schedules | Phase 6 |

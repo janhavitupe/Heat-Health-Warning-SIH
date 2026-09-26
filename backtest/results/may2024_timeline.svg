@@ -51,10 +51,10 @@ svg { --surface:#fcfcfb; --ink:#0b0b0b; --ink2:#52514e; --muted:#898781; --grid:
 <line class="grid" x1="64" x2="832" y1="72.0" y2="72.0"/>
 <text class="tm" x="56" y="76.0" text-anchor="end">100</text>
 <line class="axis" x1="64" x2="832" y1="352.0" y2="352.0"/>
-<polygon class="range" points="72.3,318.2 89.0,281.5 105.7,247.4 122.4,214.8 139.1,250.8 155.8,243.9 172.5,162.4 189.2,187.9 205.9,189.4 222.6,183.4 239.3,187.3 256.0,175.1 272.7,220.0 289.4,249.0 306.1,239.9 322.8,178.8 339.5,132.4 356.2,136.3 372.9,137.2 389.6,149.2 406.3,127.3 423.0,89.0 439.7,86.0 456.3,80.9 473.0,99.2 489.7,77.2 506.4,85.7 523.1,88.0 539.8,117.3 556.5,163.6 573.2,185.9 589.9,197.2 606.6,188.4 623.3,154.9 640.0,182.7 656.7,206.5 673.4,179.9 690.1,168.4 706.8,184.6 723.5,149.4 740.2,193.0 756.9,201.7 773.6,221.2 790.3,231.9 807.0,238.6 823.7,243.1 823.7,266.8 807.0,262.9 790.3,257.5 773.6,248.7 756.9,232.4 740.2,224.8 723.5,189.5 706.8,218.9 690.1,205.3 673.4,215.3 656.7,237.1 640.0,216.8 623.3,193.8 606.6,222.2 589.9,229.4 573.2,220.2 556.5,201.8 539.8,163.6 523.1,139.5 506.4,137.8 489.7,130.3 473.0,148.9 456.3,133.9 439.7,136.2 423.0,139.8 406.3,172.1 389.6,187.5 372.9,177.6 356.2,178.8 339.5,175.5 322.8,213.9 306.1,262.2 289.4,269.5 272.7,248.2 256.0,210.4 239.3,220.8 222.6,218.2 205.9,222.5 189.2,221.6 172.5,199.1 155.8,265.5 139.1,272.6 122.4,243.3 105.7,268.4 89.0,296.2 72.3,326.7"/>
-<polyline class="line" points="72.3,322.1 89.0,288.3 105.7,257.1 122.4,229.3 139.1,261.7 155.8,253.9 172.5,179.4 189.2,204.8 205.9,206.0 222.6,200.9 239.3,204.2 256.0,192.8 272.7,234.3 289.4,258.6 306.1,250.3 322.8,196.5 339.5,153.6 356.2,157.3 372.9,156.2 389.6,167.2 406.3,149.6 423.0,113.7 439.7,110.7 456.3,106.8 473.0,123.6 489.7,103.0 506.4,111.1 523.1,113.1 539.8,140.1 556.5,182.9 573.2,203.1 589.9,213.4 606.6,205.3 623.3,174.2 640.0,199.9 656.7,221.8 673.4,197.7 690.1,187.0 706.8,201.8 723.5,169.4 740.2,209.1 756.9,217.1 773.6,235.0 790.3,244.9 807.0,250.9 823.7,254.8"/>
-<circle class="dot" cx="489.7" cy="103.0" r="4.5"/>
-<text class="t2" x="497.7" y="95.0">Peak 89 on 26 May (airport 43.0 °C)</text>
+<polygon class="range" points="72.3,319.1 89.0,283.4 105.7,250.1 122.4,219.4 139.1,254.3 155.8,246.6 172.5,166.5 189.2,193.3 205.9,194.7 222.6,188.9 239.3,192.7 256.0,180.9 272.7,224.4 289.4,251.6 306.1,242.7 322.8,184.4 339.5,139.4 356.2,143.3 372.9,141.2 389.6,153.1 406.3,134.5 423.0,97.1 439.7,92.6 456.3,89.4 473.0,107.2 489.7,85.2 506.4,94.1 523.1,96.3 539.8,124.8 556.5,169.6 573.2,191.3 589.9,202.3 606.6,193.7 623.3,161.3 640.0,188.3 656.7,211.3 673.4,185.5 690.1,174.4 706.8,190.0 723.5,156.0 740.2,198.3 756.9,206.6 773.6,225.6 790.3,236.0 807.0,242.4 823.7,246.8 823.7,265.2 807.0,261.3 790.3,255.8 773.6,246.8 756.9,230.2 740.2,222.5 723.5,186.6 706.8,216.6 690.1,202.6 673.4,212.9 656.7,235.1 640.0,214.4 623.3,191.0 606.6,219.9 589.9,227.2 573.2,217.9 556.5,199.1 539.8,160.2 523.1,135.7 506.4,134.0 489.7,126.4 473.0,145.3 456.3,130.0 439.7,132.5 423.0,136.1 406.3,168.9 389.6,184.7 372.9,174.8 356.2,175.7 339.5,172.4 322.8,211.4 306.1,260.6 289.4,268.0 272.7,246.3 256.0,207.9 239.3,218.5 222.6,215.8 205.9,220.1 189.2,219.3 172.5,196.4 155.8,264.0 139.1,271.2 122.4,241.3 105.7,266.9 89.0,295.2 72.3,326.2"/>
+<polyline class="line" points="72.3,321.9 89.0,288.6 105.7,257.8 122.4,229.6 139.1,262.2 155.8,254.6 172.5,180.9 189.2,205.3 205.9,206.5 222.6,201.4 239.3,204.7 256.0,193.3 272.7,234.6 289.4,259.2 306.1,251.0 322.8,196.9 339.5,154.7 356.2,158.2 372.9,157.7 389.6,168.6 406.3,150.3 423.0,115.3 439.7,112.2 456.3,108.2 473.0,124.6 489.7,104.5 506.4,112.5 523.1,114.5 539.8,141.1 556.5,183.3 573.2,203.6 589.9,213.9 606.6,205.9 623.3,175.0 640.0,200.3 656.7,222.4 673.4,198.2 690.1,187.4 706.8,202.3 723.5,170.1 740.2,209.4 756.9,217.6 773.6,235.3 790.3,245.2 807.0,251.2 823.7,255.3"/>
+<circle class="dot" cx="489.7" cy="104.5" r="4.5"/>
+<text class="t2" x="497.7" y="96.5">Peak 88 on 26 May (airport 43.0 °C)</text>
 <text class="tm" x="72.3" y="368.0" text-anchor="middle">01 May</text>
 <text class="tm" x="155.8" y="368.0" text-anchor="middle">06 May</text>
 <text class="tm" x="239.3" y="368.0" text-anchor="middle">11 May</text>
@@ -167,187 +167,187 @@ Wards: 9–12, 0 at Red, 0 at Orange+
 Airport Tmax 39.0 °C → plan level Green</title></rect>
 <rect class="hit" x="80.7" y="72" width="16.7" height="398"><title>Thu 02 May 2024
 Median ward MRI 23 (Green)
-Wards: 20–25, 0 at Red, 0 at Orange+
+Wards: 20–24, 0 at Red, 0 at Orange+
 Airport Tmax 40.0 °C → plan level Green</title></rect>
 <rect class="hit" x="97.4" y="72" width="16.7" height="398"><title>Fri 03 May 2024
 Median ward MRI 34 (Green)
-Wards: 30–37, 0 at Red, 0 at Orange+
+Wards: 30–36, 0 at Red, 0 at Orange+
 Airport Tmax 41.0 °C → plan level Green</title></rect>
 <rect class="hit" x="114.1" y="72" width="16.7" height="398"><title>Sat 04 May 2024
 Median ward MRI 44 (Yellow)
-Wards: 39–49, 0 at Red, 0 at Orange+
+Wards: 40–47, 0 at Red, 0 at Orange+
 Airport Tmax 40.6 °C → plan level Green</title></rect>
 <rect class="hit" x="130.8" y="72" width="16.7" height="398"><title>Sun 05 May 2024
 Median ward MRI 32 (Green)
-Wards: 28–36, 0 at Red, 0 at Orange+
+Wards: 29–35, 0 at Red, 0 at Orange+
 Airport Tmax 39.0 °C → plan level Green</title></rect>
 <rect class="hit" x="147.5" y="72" width="16.7" height="398"><title>Mon 06 May 2024
 Median ward MRI 35 (Green)
-Wards: 31–39, 0 at Red, 0 at Orange+
+Wards: 31–38, 0 at Red, 0 at Orange+
 Airport Tmax 40.6 °C → plan level Green</title></rect>
 <rect class="hit" x="164.2" y="72" width="16.7" height="398"><title>Tue 07 May 2024
-Median ward MRI 62 (Orange)
-Wards: 55–68, 0 at Red, 30 at Orange+
+Median ward MRI 61 (Orange)
+Wards: 56–66, 0 at Red, 35 at Orange+
 Airport Tmax 42.4 °C → plan level Yellow</title></rect>
 <rect class="hit" x="180.9" y="72" width="16.7" height="398"><title>Wed 08 May 2024
-Median ward MRI 53 (Yellow)
-Wards: 47–59, 0 at Red, 0 at Orange+
+Median ward MRI 52 (Yellow)
+Wards: 47–57, 0 at Red, 0 at Orange+
 Airport Tmax 42.6 °C → plan level Yellow</title></rect>
 <rect class="hit" x="197.6" y="72" width="16.7" height="398"><title>Thu 09 May 2024
 Median ward MRI 52 (Yellow)
-Wards: 46–58, 0 at Red, 0 at Orange+
+Wards: 47–56, 0 at Red, 0 at Orange+
 Airport Tmax 42.0 °C → plan level Yellow</title></rect>
 <rect class="hit" x="214.3" y="72" width="16.7" height="398"><title>Fri 10 May 2024
 Median ward MRI 54 (Yellow)
-Wards: 48–60, 0 at Red, 1 at Orange+
+Wards: 49–58, 0 at Red, 0 at Orange+
 Airport Tmax 40.6 °C → plan level Green</title></rect>
 <rect class="hit" x="231.0" y="72" width="16.7" height="398"><title>Sat 11 May 2024
 Median ward MRI 53 (Yellow)
-Wards: 47–59, 0 at Red, 0 at Orange+
+Wards: 48–57, 0 at Red, 0 at Orange+
 Airport Tmax 41.0 °C → plan level Green</title></rect>
 <rect class="hit" x="247.7" y="72" width="16.7" height="398"><title>Sun 12 May 2024
 Median ward MRI 57 (Yellow)
-Wards: 51–63, 0 at Red, 7 at Orange+
+Wards: 51–61, 0 at Red, 4 at Orange+
 Airport Tmax 41.6 °C → plan level Yellow</title></rect>
 <rect class="hit" x="264.3" y="72" width="16.7" height="398"><title>Mon 13 May 2024
 Median ward MRI 42 (Yellow)
-Wards: 37–47, 0 at Red, 0 at Orange+
+Wards: 38–46, 0 at Red, 0 at Orange+
 Airport Tmax 41.4 °C → plan level Yellow</title></rect>
 <rect class="hit" x="281.0" y="72" width="16.7" height="398"><title>Tue 14 May 2024
 Median ward MRI 33 (Green)
-Wards: 29–37, 0 at Red, 0 at Orange+
+Wards: 30–36, 0 at Red, 0 at Orange+
 Airport Tmax 37.0 °C → plan level Green</title></rect>
 <rect class="hit" x="297.7" y="72" width="16.7" height="398"><title>Wed 15 May 2024
 Median ward MRI 36 (Green)
-Wards: 32–40, 0 at Red, 0 at Orange+
+Wards: 33–39, 0 at Red, 0 at Orange+
 Airport Tmax 39.4 °C → plan level Green</title></rect>
 <rect class="hit" x="314.4" y="72" width="16.7" height="398"><title>Thu 16 May 2024
-Median ward MRI 56 (Yellow)
-Wards: 49–62, 0 at Red, 4 at Orange+
+Median ward MRI 55 (Yellow)
+Wards: 50–60, 0 at Red, 0 at Orange+
 Airport Tmax 43.0 °C → plan level Yellow</title></rect>
 <rect class="hit" x="331.1" y="72" width="16.7" height="398"><title>Fri 17 May 2024
-Median ward MRI 71 (Orange)
-Wards: 63–78, 0 at Red, 48 at Orange+
+Median ward MRI 70 (Orange)
+Wards: 64–76, 0 at Red, 48 at Orange+
 Airport Tmax 43.6 °C → plan level Orange</title></rect>
 <rect class="hit" x="347.8" y="72" width="16.7" height="398"><title>Sat 18 May 2024
-Median ward MRI 70 (Orange)
-Wards: 62–77, 0 at Red, 48 at Orange+
+Median ward MRI 69 (Orange)
+Wards: 63–75, 0 at Red, 48 at Orange+
 Airport Tmax 44.0 °C → plan level Orange</title></rect>
 <rect class="hit" x="364.5" y="72" width="16.7" height="398"><title>Sun 19 May 2024
-Median ward MRI 70 (Orange)
-Wards: 62–77, 0 at Red, 48 at Orange+
+Median ward MRI 69 (Orange)
+Wards: 63–75, 0 at Red, 48 at Orange+
 Airport Tmax 44.4 °C → plan level Orange</title></rect>
 <rect class="hit" x="381.2" y="72" width="16.7" height="398"><title>Mon 20 May 2024
 Median ward MRI 66 (Orange)
-Wards: 59–72, 0 at Red, 45 at Orange+
+Wards: 60–71, 0 at Red, 46 at Orange+
 Airport Tmax 44.0 °C → plan level Orange
 IMD red alert day</title></rect>
 <rect class="hit" x="397.9" y="72" width="16.7" height="398"><title>Tue 21 May 2024
 Median ward MRI 72 (Orange)
-Wards: 64–80, 1 at Red, 48 at Orange+
+Wards: 65–78, 0 at Red, 48 at Orange+
 Airport Tmax 44.4 °C → plan level Orange
 IMD red alert day</title></rect>
 <rect class="hit" x="414.6" y="72" width="16.7" height="398"><title>Wed 22 May 2024
 Median ward MRI 85 (Red)
-Wards: 76–94, 40 at Red, 48 at Orange+
+Wards: 77–91, 42 at Red, 48 at Orange+
 Airport Tmax 45.4 °C → plan level Red
 IMD red alert day</title></rect>
 <rect class="hit" x="431.3" y="72" width="16.7" height="398"><title>Thu 23 May 2024
 Median ward MRI 86 (Red)
-Wards: 77–95, 40 at Red, 48 at Orange+
+Wards: 78–93, 44 at Red, 48 at Orange+
 Airport Tmax 46.2 °C → plan level Red
 IMD red alert day</title></rect>
 <rect class="hit" x="448.0" y="72" width="16.7" height="398"><title>Fri 24 May 2024
-Median ward MRI 88 (Red)
-Wards: 78–97, 44 at Red, 48 at Orange+
+Median ward MRI 87 (Red)
+Wards: 79–94, 46 at Red, 48 at Orange+
 Airport Tmax 45.4 °C → plan level Red
 IMD red alert day</title></rect>
 <rect class="hit" x="464.7" y="72" width="16.7" height="398"><title>Sat 25 May 2024
-Median ward MRI 82 (Red)
-Wards: 73–90, 30 at Red, 48 at Orange+
+Median ward MRI 81 (Red)
+Wards: 74–87, 32 at Red, 48 at Orange+
 Airport Tmax 43.4 °C → plan level Orange</title></rect>
 <rect class="hit" x="481.4" y="72" width="16.7" height="398"><title>Sun 26 May 2024
-Median ward MRI 89 (Red)
-Wards: 79–98, 46 at Red, 48 at Orange+
+Median ward MRI 88 (Red)
+Wards: 81–95, 48 at Red, 48 at Orange+
 Airport Tmax 43.0 °C → plan level Yellow</title></rect>
 <rect class="hit" x="498.1" y="72" width="16.7" height="398"><title>Mon 27 May 2024
 Median ward MRI 86 (Red)
-Wards: 76–95, 40 at Red, 48 at Orange+
+Wards: 78–92, 43 at Red, 48 at Orange+
 Airport Tmax 45.0 °C → plan level Red</title></rect>
 <rect class="hit" x="514.8" y="72" width="16.7" height="398"><title>Tue 28 May 2024
 Median ward MRI 85 (Red)
-Wards: 76–94, 40 at Red, 48 at Orange+
+Wards: 77–91, 43 at Red, 48 at Orange+
 Airport Tmax 43.4 °C → plan level Orange</title></rect>
 <rect class="hit" x="531.5" y="72" width="16.7" height="398"><title>Wed 29 May 2024
-Median ward MRI 76 (Orange)
-Wards: 67–84, 7 at Red, 48 at Orange+
+Median ward MRI 75 (Orange)
+Wards: 68–81, 4 at Red, 48 at Orange+
 Airport Tmax 41.4 °C → plan level Yellow</title></rect>
 <rect class="hit" x="548.2" y="72" width="16.7" height="398"><title>Thu 30 May 2024
 Median ward MRI 60 (Orange)
-Wards: 54–67, 0 at Red, 26 at Orange+
+Wards: 55–65, 0 at Red, 28 at Orange+
 Airport Tmax 43.0 °C → plan level Yellow</title></rect>
 <rect class="hit" x="564.9" y="72" width="16.7" height="398"><title>Fri 31 May 2024
 Median ward MRI 53 (Yellow)
-Wards: 47–59, 0 at Red, 0 at Orange+
+Wards: 48–57, 0 at Red, 0 at Orange+
 Airport Tmax 42.4 °C → plan level Yellow</title></rect>
 <rect class="hit" x="581.6" y="72" width="16.7" height="398"><title>Sat 01 Jun 2024
-Median ward MRI 50 (Yellow)
-Wards: 44–55, 0 at Red, 0 at Orange+
+Median ward MRI 49 (Yellow)
+Wards: 45–53, 0 at Red, 0 at Orange+
 Airport Tmax 41.6 °C → plan level Yellow</title></rect>
 <rect class="hit" x="598.3" y="72" width="16.7" height="398"><title>Sun 02 Jun 2024
 Median ward MRI 52 (Yellow)
-Wards: 46–58, 0 at Red, 0 at Orange+
+Wards: 47–57, 0 at Red, 0 at Orange+
 Airport Tmax 41.4 °C → plan level Yellow</title></rect>
 <rect class="hit" x="615.0" y="72" width="16.7" height="398"><title>Mon 03 Jun 2024
 Median ward MRI 63 (Orange)
-Wards: 56–70, 0 at Red, 39 at Orange+
+Wards: 57–68, 0 at Red, 41 at Orange+
 Airport Tmax 41.6 °C → plan level Yellow</title></rect>
 <rect class="hit" x="631.7" y="72" width="16.7" height="398"><title>Tue 04 Jun 2024
 Median ward MRI 54 (Yellow)
-Wards: 48–60, 0 at Red, 2 at Orange+
+Wards: 49–58, 0 at Red, 0 at Orange+
 Airport Tmax 41.4 °C → plan level Yellow</title></rect>
 <rect class="hit" x="648.3" y="72" width="16.7" height="398"><title>Wed 05 Jun 2024
 Median ward MRI 46 (Yellow)
-Wards: 41–52, 0 at Red, 0 at Orange+
+Wards: 42–50, 0 at Red, 0 at Orange+
 Airport Tmax 41.4 °C → plan level Yellow</title></rect>
 <rect class="hit" x="665.0" y="72" width="16.7" height="398"><title>Thu 06 Jun 2024
 Median ward MRI 55 (Yellow)
-Wards: 49–61, 0 at Red, 2 at Orange+
+Wards: 50–59, 0 at Red, 0 at Orange+
 Airport Tmax 41.6 °C → plan level Yellow</title></rect>
 <rect class="hit" x="681.7" y="72" width="16.7" height="398"><title>Fri 07 Jun 2024
 Median ward MRI 59 (Yellow)
-Wards: 52–66, 0 at Red, 16 at Orange+
+Wards: 53–63, 0 at Red, 15 at Orange+
 Airport Tmax 42.4 °C → plan level Yellow</title></rect>
 <rect class="hit" x="698.4" y="72" width="16.7" height="398"><title>Sat 08 Jun 2024
-Median ward MRI 54 (Yellow)
-Wards: 48–60, 0 at Red, 0 at Orange+
+Median ward MRI 53 (Yellow)
+Wards: 48–58, 0 at Red, 0 at Orange+
 Airport Tmax 41.8 °C → plan level Yellow</title></rect>
 <rect class="hit" x="715.1" y="72" width="16.7" height="398"><title>Sun 09 Jun 2024
 Median ward MRI 65 (Orange)
-Wards: 58–72, 0 at Red, 43 at Orange+
+Wards: 59–70, 0 at Red, 45 at Orange+
 Airport Tmax 43.0 °C → plan level Yellow</title></rect>
 <rect class="hit" x="731.8" y="72" width="16.7" height="398"><title>Mon 10 Jun 2024
 Median ward MRI 51 (Yellow)
-Wards: 45–57, 0 at Red, 0 at Orange+
+Wards: 46–55, 0 at Red, 0 at Orange+
 Airport Tmax 39.6 °C → plan level Green</title></rect>
 <rect class="hit" x="748.5" y="72" width="16.7" height="398"><title>Tue 11 Jun 2024
 Median ward MRI 48 (Yellow)
-Wards: 43–54, 0 at Red, 0 at Orange+
+Wards: 43–52, 0 at Red, 0 at Orange+
 Airport Tmax 40.2 °C → plan level Green</title></rect>
 <rect class="hit" x="765.2" y="72" width="16.7" height="398"><title>Wed 12 Jun 2024
 Median ward MRI 42 (Yellow)
-Wards: 37–47, 0 at Red, 0 at Orange+
+Wards: 38–45, 0 at Red, 0 at Orange+
 Airport Tmax 40.8 °C → plan level Green</title></rect>
 <rect class="hit" x="781.9" y="72" width="16.7" height="398"><title>Thu 13 Jun 2024
 Median ward MRI 38 (Green)
-Wards: 34–43, 0 at Red, 0 at Orange+
+Wards: 34–41, 0 at Red, 0 at Orange+
 Airport Tmax 41.2 °C → plan level Yellow</title></rect>
 <rect class="hit" x="798.6" y="72" width="16.7" height="398"><title>Fri 14 Jun 2024
 Median ward MRI 36 (Green)
-Wards: 32–41, 0 at Red, 0 at Orange+
+Wards: 32–39, 0 at Red, 0 at Orange+
 Airport Tmax 39.2 °C → plan level Green</title></rect>
 <rect class="hit" x="815.3" y="72" width="16.7" height="398"><title>Sat 15 Jun 2024
 Median ward MRI 35 (Green)
-Wards: 30–39, 0 at Red, 0 at Orange+
+Wards: 31–38, 0 at Red, 0 at Orange+
 Airport Tmax 39.8 °C → plan level Green</title></rect>
 </svg>

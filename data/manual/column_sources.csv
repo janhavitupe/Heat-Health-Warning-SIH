@@ -31,3 +31,7 @@ tree_cover,Share of ward area under tree cover,ESA WorldCover v200,10 m,2021,Fal
 elderly_share,pop_60plus / population,Derived,ward,2020,True,model_estimate,build_wards.py
 under5_share,pop_under5 / population,Derived,ward,2020,True,model_estimate,build_wards.py
 population_density,population / area_km2 (per km²),Derived,ward,2020,True,model_estimate,build_wards.py
+cooling_gap,"Share of residents beyond a 15-min walk (1 km at 4 km/h) of an AMC cooling option","OSM walking network + WorldPop 100 m cells + cooling_points.geojson (scripts/build_access.py)",100 m cell,current,True,model_estimate,build_access.py
+cooling_gap_with_community,"As cooling_gap, also counting temples, mosques and malls (sensitivity)","As cooling_gap",100 m cell,current,True,model_estimate,build_access.py
+cooling_desert,"Cooling gap above 50% (most residents beyond a 15-min walk)","Derived",ward,current,True,model_estimate,build_access.py
+health_walk_km,"Population-weighted walking distance to the nearest hospital, clinic or UHC (km)","OSM walking network + WorldPop 100 m cells (scripts/build_access.py)",100 m cell,current,True,model_estimate,build_access.py
