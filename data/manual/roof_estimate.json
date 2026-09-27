@@ -1,0 +1,16 @@
+{
+ "method": "slum-share mix; see scripts/estimate_roof_share.py",
+ "city_sheet_share_2011": 0.2188,
+ "slum_sheet_share_gujarat_2011": 0.5107,
+ "slum_household_share": 0.1369,
+ "nonslum_sheet_share": 0.1725,
+ "wards_2011": 63,
+ "wards_with_households": 57,
+ "households": 1179823,
+ "ward_spread_2011": {
+  "p10": 0.078,
+  "median": 0.263,
+  "p90": 0.478,
+  "max": 0.627
+ }
+}

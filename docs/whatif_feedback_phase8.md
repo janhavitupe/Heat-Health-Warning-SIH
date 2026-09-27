@@ -11,7 +11,7 @@ Interventions are applied to ward attributes, and the affected wards are re-scor
 | Lever | How it enters the model | Evidence |
 |---|---|---|
 | **Tree cover +X points** (max 20) | Tree cover → NDVI (+0.727 per unit, r = 0.91 across Ahmedabad's wards) → night surface temperature (−11.3 °C per unit NDVI, Phase 2 fit) → night air temperature (× 0.3). More tree shade also lowers daytime radiant temperature | Ward data; Ziter et al. (2019, PNAS): the strongest cooling comes above 40% canopy, while Ahmedabad's wards have 0–22%, so the lever is capped at +20 points |
-| **Cool roofs on X% of sheet roofs** | Sheet-roof share × (1 − X) → indoor-heat points | **No effect yet:** roof data is missing, and the result says so |
+| **Cool roofs on X% of sheet roofs** | Sheet-roof share × (1 − X) → indoor-heat points | Roof share is a census-based estimate ([decision_roof_share.md](decision_roof_share.md)). A treated roof counts as no longer heat-trapping, so this is an **upper bound**: field studies show 2–5 °C indoor cooling from reflective paint (NRDC/IIPH 2018; Vellingiri et al. 2020) |
 | **New cooling centre** (map click or recommended site) | People newly within a 15-minute walk along the street network → ward cooling gap → vulnerability (PVI) | Phase 6 access model |
 
 **Two design choices keep unaffected wards unchanged:**
@@ -25,7 +25,7 @@ Interventions are applied to ward attributes, and the affected wards are re-scor
 | +10 points of trees in Baherampura and Odhav | Night minimum −0.25 °C; average risk −1.2 in each; **1 Red day avoided in each** |
 | +15 points of trees in Baherampura | Average risk −1.7; 1 Red day avoided |
 | Cooling centre at recommended site 1 (Baherampura) | 20,206 more people within a 15-minute walk; vulnerability −1.5; average risk −0.7 |
-| Cool roofs 50% in Baherampura | No effect (no roof data), and the result says so |
+| Cool roofs 50% in Baherampura | Sheet-roof share 27.5% → 13.8%; average risk −1.6; **2 Red days avoided** (upper bound) |
 
 **Speed:** 0.2–0.4 s for tree scenarios. About 1 s for a cooling centre, using a cached walking network (`scripts/build_access.py` writes it; loading takes 1.4 s instead of about 20 s).
 
@@ -70,7 +70,7 @@ Written against the principles of India's **Digital Personal Data Protection Act
 - **No real reports yet.** Flags and recalibration are shown on synthetic data. The method is ready for the 2027 season.
 - **No WhatsApp report flow.** The optional WhatsApp route in the plan isn't built; health workers use the web form, which works on phones.
 - **Hospital beds / ambulances lever not included.** The hospital capacity factor is switched off until private-bed data exists (Phase 6), so a beds lever would change nothing.
-- **Cool roofs and outdoor workers still lack data**, so those levers and indicators stay neutral.
+- **Roof shares are estimates** (census 2011 city and slum rates mixed by slum share); outdoor workers still lack data and are held neutral.
 - **No side-by-side before/after map.** The simulator shows a per-ward change table and a before/after risk chart instead.
 
 ## Sources

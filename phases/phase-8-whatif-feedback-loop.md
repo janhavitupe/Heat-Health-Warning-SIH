@@ -11,7 +11,7 @@ Close the loop in two directions: let planners test interventions before funding
 - [x] `scenarios.py`: take a scenario (list of changes) → modified copy of ward attributes → re-run full pipeline over a chosen period (default: replayed backtest heatwave). *0.2–1 s.*
 - [x] Levers:
   - [x] Tree cover +X% → NDVI change → LST anomaly change via Phase 2 regression → ward temperature and MRT *(capped at +20 points: observed range 0–22%)*
-  - [x] Cool roofs on X% of sheet-roofed homes → reduced effective `roof_sheet_share` → P_indoor *(no effect until roof data exists; result says so)*
+  - [x] Cool roofs on X% of sheet-roofed homes → reduced effective `roof_sheet_share` → P_indoor *(roof share estimated from census 2011; upper-bound effect)*
   - [x] New cooling centre at a map-clicked location → recompute Cooling Gap → PVI
   - [ ] Additional beds / ambulances → C_h → HRI *(not built: C_h is off until private-bed data exists, so it would change nothing)*
 - [x] UI: scenario builder panel, before/after map side-by-side or toggle, per-ward delta table, "Red-alert ward-days avoided" summary. *Before/after chart instead of a second map.*

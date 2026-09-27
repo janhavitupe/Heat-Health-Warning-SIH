@@ -25,7 +25,7 @@ HEAT_LABELS = {
     "heat_index": ("Heat + humidity (Heat Index)", "live"),
     "night": ("Hot night — little overnight recovery", "live"),
     "persist": ("Consecutive hot days", "live"),
-    "indoor": ("Heat-trapping sheet roofs (indoor heat)", "census"),
+    "indoor": ("Heat-trapping sheet roofs (indoor heat)", "model_estimate"),
 }
 PVI_LABELS = {
     "elderly_share": "Elderly population (60+)",
@@ -82,7 +82,10 @@ def explain_day(day: dict, pvi_row: dict, pvi_status: dict[str, str], factor: fl
     contribs: list[Contribution] = []
     for key, (label, data_label) in HEAT_LABELS.items():
         pts = day[f"pts_{key}"] * s
-        note = "roof data not yet available — counted as 0" if key == "indoor" and day["indoor_data_missing"] else ""
+        note = ""
+        if key == "indoor":
+            note = ("roof data not yet available — counted as 0" if day["indoor_data_missing"]
+                    else "roof share estimated from census 2011 city and slum rates")
         contribs.append(Contribution(key, label, pts, "heat", data_label, note))
 
     for key, label in PVI_LABELS.items():

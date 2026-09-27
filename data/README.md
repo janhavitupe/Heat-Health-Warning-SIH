@@ -36,7 +36,7 @@ pytest                                                      # data checks
 | Landsat 8/9, MODIS, Sentinel-2, ESA WorldCover | LST day/night, NDVI, built-up, tree cover | ✅ Via Earth Engine (2021–2025, Apr–Jun) |
 | Census 2011 ward-level PCA (58 wards) | population, 0–6, workers by category | ✅ Downloaded to `raw/census/`. ⛔ Not usable until 2011 wards are matched to 2015 wards — see below |
 | AMC socio-economic slum survey 2010-11, via the Slum Free City Action Plan 2014 (Annexure II) | informal_housing_share, slum_huts | ✅ 686 slums, 161,463 huts (99.2% of the survey total) extracted by `scripts/extract_slums.py`; 2010 ward names mapped to 2015 wards in [`manual/ward_crosswalk_slum_2010.csv`](manual/ward_crosswalk_slum_2010.csv) (name match, TP scheme or geocoded locality; evidence per row) |
-| Census 2011 Houselisting roof material | roof_sheet_share (Innovation 1) | ⛔ Blocked on the 2011→2015 ward crosswalk |
+| Census 2011 Houselisting roof material (HH-14 Ahmadabad; SLUM HL-02 A Gujarat) | roof_sheet_share (Innovation 1) | ✅ **Estimate:** `scripts/estimate_roof_share.py` mixes the city (21.9%) and slum (51.1%) sheet-roof rates by each ward's slum share → 17–38%. Files in `raw/census/`. To be replaced by census ward values once the crosswalk exists ([decision](../docs/decision_roof_share.md)) |
 | PLFS / NSSO / Census B-series | outdoor_worker_share | ⛔ Blocked on the crosswalk |
 | Major public hospitals (Wikipedia, DeshGujarat) | hospital_beds, public_beds_access | ✅ 5 hospitals, 7,785 beds, in [`manual/hospital_beds.csv`](manual/hospital_beds.csv) (Shardaben placed at its ward centroid). Private beds pending. Private hospitals handle 64.6% of urban Gujarat admissions, so `capacity_factor` stays at default until they are added |
 | AMC Urban Health Centre list (2024) | Cooling / first-aid points | ✅ 79 of ~110 parsed into [`manual/amc_uhc_list.csv`](manual/amc_uhc_list.csv); not yet geocoded |
@@ -50,7 +50,7 @@ pytest                                                      # data checks
 The Census 2011 ward table has 58 wards identified only by number ("WARD NO.-0001"); no public source found gives their names or boundaries. The AMC census download link is dead, and the District Census Handbook has no ward map. To unblock:
 1. Ask the AMC Estate / Election department or the Directorate of Census Operations, Gujarat, for the 2011 ward map or number-to-name list. A scanned map is enough.
 2. Build `manual/ward_crosswalk_2011_2015.csv` (`ward_2011, ward_id_2015, share`).
-3. The roof, worker, and under-6 columns can then be reallocated automatically. (Slum share no longer depends on this; it comes from the AMC slum survey.)
+3. The worker and under-6 columns can then be reallocated automatically, and census ward roof values can replace the roof estimate. (Slum share no longer depends on this; it comes from the AMC slum survey.)
 
 Until then these columns stay empty, and the scoring treats them as neutral (midpoint) and says so in each explanation.
 

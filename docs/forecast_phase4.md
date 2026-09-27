@@ -29,15 +29,15 @@ Run time: deterministic forecast 3 seconds; full ensemble (122 runs × 48 wards)
 
 Archived *ensemble* forecasts for 2024 aren't available: Open-Meteo keeps them for about three months. Instead, archived *deterministic* forecasts from the Previous Runs API show what each model predicted 1–5 days ahead. Each forecast was scored for all 48 wards and compared with the model run on actual (reanalysis) weather. That isolates the error coming from the weather forecast.
 
-> Numbers refreshed on 26 Sep 2026 after the Phase 6 vulnerability update (walking access to health care and cooling access in PVI). Changes were small.
+> Numbers refreshed on 27 Sep 2026 after sheet-roof shares were added (roof points raise scores slightly, so more ward-days are Orange+). The 2024/2025 model-combination table below was not re-run; that choice does not depend on roof data.
 
 ### Single models: Orange-or-above ward-days
 
 | Model | Hit rate, 1–5 days ahead | False alarm ratio | Why |
 |---|---|---|---|
-| **ECMWF IFS** | 79–88% | 19–30% | Balanced |
-| **GFS** | 17–42% | 0–34% | Afternoon wind 44% too strong and air too dry, so heat stress is understated (WBGT about −1.8 °C) |
-| **ICON** | 84–90% | 30–35% | Wind too calm and air too humid, so heat stress is overstated |
+| **ECMWF IFS** | 82–87% | 21–32% | Balanced |
+| **GFS** | 31–54% | 2–28% | Afternoon wind 44% too strong and air too dry, so heat stress is understated (WBGT about −1.8 °C) |
+| **ICON** | 86–91% | 29–33% | Wind too calm and air too humid, so heat stress is overstated |
 
 Afternoon wind, May 2024: airport station 3.5 m/s, reanalysis 3.7, ECMWF 3.6, GFS 5.4, ICON 2.3. Air temperature itself is well forecast by all three (Tmax bias within ±0.6 °C).
 
@@ -47,9 +47,9 @@ A **time-lagged multi-model ensemble** was built from the three models' forecast
 
 | Days ahead | 1 | 2 | 3 | 4 | 5 |
 |---|---|---|---|---|---|
-| Brier skill vs climatology | 0.52 | 0.50 | 0.46 | 0.52 | 0.43 |
+| Brier skill vs climatology | 0.47 | 0.44 | 0.41 | 0.47 | 0.40 |
 
-Every lead beats simply using the season's average frequency (40% of ward-days at Orange+). The reliability table ([backtest/results/forecast_skill.md](../backtest/results/forecast_skill.md)) is close to ideal at 1 day ahead: forecasts of 56% came true 49% of the time, and 89% came true 93%. At 5 days ahead the forecasts are somewhat under-confident, so events happen more often than predicted.
+Every lead beats simply using the season's average frequency (48% of ward-days at Orange+). In the reliability table ([backtest/results/forecast_skill.md](../backtest/results/forecast_skill.md)) at 1 day ahead, high probabilities are well calibrated (89% came true 88% of the time), while mid-range forecasts are over-confident (56% came true 38%). At 5 days ahead the forecasts are somewhat under-confident, so events happen more often than predicted.
 
 ### Which models to combine: train on 2024, blind test on 2025
 

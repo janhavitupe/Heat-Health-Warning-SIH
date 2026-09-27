@@ -66,7 +66,7 @@ export default function WhatIfTab({ wards, selected, point, armed, onArm, coolin
         <input type="range" min="0" max="20" step="1" value={trees} onChange={(e) => setTrees(+e.target.value)} /></label>
       <label className="fld">Cool roofs on <b>{roofs}%</b> of sheet-roofed homes
         <input type="range" min="0" max="100" step="10" value={roofs} onChange={(e) => setRoofs(+e.target.value)} /></label>
-      {roofs > 0 && <p className="meta">Sheet-roof data is not available yet, so this lever will show no effect until it is added.</p>}
+      {roofs > 0 && <p className="meta">Sheet-roof shares are estimates (census 2011 city and slum rates, mixed by each ward’s slum share).</p>}
 
       <h4>New cooling centre</h4>
       <div className="adv-controls">
@@ -91,7 +91,9 @@ export default function WhatIfTab({ wards, selected, point, armed, onArm, coolin
           <p key={i} className="meta">
             {c.lever === 'tree_cover' && `Trees +${c.pp} pts: night surface ${signed(c.night_lst_change_c, 2)} °C, night air ${signed(c.night_air_change_c, 2)} °C.`}
             {c.lever === 'cooling_centre' && `New cooling centre: ${c.people_newly_within_walk.toLocaleString('en-IN')} more people within a 15-minute walk.`}
-            {c.lever === 'cool_roofs' && (c.note || `Cool roofs on ${c.share * 100}% of sheet roofs.`)}
+            {c.lever === 'cool_roofs' && (c.roof_share_before != null
+              ? `Cool roofs on ${c.share * 100}% of sheet roofs: sheet-roof share ${Math.round(c.roof_share_before * 100)}% → ${Math.round(c.roof_share_after * 100)}% (estimate).`
+              : c.note)}
           </p>
         ))}
         <table className="list">

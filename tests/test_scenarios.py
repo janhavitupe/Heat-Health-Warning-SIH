@@ -35,9 +35,22 @@ def test_other_wards_do_not_move(wards, cfg):
     assert affected == ["AMC-35"]
 
 
-def test_cool_roofs_report_missing_data(wards, hot, cfg):
+def test_cool_roofs_lower_indoor_heat(wards, hot, cfg):
     r = scenarios.run(wards, hot, [{"lever": "cool_roofs", "wards": ["AMC-35"], "share": 0.5}], cfg)
+    c = r["changes"][0]
+    assert c["roof_share_after"] == pytest.approx(c["roof_share_before"] / 2, abs=0.001)
+    assert r["wards"][0]["change"]["mean_mri"] < 0
+
+
+def test_cool_roofs_report_missing_data(wards, hot, cfg):
+    no_roofs = wards.assign(roof_sheet_share=float("nan"))
+    r = scenarios.run(no_roofs, hot, [{"lever": "cool_roofs", "wards": ["AMC-35"], "share": 0.5}], cfg)
     assert "no effect" in r["changes"][0]["note"] and r["wards"][0]["change"]["mean_mri"] == 0
+
+
+def test_roof_share_estimate_in_range(wards):
+    s = wards["roof_sheet_share"]
+    assert s.notna().all() and s.between(0.15, 0.55).all()      # between non-slum (17%) and slum (51%) rates
 
 
 @pytest.mark.parametrize("change", [

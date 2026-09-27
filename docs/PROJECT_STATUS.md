@@ -95,7 +95,7 @@ Validation, polish, demo                                     ← Phase 9 (not st
 | 8 | What-if simulator & health-worker feedback | ✅ Done. Tree cover, cool roofs and cooling-centre scenarios in about 1 s; anonymous count-only reports, anomaly flags, recalibration proposals (synthetic demo data) |
 | 9 | Validation, polish, demo | Not started |
 
-**Code:** a Python package `heatrisk/` with 9 modules, 3 data scripts, 1 Earth Engine script, 3 backtest scripts, 153 passing tests.
+**Code:** a Python package `heatrisk/` with 9 modules, 3 data scripts, 1 Earth Engine script, 3 backtest scripts, 155 passing tests.
 **Git:** nothing is committed yet. All files are untracked on branch `master`.
 
 ---
@@ -125,7 +125,7 @@ Validation, polish, demo                                     ← Phase 9 (not st
 | **Sentinel-2** | Vegetation index NDVI (10 m) | ESA Copernicus, via Earth Engine | Apr–Jun 2021–2025 | ✅ |
 | **ESA WorldCover v200** | Built-up share, tree cover share (10 m) | ESA, via Earth Engine | 2021 | ✅ |
 | **Census 2011 ward tables** | Population, children 0–6, workers by type (58 old wards) | Census of India PCA, `data/raw/census/` | 2011 | ⛔ Downloaded but not usable yet (§9) |
-| **Census 2011 slum & housing tables** | Slum share, roof material | Census of India | 2011 | ⛔ Blocked (§9) |
+| **Census 2011 roof material** | Sheet-roof share (HH-14 Ahmadabad wards, SLUM HL-02 A Gujarat) | Census of India | 2011 | ✅ Estimated per ward from city and slum rates ([decision_roof_share.md](decision_roof_share.md)) |
 | **Public hospital beds** | 5 hospitals, 7,785 beds | Wikipedia "Healthcare in Ahmedabad", DeshGujarat 2023 | 2019–2023 | ✅ Private beds missing |
 | **AMC Urban Health Centres** | 79 of about 110 centres | AMC list (Nov 2024 copy); personal contact details removed | 2024 | ✅ Not yet placed on the map |
 | **Weather station** | Hourly temperature, humidity, wind, pressure | IMD Ahmedabad Airport, station 42647, via Meteostat | 1944–2026 | ✅ |
@@ -204,7 +204,8 @@ Every column's source, year and whether it is an estimate is recorded in [data/m
 | Satellite | lst_day, lst_night, ndvi, builtup_frac, tree_cover | 100% |
 | Risk factors | historical_factor (set to 1.0 everywhere: no ward-level illness data found) | 100% (default) |
 | Slums | informal_housing_share, slum_huts (AMC slum survey 2010-11) | 100% |
-| **Census-based** | **roof_sheet_share, outdoor_worker_share** | **0% — blocked** |
+| Census-based | roof_sheet_share (estimate: slum-mix of census 2011 rates, 17–38%) | 100% (estimate) |
+| **Census-based** | **outdoor_worker_share** | **0% — blocked** |
 | Capacity | capacity_factor (default 1.0: kept off, see §5b Decision 3); public_beds_access (E2SFCA) | 0% / 100% |
 
 **Important findings from the data:**
@@ -284,7 +285,7 @@ Base score = 0.5 × UTCI score + 0.3 × WBGT score + 0.2 × Heat Index score.
 |---|---|
 | **P_night** (hot night) | 0 if the day's minimum temperature is below 28 °C, rising linearly to 10 at 31 °C. People can't recover overnight. |
 | **P_persist** (consecutive hot days) | 2.5 points per consecutive heat-alert day (base score ≥ 60, roughly the Heat Action Plan's Orange; was ≥ 41 until Phase 3). The first such day earns 0. Resets after a cooler day. |
-| **P_indoor** (sheet roofs — *Innovation 1*) | 10 × share of households with metal/asbestos sheet roofs. Only on days with base ≥ 41; × 1.5 on hot nights (sheet roofs release heat slowly); capped at 10. Missing roof data → 0 and flagged. |
+| **P_indoor** (sheet roofs — *Innovation 1*) | 10 × share of households with metal/asbestos sheet roofs. Only on days with base ≥ 41; × 1.5 on hot nights (sheet roofs release heat slowly); capped at 10. Roof share is estimated per ward from census 2011 city and slum rates (17–38%, [decision_roof_share.md](decision_roof_share.md)); missing roof data → 0 and flagged. |
 
 **HTSI = min(100, base + P_night + P_persist + P_indoor)**
 
@@ -489,24 +490,24 @@ The model reaches Orange **3 days before** IMD's red alert, and Red one day afte
 | Against the IMD red alert (20–24 May) | Result |
 |---|---|
 | IMD red days with any ward at Orange+ | 5 of 5 |
-| IMD red days with any ward at Red | 3 of 5 (22–24 May) |
-| Lead time (days at Orange+ before 20 May) | 3 |
-| Days outside the window with any ward at Red | 5 of 41 (25–29 May; airport hit 45.0 °C on 27 May) |
+| IMD red days with any ward at Red | 4 of 5 (21–24 May) |
+| Lead time (days at Orange+ before 20 May) | 4 |
+| Days outside the window with any ward at Red | 6 of 41 (17 May, the day before onset; 25–29 May, airport hit 45.0 °C on 27 May) |
 
 | Day by day against the Heat Action Plan rule on observed airport Tmax (46 days) | Result |
 |---|---|
-| Same level / within one level | 67% / 98% |
+| Same level / within one level | 65% / 98% |
 | Plan Orange/Red days the model also rates Orange/Red | 11 of 11 |
 | Model lower than the plan | 1 day |
-| Model higher than the plan | 14 days (mostly one step up on muggy days) |
+| Model higher than the plan | 15 days (mostly one step up on muggy days) |
 
 ![May 2024 timeline](../backtest/results/may2024_timeline.svg)
 
 ### Sensitivity ([backtest/sensitivity.py](../backtest/sensitivity.py))
 
-- Ward rankings stay stable under every ±20% weight change (Spearman ρ ≥ 0.963; target 0.8).
+- Ward rankings stay stable under every ±20% weight change (Spearman ρ ≥ 0.978; target 0.8).
 - The only change that reshuffles rankings is turning on daytime downscaling (β_day = 0.3, ρ 0.72), which is off on station evidence.
-- Alert counts are more fragile than rankings: the number of wards at Red on peak days swings widely (UTCI weight ±20% → 195–350 Red ward-days vs 302), because many sit just above the Red line.
+- Alert counts are more fragile than rankings: the number of wards at Red on peak days swings widely (UTCI weight ±20% → 283–429 Red ward-days vs 350), because many sit just above the Red line.
 
 ### Which wards rank worst
 
@@ -537,10 +538,10 @@ Full details: [docs/forecast_phase4.md](forecast_phase4.md).
 
 | | 1 day ahead | 3 days | 5 days |
 |---|---|---|---|
-| ECMWF: Orange+ hit rate / false alarms | 79% / 19% | 82% / 27% | 81% / 30% |
-| Combined probability: Brier skill vs climatology | 0.52 | 0.46 | 0.43 |
+| ECMWF: Orange+ hit rate / false alarms | 85% / 21% | 84% / 28% | 82% / 32% |
+| Combined probability: Brier skill vs climatology | 0.47 | 0.41 | 0.40 |
 
-- **GFS understates Ahmedabad heat stress** (hit rate 17–42%) because its afternoon winds are 44% too strong. **ICON overstates it** (winds too calm).
+- **GFS understates Ahmedabad heat stress** (hit rate 31–54%) because its afternoon winds are 44% too strong. **ICON overstates it** (winds too calm).
 - Combined with equal weight, the three models beat any single model or pair, in 2024 and in a blind 2025 test.
 - A wind bias correction didn't help out of sample, so none is applied.
 
@@ -615,7 +616,7 @@ Full details and privacy note: [docs/whatif_feedback_phase8.md](whatif_feedback_
 
 ## 6. Tests
 
-**153 tests, all passing** (`pytest`, about 30 seconds): 114 test functions, several run with many inputs, some run with several inputs. Most use synthetic weather, so they run without internet.
+**155 tests, all passing** (`pytest`, about 30 seconds): 114 test functions, several run with many inputs, some run with several inputs. Most use synthetic weather, so they run without internet.
 
 | File | Test functions | What they check |
 |---|---|---|
@@ -623,7 +624,7 @@ Full details and privacy note: [docs/whatif_feedback_phase8.md](whatif_feedback_
 | `test_thermal.py` | 8 | Sun position, MRT higher by day than night, agreement with pythermalcomfort, extreme wind and saturated air |
 | `test_scoring.py` | 23 | Normalization, persistence counting and resets (only heat-alert-level days count), roof points gating and caps, neutral PVI indicators, percentile-rank scaling, risk multiplier centred on the average ward, Red reachable, alert band edges, city-wide batch table, explanations add up exactly, a "golden day" with known output |
 | `test_api.py` | 10 | GeoJSON with scores and probabilities, ward detail explanation adds up, days and events, config disclosed, error codes, actions / work windows / advisories / priorities / cooling / allocation endpoints (temporary database, no network) |
-| `test_scenarios.py` | 5 | Trees cool nights and lower risk only in chosen wards, other wards unchanged, cool roofs report missing data, invalid changes rejected (4 cases), cooling centre lowers gap and PVI |
+| `test_scenarios.py` | 7 | Trees cool nights and lower risk only in chosen wards, other wards unchanged, cool roofs lower indoor heat (and report missing data), roof estimate in range, invalid changes rejected (4 cases), cooling centre lowers gap and PVI |
 | `test_feedback.py` | 4 | Expected share, flag rules, bounded significant-only recalibration, reproducible synthetic data |
 | `test_alerts.py` | 8 | Engine drafts once per day/level, nothing sent without approval, named officer and reason required, edit → approve → dispatch → audit order, CAP validates against the OASIS 1.2 schema, voice menu in Gujarati, API token, Twilio mode refuses example recipients |
 | `test_work_windows.py` | 4 | ACGIH limits, schedule merging and working hours, unacclimatized stricter, first days of a heatwave |
@@ -682,7 +683,6 @@ Before the Phase 3 calibration, this ward scored HTSI 100 and MRI 66.7 (Orange) 
 
 The Census 2011 ward table has 58 wards identified only by number ("WARD NO.-0001"), with no names or boundaries. Today's map has 48 different wards. Until old wards are matched to new ones, these columns stay empty:
 
-- `roof_sheet_share` (needed for Innovation 1, indoor heat)
 - `outdoor_worker_share`
 - ward-level under-6 children (better than WorldPop's flat shares)
 
@@ -841,7 +841,7 @@ heat/
 │   ├── whatif_feedback_phase8.md     Phase 8 simulator, feedback loop and privacy note
 │   └── weights_changelog.md          every config change and why
 ├── phases/                           plan for phases 0–9
-└── tests/                            153 tests
+└── tests/                            155 tests
 ```
 
 *All scores are model estimates, not clinical predictions.*

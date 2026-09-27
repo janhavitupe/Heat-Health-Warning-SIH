@@ -26,3 +26,4 @@ Every change to a value in `config.yaml` is recorded here with its reason (propo
 | 2026-09-26 | alert_workflow (new) | — | min_level orange; en/hi/gu; sms/whatsapp/voice; placeholder CAP sender; Google TTS voices | Phase 7 alert workflow and delivery settings | Phase 7 |
 | 2026-09-27 | scenarios (new) | — | tree_ndvi_slope 0.727, max_tree_pp 20 | Tree cover → NDVI fit across wards (r = 0.91); cap at the observed range | Phase 8 |
 | 2026-09-27 | feedback.p_threshold, prior_cases, recalibration_p (new) | — | 0.01, 10, 0.05 | Anomaly significance, shrinkage and evidence threshold for H_m proposals | Phase 8 |
+| 2026-09-27 | data: roof_sheet_share | empty (P_indoor = 0) | 17–38% per ward (estimate) | Census 2011 city and Gujarat slum sheet-roof rates mixed by ward slum share; enables P_indoor and the cool-roofs lever. Backtest: 4 of 5 IMD red days with a Red ward (was 3), lead 4 days (was 3), one more early Red day (17 May) | Roof data |

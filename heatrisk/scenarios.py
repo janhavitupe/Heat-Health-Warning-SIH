@@ -11,7 +11,7 @@ Levers and how they enter the model:
                   → night air temperature (× beta_night), and
                   → more tree shade on mean radiant temperature (daytime UTCI)
   cool_roofs      paint X% of sheet roofs → roof_sheet_share × (1 − X) → P_indoor
-                  (no effect while roof data is missing, and the result says so)
+                  (roof share is a census-based estimate; no effect where it is missing)
   cooling_centre  a new cooling place at a map point → people within a 15-min walk
                   → ward cooling gap → PVI (scored against the baseline city)
 
@@ -119,10 +119,14 @@ def apply(wards: pd.DataFrame, changes: list[dict], cfg: dict) -> tuple[pd.DataF
             share = float(ch.get("share", 0))
             if not 0 < share <= 1:
                 raise ScenarioError("cool_roofs: share must be between 0 and 1")
-            missing = scen.loc[rows, "roof_sheet_share"].isna().all()
-            scen.loc[rows, "roof_sheet_share"] = scen.loc[rows, "roof_sheet_share"] * (1 - share)
+            before = scen.loc[rows, "roof_sheet_share"]
+            missing = before.isna().all()
+            scen.loc[rows, "roof_sheet_share"] = before * (1 - share)
             notes.append({"lever": lever, "wards": ids, "share": share,
-                          "note": "no effect: sheet-roof data is not yet available for these wards" if missing else ""})
+                          "roof_share_before": None if missing else round(float(before.mean()), 3),
+                          "roof_share_after": None if missing else round(float(before.mean() * (1 - share)), 3),
+                          "note": "no effect: sheet-roof data is not yet available for these wards" if missing
+                                  else "sheet-roof share is an estimate from census 2011 city and slum rates"})
         affected += ids
     return scen, list(dict.fromkeys(affected)), notes
 

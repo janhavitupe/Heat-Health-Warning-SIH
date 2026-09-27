@@ -217,6 +217,17 @@ def main() -> None:
         derived = access_mod.capacity_factor(wards.set_index("ward_id")["public_beds_access"],
                                              cfg["risk"]["capacity_factor"], cap["spread"])
         wards["capacity_factor"] = wards["capacity_factor"].fillna(wards["ward_id"].map(derived))
+    # Sheet-roof share (Innovation 1): census 2011 roof material mixed by slum share
+    # (scripts/estimate_roof_share.py). A value entered by hand in ward_attributes.csv wins.
+    roof_path = MANUAL / "roof_estimate.json"
+    if roof_path.exists():
+        import json
+        r = json.loads(roof_path.read_text(encoding="utf-8"))
+        est = (r["slum_sheet_share_gujarat_2011"] * wards["informal_housing_share"]
+               + r["nonslum_sheet_share"] * (1 - wards["informal_housing_share"]))
+        wards["roof_sheet_share"] = wards["roof_sheet_share"].fillna(est.round(3))
+    else:
+        print("roof_estimate.json not found - run scripts/estimate_roof_share.py; roof_sheet_share left empty")
     wards["elderly_share"] = wards["pop_60plus"] / wards["population"]
     wards["under5_share"] = wards["pop_under5"] / wards["population"]
     wards["population_density"] = wards["population"] / wards["area_km2"]

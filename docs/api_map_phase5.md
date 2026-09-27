@@ -46,7 +46,7 @@ All endpoints accept `?replay=may2024`, and every response carries "Model estima
 ## Map
 
 - **Mode and role:** Live vs May 2024 replay, and Municipal vs Healthcare. Municipal opens on mortality risk (MRI), Healthcare on hospitalization risk (HRI).
-- **Layers:** mortality risk, hospitalization risk, heat stress (HTSI), max temperature (bands at the Heat Action Plan thresholds 41 / 43 / 45 °C), vulnerability (PVI), indoor heat from sheet roofs (Innovation 1; grey "no data" until roof data exists), and chance of Red (Innovation 2).
+- **Layers:** mortality risk, hospitalization risk, heat stress (HTSI), max temperature (bands at the Heat Action Plan thresholds 41 / 43 / 45 °C), vulnerability (PVI), indoor heat from sheet roofs (Innovation 1; roof shares estimated from census 2011; grey "no data" only where a value is missing), and chance of Red (Innovation 2).
 - **Colours:**
   - Alert layers use the fixed status palette, matching IMD green / yellow / orange / red, always with text labels.
   - Continuous layers use one orange ramp, checked for contrast in light and dark mode.

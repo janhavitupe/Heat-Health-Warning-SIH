@@ -1,5 +1,7 @@
 # Backtest: May 2024 Heatwave (Phase 3)
 
+> Refreshed 27 Sep 2026 after sheet-roof shares were added ([decision_roof_share.md](decision_roof_share.md)).
+
 The full model (downscaling → thermal → HTSI → PVI → MRI) was replayed for all 48 wards from 1 May to 15 June 2024 and compared with what officially happened. Scripts: [backtest/may2024.py](../backtest/may2024.py), [backtest/sensitivity.py](../backtest/sensitivity.py), [backtest/plot_timeline.py](../backtest/plot_timeline.py). Raw outputs: [backtest/results/](../backtest/results/).
 
 ![Model vs official alerts, May–June 2024](../backtest/results/may2024_timeline.svg)
@@ -19,12 +21,12 @@ The full model (downscaling → thermal → HTSI → PVI → MRI) was replayed f
 | Metric | Result |
 |---|---|
 | IMD red days with any ward at Orange or above | **5 of 5** |
-| IMD red days with any ward at Red | 3 of 5 (22–24 May; 20–21 May Orange) |
+| IMD red days with any ward at Red | 4 of 5 (21–24 May; 20 May Orange) |
 | IMD red days with the median ward at Red | 3 of 5 (22–24 May) |
-| Lead time: days at Orange or above before 20 May | **3** (from 17 May) |
-| Days outside the window with any ward at Red | 5 of 41 (25–29 May) |
+| Lead time: days at Orange or above before 20 May | **4** (from 16 May) |
+| Days outside the window with any ward at Red | 6 of 41 (17 May; 25–29 May) |
 
-The Red days after the window (25–29 May; 29 May only 7 wards) are hard to call false alarms. The airport reached 45.0 °C on 27 May, the Heat Action Plan's own Red threshold, and 66 of the 69 heatstroke cases fell in the last ten days of May.
+17 May is the day before the heatwave began (two wards at MRI 80.2–80.7, ward Tmax 45 °C), so it reads as early warning. The Red days after the window (25–29 May; 29 May only 7 wards) are hard to call false alarms. The airport reached 45.0 °C on 27 May, the Heat Action Plan's own Red threshold, and 66 of the 69 heatstroke cases fell in the last ten days of May.
 
 ## B. Day by day against the Heat Action Plan rule
 
@@ -32,12 +34,12 @@ The model's level for the median ward, compared with the plan's level from obser
 
 | Metric | Result |
 |---|---|
-| Same level | 31 days (67%) |
+| Same level | 30 days (65%) |
 | Within one level | 45 days (98%) |
 | Plan Orange/Red days where the model is Orange/Red | **11 of 11** |
 | Model lower than the plan | 1 day |
-| Model higher than the plan | 14 days |
-| Plan Yellow/White days where the model is Orange/Red | 6 of 35 |
+| Model higher than the plan | 15 days |
+| Plan Yellow/White days where the model is Orange/Red | 7 of 35 |
 
 | Plan \ Model | Green | Yellow | Orange | Red |
 |---|---|---|---|---|
@@ -54,19 +56,19 @@ Before the persistence decision, 19 days rated higher (13 plan Yellow/White days
 
 Ward ranking is measured by mean MRI over 17–28 May. Each setting was changed on its own and the ranking compared with the baseline (Spearman ρ); the target is ρ ≥ 0.8. The full table is in [backtest/results/sensitivity.md](../backtest/results/sensitivity.md).
 
-| Change | Lowest ρ | Largest rank move | Red ward-days (baseline 302) |
+| Change | Lowest ρ | Largest rank move | Red ward-days (baseline 350) |
 |---|---|---|---|
-| Each HTSI weight ±20% | 0.996 | 4 | 195–350 (UTCI weight moves it most) |
-| Each PVI weight ±20% (7 indicators) | 0.963 (slum share ×0.8) | 11 | 294–306 |
-| Hot-night / persistence points ±20% | 0.999 | 1 | 254–313 |
-| β_night 0 to 0.6 | 0.982 | 10 | 283–287 |
-| Vulnerability spread 0.2 to 0.6 | 0.979 (0.2) | 8 | 273–320 |
-| **β_day = 0.3** | **0.721 ⚠️** | 23 | 295 |
+| Each HTSI weight ±20% | 0.996 | 5 | 283–429 (UTCI weight moves it most) |
+| Each PVI weight ±20% (7 indicators) | 0.978 (density ×0.8) | 10 | 347–351 |
+| Hot-night / persistence points ±20% | 0.997 | 3 | 329–369 |
+| β_night 0 to 0.6 | 0.970 | 10 | 348–349 |
+| Vulnerability spread 0.2 to 0.6 | 0.976 (0.2) | 8 | 336–348 |
+| **β_day = 0.3** | **0.733 ⚠️** | 22 | 354 |
 
-- **Rankings are stable** under every ±20% weight change (ρ ≥ 0.963). The phase target is met.
+- **Rankings are stable** under every ±20% weight change (ρ ≥ 0.978). The phase target is met.
 - **Slum share, hospital access and density drive the rankings** (the three vulnerability indicators with real ward data). Percentile ranking keeps any one of them from dominating. Re-run once worker and age data arrive.
-- **Turning on daytime downscaling (β_day = 0.3) reshuffles the rankings** (ρ 0.72). That setting is off because the station evidence contradicts it ([downscaling_validation.md](downscaling_validation.md)). Turning it on would change which wards look worst, not just the numbers.
-- **Alert counts are more fragile than rankings.** Red ward-days range from 195 to 350 when the UTCI weight moves ±20%, because many peak days sit just above the Red line (80). The Red *days* are the same; the number of wards over the line changes. Report ward counts on Red days with that uncertainty in mind.
+- **Turning on daytime downscaling (β_day = 0.3) reshuffles the rankings** (ρ 0.73). That setting is off because the station evidence contradicts it ([downscaling_validation.md](downscaling_validation.md)). Turning it on would change which wards look worst, not just the numbers.
+- **Alert counts are more fragile than rankings.** Red ward-days range from 283 to 429 when the UTCI weight moves ±20%, because many peak days sit just above the Red line (80). The Red *days* are the same; the number of wards over the line changes. Report ward counts on Red days with that uncertainty in mind.
 
 ## Performance
 

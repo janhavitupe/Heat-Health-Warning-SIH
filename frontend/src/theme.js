@@ -35,7 +35,7 @@ export const LAYERS = {
     help: 'Slum share, walking distance to health care, cooling access and density (elderly, children and outdoor workers held at midpoint until data arrives).' },
   indoor: { label: 'Indoor heat (sheet roofs)', kind: 'ramp', field: 'pts_indoor', unit: 'pts', missing: 'indoor_data_missing',
     classes: [[0.01, 'None'], [2.5, '0–2.5'], [5, '2.5–5'], [7.5, '5–7.5'], [Infinity, '7.5–10']],
-    help: 'Extra heat-stress points for homes with metal/asbestos roofs (Innovation 1). Roof data not yet available.' },
+    help: 'Extra heat-stress points for homes with metal/asbestos roofs (Innovation 1). Roof share is estimated from census 2011 city and slum rates mixed by each ward’s slum share.' },
   cooling: { label: 'Cooling access gap', kind: 'ramp', field: 'cooling_gap', unit: '%', percent: true,
     classes: [[0.1, '< 10%'], [0.25, '10–25%'], [0.4, '25–40%'], [0.5, '40–50%'], [Infinity, '> 50% (desert)']],
     help: 'Share of residents more than a 15-minute walk (1 km) from an AMC cooling place. Blue dots: existing places; numbered green circles: recommended new sites.' },
