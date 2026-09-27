@@ -57,7 +57,7 @@ Until then these columns stay empty, and the scoring treats them as neutral (mid
 ## Known limitations
 
 - **WorldPop age shares are effectively constant across wards** (elderly 9.3–9.4%, under-5 7.8–7.9%). WorldPop applies district-level age proportions uniformly, so these columns carry no ward-level signal. WorldPop *totals and density* do vary and are usable. For ward-level age data:
-  - under-6 population is in the Census 2011 Primary Census Abstract at ward level; use it as a proxy for `under5_share`.
+  - under-6 population is in the Census 2011 Primary Census Abstract at ward level. **Done:** census wards 1–47 are the 2001 AMC wards, matched to 2008 assembly constituencies and then to 2015 wards (`manual/ward_census2011_groups.csv`, `scripts/estimate_under5.py`, [decision](../docs/decision_age_worker_data.md)).
   - elderly (60+) is generally published only at city level; look for AMC or health-survey ward data. Otherwise PVI must treat elderly share as uniform — Phase 1 excludes near-constant indicators from min-max normalization so noise is not stretched into false differences.
 - **Daytime LST is highest in the peri-urban fringe** (Odhav 49.1°C, Ramol-Hathijan 48.6°C), where bare dry soil heats faster than the built-up core; daytime LST barely correlates with built-up share (r = −0.11). **Night-time LST tracks the urban heat island strongly** (r = +0.90 with built-up share, −0.74 with NDVI). Phase 2 should use night LST for Tmin and the P_night / P_indoor terms, and treat daytime LST with care.
 - **WorldPop total (5.71 M) is likely an undercount** for AMC in 2020; ward *proportions* matter more than the absolute total for relative risk.

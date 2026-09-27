@@ -27,7 +27,8 @@ Short, honest answers for the jury. Details are in [evaluation.md](evaluation.md
 ## Data gaps
 
 **Which data are missing?**
-- **Neutral indicators:** ward-level elderly, children and outdoor-worker shares. WorldPop's age shares are flat across wards, and the 2011 census wards cannot yet be matched to today's wards. These are held at the city midpoint, and every explanation says so.
+- **Neutral indicators:** ward-level elderly and outdoor-worker shares. No public source gives age or occupation below city level, and the proxies tested were too weak ([decision](decision_age_worker_data.md)). They are held at the city midpoint, and every explanation says so.
+- **Coarse:** children under 5 come from census 2011, averaged by assembly constituency (6.1–9.1% across wards).
 - **Hospital capacity:** private hospital beds are missing, so capacity is switched off.
 - **Estimates:** sheet-roof shares come from census 2011 rates.
 

@@ -36,6 +36,7 @@ export function reportCardUrl(replay, event = 0) {
 
 export const api = {
   config: () => get('/config'),
+  whatsappPreview: (text, replay) => get('/whatsapp/preview', { text, replay }),
   status: () => get('/status'),
   days: (replay) => get('/days', { replay }),
   wards: (day, replay) => get('/wards', { day, replay }),

@@ -213,7 +213,7 @@ def build(conn, run: dict, prob_run: dict | None, replay: str | None, event_inde
         "limitations": [
             "Model estimates, not clinical predictions. Health outcomes for this event are known only city-wide.",
             "Early warning in a replay uses archived deterministic forecasts from three models (9 members), not the live 122-member ensemble.",
-            "Sheet-roof shares are census-based estimates; elderly, children and outdoor-worker indicators are held at the city midpoint.",
+            "Sheet-roof shares are census-based estimates; children under 5 are census 2011 constituency averages; elderly and outdoor-worker indicators are held at the city midpoint.",
         ] + (["Report flags are prompts to verify, not confirmed clusters: at p < 0.01 over hundreds of ward-days, "
               "about one flag can occur by chance."] if reports["flags"] else [])
           + (["Health-worker reports in this card are SYNTHETIC demo data."] if reports["synthetic"] else [])

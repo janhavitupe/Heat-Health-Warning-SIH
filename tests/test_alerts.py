@@ -72,7 +72,9 @@ def test_approval_and_rejection_need_a_named_officer_and_reason(client):
     assert client.post(f"/alerts/{a['alert_id']}/reject", json={"officer": "Officer A"}).status_code == 409
 
 
-def test_edit_approve_dispatch_and_audit(client):
+def test_edit_approve_dispatch_and_audit(client, monkeypatch, tmp_path):
+    from api import dispatch
+    monkeypatch.setattr(dispatch, "RECIPIENTS", tmp_path / "none.csv")     # use the example list, not a local one
     a = _first(client)
     aid = a["alert_id"]
     e = client.patch(f"/alerts/{aid}", json={"officer": "Officer A", "channels": ["sms"], "languages": ["en", "gu"],
@@ -121,3 +123,15 @@ def test_twilio_mode_refuses_the_example_recipients(monkeypatch):
     monkeypatch.setattr(dispatch, "RECIPIENTS", Path("does-not-exist.csv"))
     with pytest.raises(alerts.WorkflowError):
         dispatch.recipients()
+
+
+def test_twilio_needs_senders_only_for_channels_in_use(monkeypatch):
+    from api import alerts as al, dispatch
+    for k in ("TWILIO_SMS_FROM", "TWILIO_VOICE_FROM"):
+        monkeypatch.delenv(k, raising=False)
+    monkeypatch.setenv("TWILIO_ACCOUNT_SID", "ACtest")
+    monkeypatch.setenv("TWILIO_AUTH_TOKEN", "x")
+    monkeypatch.setenv("TWILIO_WHATSAPP_FROM", "whatsapp:+14155238886")
+    assert "TWILIO_WHATSAPP_FROM" in dispatch._twilio_env(["whatsapp"])    # WhatsApp sandbox alone is enough
+    with pytest.raises(al.WorkflowError, match="TWILIO_SMS_FROM"):
+        dispatch._twilio_env(["whatsapp", "sms"])

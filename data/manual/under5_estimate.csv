@@ -1,0 +1,49 @@
+ward_id,ward_name_2015,census_group,confidence,child06_2011,under5_share
+AMC-01,Gota,added_2006,high,0.1139,0.0797
+AMC-02,Chandlodia,added_2006,high,0.1139,0.0797
+AMC-03,Chandkheda,added_2006,high,0.1139,0.0797
+AMC-04,Sabarmati,ward_15,medium,0.1081,0.0757
+AMC-05,Ranip,added_2006,high,0.1139,0.0797
+AMC-06,New Wadaj,Naranpura,high,0.0941,0.0658
+AMC-07,Ghatlodia,added_2006,high,0.1139,0.0797
+AMC-08,Thaltej,added_2006,high,0.1139,0.0797
+AMC-09,Naranpura,Naranpura,high,0.0941,0.0658
+AMC-10,S.P.Stadium,Naranpura,medium,0.0941,0.0658
+AMC-11,Sardarnagar,Naroda,medium,0.117,0.0819
+AMC-12,Naroda,ward_45,high,0.1018,0.0713
+AMC-13,Saijpur Bogha,Naroda,medium,0.117,0.0819
+AMC-14,Kubernagr,Naroda,medium,0.117,0.0819
+AMC-15,Asarwa,Asarwa,high,0.1134,0.0794
+AMC-16,Shahibag,Asarwa,high,0.1134,0.0794
+AMC-17,Shahpur,Dariapur,medium,0.1139,0.0798
+AMC-18,Navrangpura,Ellisbridge,medium,0.0874,0.0612
+AMC-19,Bodakdev,added_2006,high,0.1139,0.0797
+AMC-20,Jodhpur,added_2006,high,0.1139,0.0797
+AMC-21,Dariyapur,Dariapur,high,0.1139,0.0798
+AMC-22,India Colony,Thakkarbapa Nagar,medium,0.1077,0.0754
+AMC-23,Thakkarbapanagar,Thakkarbapa Nagar,high,0.1077,0.0754
+AMC-24,Nikol,ward_46,high,0.1214,0.085
+AMC-25,Viratnagar,interpolate,low,0.1113,0.0779
+AMC-26,Bapunagar,Bapunagar,high,0.1167,0.0817
+AMC-27,Saraspur-Rakhiyal,Bapunagar,medium,0.1167,0.0817
+AMC-28,Khadia,Jamalpur-Khadiya,high,0.1138,0.0796
+AMC-29,Jamalpur,Jamalpur-Khadiya,high,0.1138,0.0796
+AMC-30,Paldi,Ellisbridge,high,0.0874,0.0612
+AMC-31,Vasna,Ellisbridge,medium,0.0874,0.0612
+AMC-32,Vejalpur,added_2006,high,0.1139,0.0797
+AMC-33,Sarkhej,added_2006,high,0.1139,0.0797
+AMC-34,Maktampura,added_2006,high,0.1139,0.0797
+AMC-35,Baherampura,Danilimda,medium,0.1302,0.0911
+AMC-36,Danilimda,Danilimda,high,0.1302,0.0911
+AMC-37,Maninagar,Maninagar,high,0.1008,0.0705
+AMC-38,Gomtipur,interpolate,low,0.1113,0.0779
+AMC-39,Amraiwadi,Amraiwadi,high,0.1114,0.078
+AMC-40,Odhav,ward_47,high,0.0936,0.0655
+AMC-41,Vastral,added_2006,high,0.1139,0.0797
+AMC-42,Indrapuri,interpolate,low,0.1113,0.0779
+AMC-43,Bhaipura Hatkeshwar,Amraiwadi,medium,0.1114,0.078
+AMC-44,Khokhra,Maninagar,medium,0.1008,0.0705
+AMC-45,Isanpur,interpolate,low,0.1113,0.0779
+AMC-46,Lambha,added_2006,high,0.1139,0.0797
+AMC-47,Vatva,added_2006,high,0.1139,0.0797
+AMC-48,Ramol Hathijan,added_2006,high,0.1139,0.0797

@@ -95,7 +95,7 @@ With 69 synthetic reports (the number of heatstroke cases reported in May 2024) 
 1. **No ward-level health validation.** Illness and death data for 2024 are city-wide, so no Spearman correlation between ward risk and ward outcomes was possible. Ward-level case data from AMC's health department (even anonymous counts) would allow this. The feedback loop is designed to collect it.
 2. **One event.** One heatwave cannot measure false-alarm rates across seasons. Replays of 2016, 2019 and 2022 (IMD-declared heatwaves) are the next step.
 3. **The model is compared with rules, not outcomes.** Agreement with the Heat Action Plan shows the model is consistent with current practice. It does not prove that it is more accurate than that practice.
-4. **Data gaps held at neutral:** elderly, children and outdoor-worker shares (no ward-level variation available), and hospital capacity (private beds missing).
+4. **Data gaps held at neutral:** elderly and outdoor-worker shares (no ward-level source), and hospital capacity (private beds missing). Children under 5 are census 2011 constituency averages ([decision](decision_age_worker_data.md)).
 5. **Estimates:** sheet-roof shares (census 2011 rates mixed by slum share) and slum shares (2010-11 survey).
 6. **Early-warning skill in the replay** uses 9 archived deterministic forecasts, not the live 122-member ensemble. The live ensemble's reliability can only be measured in the 2027 season. Daily outputs are stored for that.
 7. **The ward temperature adjustment** rests on one station. The CPCB stations at Maninagar and Vatva would allow a proper fit.

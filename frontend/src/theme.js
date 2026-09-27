@@ -32,7 +32,7 @@ export const LAYERS = {
     help: 'Ward-adjusted daily maximum. 41 / 43 / 45 °C are the Heat Action Plan alert thresholds.' },
   pvi: { label: 'Vulnerability (PVI)', kind: 'ramp', field: 'pvi', unit: '/100',
     classes: [[40, '< 40'], [45, '40–45'], [50, '45–50'], [55, '50–55'], [Infinity, '≥ 55']],
-    help: 'Slum share, walking distance to health care, cooling access and density (elderly, children and outdoor workers held at midpoint until data arrives).' },
+    help: 'Slum share, walking distance to health care, cooling access and density children under 5 (census 2011, by constituency). Elderly and outdoor workers are held at the midpoint: no ward data exists.' },
   indoor: { label: 'Indoor heat (sheet roofs)', kind: 'ramp', field: 'pts_indoor', unit: 'pts', missing: 'indoor_data_missing',
     classes: [[0.01, 'None'], [2.5, '0–2.5'], [5, '2.5–5'], [7.5, '5–7.5'], [Infinity, '7.5–10']],
     help: 'Extra heat-stress points for homes with metal/asbestos roofs (Innovation 1). Roof share is estimated from census 2011 city and slum rates mixed by each ward’s slum share.' },

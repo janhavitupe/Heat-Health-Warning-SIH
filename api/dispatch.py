@@ -3,10 +3,11 @@
 Default mode is **simulated**: every message that would be sent is rendered and recorded in
 the deliveries table and audit log, and nothing leaves the machine.
 
-Real sending through the Twilio sandbox needs all of:
+Real sending through the Twilio sandbox needs:
   HEAT_DISPATCH_MODE=twilio
   TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN
-  TWILIO_SMS_FROM, TWILIO_WHATSAPP_FROM (e.g. whatsapp:+14155238886), TWILIO_VOICE_FROM
+  a sender for each channel used in the recipients file: TWILIO_SMS_FROM, TWILIO_VOICE_FROM (a Twilio
+  number) and/or TWILIO_WHATSAPP_FROM (the free WhatsApp sandbox: the number shown in your Twilio Console, e.g. whatsapp:+1XXXXXXXXXX)
   data/manual/test_recipients.csv  (your own verified test numbers; the example file is never
                                     used for real sending)
   optional HEAT_PUBLIC_URL          (public address of this API, for the voice keypad menu)
@@ -43,8 +44,12 @@ def recipients() -> pd.DataFrame:
     return pd.read_csv(RECIPIENTS if RECIPIENTS.exists() else EXAMPLE, dtype=str)
 
 
-def _twilio_env() -> dict:
-    need = ["TWILIO_ACCOUNT_SID", "TWILIO_AUTH_TOKEN", "TWILIO_SMS_FROM", "TWILIO_WHATSAPP_FROM", "TWILIO_VOICE_FROM"]
+SENDER = {"sms": "TWILIO_SMS_FROM", "whatsapp": "TWILIO_WHATSAPP_FROM", "voice": "TWILIO_VOICE_FROM"}
+
+
+def _twilio_env(channels) -> dict:
+    """Credentials plus a sender for each channel actually used (trial accounts may have only WhatsApp)."""
+    need = ["TWILIO_ACCOUNT_SID", "TWILIO_AUTH_TOKEN"] + sorted({SENDER[c] for c in channels if c in SENDER})
     missing = [k for k in need if not os.environ.get(k)]
     if missing:
         raise alerts.WorkflowError(f"Twilio mode is missing environment variables: {missing}")
@@ -62,7 +67,8 @@ def _send_twilio(env: dict, channel: str, phone: str, body: str, voice_xml: str)
         r = requests.post(f"{base}/Messages.json", auth=auth, timeout=30, data={"To": to, "From": frm, "Body": body})
     j = r.json() if r.headers.get("content-type", "").startswith("application/json") else {}
     if r.status_code >= 400:
-        return "failed", j.get("sid", ""), j.get("message", r.text[:200])
+        used = env["TWILIO_VOICE_FROM"] if channel == "voice" else frm
+        return "failed", j.get("sid", ""), f"{j.get('message', r.text[:200])} (Twilio error {j.get('code', r.status_code)}; from {used})"
     return j.get("status", "queued"), j.get("sid", ""), ""
 
 
@@ -71,8 +77,9 @@ def dispatch(conn, alert_id: int, officer: str) -> dict:
     a = alerts.load(conn, alert_id)
     alerts._require(a, "approved", "dispatch")
     m = mode()
-    env = _twilio_env() if m == "twilio" else None
     rec = recipients()
+    used = [c for c in rec["channel"].unique() if c in a["channels"]]
+    env = _twilio_env(used) if m == "twilio" else None
     base_url = os.environ.get("HEAT_PUBLIC_URL")
     rows = []
     for r in rec.itertuples():
@@ -102,7 +109,7 @@ def refresh_status(conn, alert_id: int) -> int:
     """Twilio mode: fetch the latest delivery status of each message/call and record changes."""
     if mode() != "twilio":
         return 0
-    env = _twilio_env()
+    env = _twilio_env([])                   # status lookups need only the credentials
     base, auth = TWILIO.format(sid=env["TWILIO_ACCOUNT_SID"]), (env["TWILIO_ACCOUNT_SID"], env["TWILIO_AUTH_TOKEN"])
     changed = 0
     for d in conn.execute("SELECT id, channel, provider_id, status FROM deliveries WHERE alert_id=? AND provider='twilio' "

@@ -18,8 +18,9 @@ def hot():
     return synthetic_weather(days=4, tmax=46.5, tmin=31)
 
 
-def test_tree_cover_cools_nights_and_lowers_risk_only_in_chosen_ward(wards, hot, cfg):
-    r = scenarios.run(wards, hot, [{"lever": "tree_cover", "wards": ["AMC-35"], "pp": 10}], cfg)
+def test_tree_cover_cools_nights_and_lowers_risk_only_in_chosen_ward(wards, cfg):
+    warm = synthetic_weather(days=4, tmax=45.0, tmin=31)      # below the level where Baherampura's risk is capped at 100
+    r = scenarios.run(wards, warm, [{"lever": "tree_cover", "wards": ["AMC-35"], "pp": 10}], cfg)
     assert r["label"] == "scenario_estimate" and [w["ward_id"] for w in r["wards"]] == ["AMC-35"]
     ch = r["wards"][0]["change"]
     assert ch["mean_tmin"] == pytest.approx(-0.25, abs=0.02)        # 0.727 × 0.1 × −11.33 × 0.3
@@ -72,3 +73,8 @@ def test_cooling_centre_reduces_gap_and_pvi(wards, hot, cfg):
     r = scenarios.run(wards, hot, [{"lever": "cooling_centre", "lon": lon, "lat": lat}], cfg)
     assert r["changes"][0]["people_newly_within_walk"] == pytest.approx(site["properties"]["people_newly_covered"], rel=0.01)
     assert all(w["change"]["pvi"] <= 0 for w in r["wards"]) and any(w["change"]["pvi"] < 0 for w in r["wards"])
+
+
+def test_under5_estimate_varies_within_census_range(wards):
+    s = wards["under5_share"]
+    assert s.notna().all() and s.between(0.05, 0.10).all() and s.std() > 0.003   # census 2011: 0-6 share 7.6-14.6% by ward

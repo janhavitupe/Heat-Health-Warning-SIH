@@ -155,3 +155,40 @@ def test_report_card(client):
     page = client.get("/report-card").text
     assert page.startswith("<!doctype html>") and "not clinical predictions" in page
     assert client.get("/report-card?event=9").status_code == 404
+
+
+def test_whatsapp_bot_replies_only_with_approved_alerts(client, monkeypatch):
+    monkeypatch.delenv("TWILIO_AUTH_TOKEN", raising=False)
+    monkeypatch.delenv("HEAT_WHATSAPP_REPLAY", raising=False)
+    from datetime import date
+    from api import alerts as al
+    with db.connect() as conn:            # the synthetic forecast is dated 2024: draft all days, then date them today
+        run, _ = api_main._runs(conn, None)
+        al.generate(conn, run, None, None, {}, from_day=None)
+        conn.execute("UPDATE alerts SET date=? WHERE mode='live'", (date.today().isoformat(),))
+    drafts = [a for a in client.get("/alerts?status=draft").json()["alerts"] if a["mode"] == "live"]
+    ward = drafts[0]["wards"][0]
+    with db.connect() as conn:
+        name = conn.execute("SELECT ward_name FROM wards WHERE ward_id=?", (ward,)).fetchone()[0]
+    r = client.post("/whatsapp/inbound", data={"From": "whatsapp:+910000000000", "Body": name})
+    assert r.status_code == 200 and "No heat alert has been issued" in r.text        # draft only: nothing shared
+    aid = drafts[0]["alert_id"]
+    client.post(f"/alerts/{aid}/approve", json={"officer": "Officer B", "note": ""})
+    r = client.post("/whatsapp/inbound", data={"From": "whatsapp:+910000000000", "Body": f"{name} gujarati"})
+    assert r.status_code == 200 and "<Message>" in r.text and "No heat alert" not in r.text
+    with db.connect() as conn:
+        logged = conn.execute("SELECT detail FROM audit_log WHERE action='whatsapp_reply'").fetchall()
+    assert logged and all("+91" not in row[0] for row in logged)                     # phone never stored
+    monkeypatch.setenv("TWILIO_AUTH_TOKEN", "secret")
+    monkeypatch.setenv("HEAT_PUBLIC_URL", "https://example.ngrok.app")
+    assert client.post("/whatsapp/inbound", data={"Body": name}).status_code == 403  # unsigned request refused
+
+
+def test_whatsapp_preview_is_read_only(client):
+    with db.connect() as conn:
+        before = conn.execute("SELECT COUNT(*) FROM audit_log").fetchone()[0]
+    r = client.get("/whatsapp/preview", params={"text": "help"}).json()
+    assert r["simulated"] and "ward name" in r["reply"]
+    assert client.get("/whatsapp/preview", params={"text": "Nowhereville"}).json()["detail"]["query"] == "unknown"
+    with db.connect() as conn:
+        assert conn.execute("SELECT COUNT(*) FROM audit_log").fetchone()[0] == before

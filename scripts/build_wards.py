@@ -230,6 +230,14 @@ def main() -> None:
         print("roof_estimate.json not found - run scripts/estimate_roof_share.py; roof_sheet_share left empty")
     wards["elderly_share"] = wards["pop_60plus"] / wards["population"]
     wards["under5_share"] = wards["pop_under5"] / wards["population"]
+    # WorldPop age shares are the same in every ward; replace under-5 share with the census 2011
+    # constituency-level estimate (scripts/estimate_under5.py) when it has been built.
+    u5_path = MANUAL / "under5_estimate.csv"
+    if u5_path.exists():
+        u5 = pd.read_csv(u5_path).set_index("ward_id")["under5_share"]
+        wards["under5_share"] = wards["ward_id"].map(u5).fillna(wards["under5_share"])
+    else:
+        print("under5_estimate.csv not found - run scripts/estimate_under5.py; under5_share stays WorldPop (flat)")
     wards["population_density"] = wards["population"] / wards["area_km2"]
 
     wards.drop(columns="geometry").pipe(pd.DataFrame).to_parquet(OUT / "wards.parquet", index=False)

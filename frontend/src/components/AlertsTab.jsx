@@ -114,11 +114,45 @@ function Review({ id, onChanged }) {
         <h4>Deliveries ({a.deliveries.length})</h4>
         <table className="list"><thead><tr><th>Channel</th><th>To</th><th>Ward</th><th>Lang</th><th>Status</th></tr></thead>
           <tbody>{a.deliveries.map((d, i) => <tr key={i} style={{ cursor: 'default' }}><td>{CHANNELS[d.channel]}</td><td>{d.recipient}</td>
-            <td>{names[d.ward_id] ?? d.ward_id}</td><td>{d.lang}</td><td title={d.detail}>{d.status}</td></tr>)}</tbody></table>
+            <td>{names[d.ward_id] ?? d.ward_id}</td><td>{d.lang}</td><td title={d.detail}>{d.status}{d.status === 'failed' && d.detail ? `: ${d.detail}` : ''}</td></tr>)}</tbody></table>
+        {a.deliveries.some((d) => /ContentSid/i.test(d.detail || '')) && <p className="meta">WhatsApp only accepts free text within 24 hours of the recipient messaging the sandbox. Ask them to send the join code (or any message) to the sandbox number, then dispatch a new alert.</p>}
       </>)}
       <h4>Audit trail</h4>
       <ul className="audit">{audit.map((x) => <li key={x.id}><b>{x.action.replace('alert_', '')}</b> · {x.actor} · {new Date(x.at).toLocaleString('en-IN')}</li>)}</ul>
     </div>
+  )
+}
+
+// Simulated resident chat with the WhatsApp reply bot: same code as the live webhook, nothing is sent.
+function WhatsAppPreview({ replay }) {
+  const [text, setText] = useState('')
+  const [chat, setChat] = useState([])
+  const [busy, setBusy] = useState(false)
+  async function ask(e) {
+    e.preventDefault()
+    const q = text.trim()
+    if (!q) return
+    setBusy(true)
+    try {
+      const r = await api.whatsappPreview(q, replay)
+      setChat((c) => [...c.slice(-6), { me: q, bot: r.reply }])
+      setText('')
+    } catch (err) { setChat((c) => [...c, { me: q, bot: `Error: ${err.message}` }]) }
+    setBusy(false)
+  }
+  return (
+    <details className="wa">
+      <summary>Resident WhatsApp preview <span className="wa-tag">simulated</span></summary>
+      <p className="meta">A resident sends their ward name (optionally “hindi” or “gujarati”) and gets the alert an officer has approved. Nothing is sent from here.</p>
+      <div className="wa-chat" aria-live="polite">
+        {chat.length === 0 && <p className="meta">Try “Baherampura” or “Vatva gujarati”.</p>}
+        {chat.map((m, i) => (<div key={i}><p className="wa-me">{m.me}</p><p className="wa-bot">{m.bot}</p></div>))}
+      </div>
+      <form className="rbtns" onSubmit={ask}>
+        <input aria-label="Message to the WhatsApp bot" value={text} onChange={(e) => setText(e.target.value)} placeholder="Ward name…" maxLength={100} />
+        <button className="ok" disabled={busy || !text.trim()} type="submit">Send</button>
+      </form>
+    </details>
   )
 }
 
@@ -140,6 +174,7 @@ export default function AlertsTab({ replay, onChanged }) {
         <label className="meta">API token <input type="password" value={token} onChange={(e) => { setTok(e.target.value); setToken(e.target.value) }} placeholder="if required" /></label>
       </div>
       {err && <p className="review" role="alert">{err}</p>}
+      <WhatsAppPreview replay={replay} />
       {!list ? <p className="empty">Loading…</p> : list.alerts.length === 0 ? <p className="empty">No alerts yet.</p> : (
         <table className="list">
           <thead><tr><th>Date</th><th>Level</th><th>Wards</th><th>Status</th></tr></thead>

@@ -13,7 +13,7 @@ const pct = (x) => `${Math.round(x * 100)}%`
 const LIMITS = [
   'Scores are model estimates, not clinical predictions. They rank wards and time actions; they do not predict individual illness.',
   'Validated on one heatwave (May 2024). Health outcomes for it are known only city-wide (69 heatstroke cases), so ward rankings cannot yet be checked against illness.',
-  'Elderly, children and outdoor-worker shares are held at the city midpoint: WorldPop age shares are flat across wards and census 2011 wards cannot yet be matched to 2015 wards.',
+  'Elderly and outdoor-worker shares are held at the city midpoint: no source gives age or occupation below city level. Children under 5 come from census 2011 at constituency level, so differences inside a constituency are not captured.',
   'Sheet-roof shares are estimates from census 2011 city and slum rates, mixed by each ward’s slum share. Real ward differences are larger.',
   'Hospital capacity is not used: only public beds are in the data, and private hospitals treat most patients in urban Gujarat.',
   'Ward temperature adjustment is applied at night only; the daytime satellite signal made errors worse at the airport station.',

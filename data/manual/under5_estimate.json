@@ -1,0 +1,143 @@
+{
+ "method": "census 2011 ward 0-6 share by 2008 assembly constituency; see scripts/estimate_under5.py",
+ "under5_per_child06": 0.6999,
+ "city_child06_2011": 0.1113,
+ "groups": [
+  {
+   "group": "Ellisbridge",
+   "census_wards": "7 8 9 10",
+   "pop_2011": 330783,
+   "child06_2011": 0.0874
+  },
+  {
+   "group": "Naranpura",
+   "census_wards": "11 12 13 14",
+   "pop_2011": 316584,
+   "child06_2011": 0.0941
+  },
+  {
+   "group": "Nikol",
+   "census_wards": "31 34 35",
+   "pop_2011": 354792,
+   "child06_2011": 0.1238
+  },
+  {
+   "group": "Naroda",
+   "census_wards": "23 24 27",
+   "pop_2011": 338828,
+   "child06_2011": 0.117
+  },
+  {
+   "group": "Thakkarbapa Nagar",
+   "census_wards": "22 25 26",
+   "pop_2011": 316306,
+   "child06_2011": 0.1077
+  },
+  {
+   "group": "Bapunagar",
+   "census_wards": "21 28 29",
+   "pop_2011": 239343,
+   "child06_2011": 0.1167
+  },
+  {
+   "group": "Amraiwadi",
+   "census_wards": "32 33 41",
+   "pop_2011": 348342,
+   "child06_2011": 0.1114
+  },
+  {
+   "group": "Dariapur",
+   "census_wards": "2 3 4 16",
+   "pop_2011": 251914,
+   "child06_2011": 0.1139
+  },
+  {
+   "group": "Jamalpur-Khadiya",
+   "census_wards": "1 5 6 39",
+   "pop_2011": 264145,
+   "child06_2011": 0.1138
+  },
+  {
+   "group": "Maninagar",
+   "census_wards": "36 37 43",
+   "pop_2011": 324207,
+   "child06_2011": 0.1008
+  },
+  {
+   "group": "Danilimda",
+   "census_wards": "30 38 40",
+   "pop_2011": 302856,
+   "child06_2011": 0.1302
+  },
+  {
+   "group": "Asarwa",
+   "census_wards": "17 18 19 20 44",
+   "pop_2011": 361477,
+   "child06_2011": 0.1134
+  },
+  {
+   "group": "Vatva",
+   "census_wards": "42 47",
+   "pop_2011": 371623,
+   "child06_2011": 0.1107
+  },
+  {
+   "group": "added_2006",
+   "census_wards": "48 49 50 51 52 53 54 55 56 57",
+   "pop_2011": 1147885,
+   "child06_2011": 0.1139
+  },
+  {
+   "group": "ward_15",
+   "census_wards": "15",
+   "pop_2011": 68566,
+   "child06_2011": 0.1081
+  },
+  {
+   "group": "ward_45",
+   "census_wards": "45",
+   "pop_2011": 120152,
+   "child06_2011": 0.1018
+  },
+  {
+   "group": "ward_46",
+   "census_wards": "46",
+   "pop_2011": 120137,
+   "child06_2011": 0.1214
+  },
+  {
+   "group": "ward_47",
+   "census_wards": "47",
+   "pop_2011": 206893,
+   "child06_2011": 0.0936
+  }
+ ],
+ "ward_under5_range": [
+  0.0612,
+  0.0911
+ ],
+ "confidence_counts": {
+  "high": 31,
+  "medium": 13,
+  "low": 4
+ },
+ "check_leave_one_out_mae": 0.0074,
+ "check_mean_only_mae": 0.0076,
+ "check_spearman_vs_slum_share": [
+  -0.213,
+  0.14557642286565484
+ ],
+ "check_population_ratio_by_ac": {
+  "Amraiwadi": 0.48,
+  "Asarwa": 0.53,
+  "Bapunagar": 0.76,
+  "Danilimda": 0.81,
+  "Dariapur": 0.58,
+  "Ellisbridge": 1.8,
+  "Jamalpur-Khadiya": 0.69,
+  "Maninagar": 0.83,
+  "Naranpura": 1.09,
+  "Naroda": 0.76,
+  "Thakkarbapa Nagar": 0.69
+ }
+}

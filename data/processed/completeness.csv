@@ -29,7 +29,7 @@ ndvi,Summer vegetation index,Sentinel-2 SR harmonized (Apr-Jun median),10 m,2021
 builtup_frac,Share of ward area built up,ESA WorldCover v200,10 m,2021,False,satellite_derived,gee,1.0,complete
 tree_cover,Share of ward area under tree cover,ESA WorldCover v200,10 m,2021,False,satellite_derived,gee,1.0,complete
 elderly_share,pop_60plus / population,Derived,ward,2020,True,model_estimate,build_wards.py,1.0,complete
-under5_share,pop_under5 / population,Derived,ward,2020,True,model_estimate,build_wards.py,1.0,complete
+under5_share,Share of population aged 0-4,"Census 2011 ward 0-6 share by 2008 assembly constituency, mapped to 2015 wards (ward_census2011_groups.csv) and scaled to 0-4 by the urban Ahmadabad C-13 ratio 0.70; scripts/estimate_under5.py",assembly constituency,2011,True,model_estimate,build_wards.py,1.0,complete
 population_density,population / area_km2 (per km²),Derived,ward,2020,True,model_estimate,build_wards.py,1.0,complete
 cooling_gap,Share of residents beyond a 15-min walk (1 km at 4 km/h) of an AMC cooling option,OSM walking network + WorldPop 100 m cells + cooling_points.geojson (scripts/build_access.py),100 m cell,current,True,model_estimate,build_access.py,1.0,complete
 cooling_gap_with_community,"As cooling_gap, also counting temples, mosques and malls (sensitivity)",As cooling_gap,100 m cell,current,True,model_estimate,build_access.py,1.0,complete

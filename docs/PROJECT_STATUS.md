@@ -125,7 +125,7 @@ Evaluation, report card, methodology page, demo             ← Phase 9
 | **MODIS MOD11A2** | Night-time land surface temperature (1 km) | NASA, via Earth Engine | Apr–Jun 2021–2025 | ✅ |
 | **Sentinel-2** | Vegetation index NDVI (10 m) | ESA Copernicus, via Earth Engine | Apr–Jun 2021–2025 | ✅ |
 | **ESA WorldCover v200** | Built-up share, tree cover share (10 m) | ESA, via Earth Engine | 2021 | ✅ |
-| **Census 2011 ward tables** | Population, children 0–6, workers by type (58 old wards) | Census of India PCA, `data/raw/census/` | 2011 | ⛔ Downloaded but not usable yet (§9) |
+| **Census 2011 ward tables** | Population, children 0–6, workers by type (57 old wards; children now used, by constituency, [decision_age_worker_data.md](decision_age_worker_data.md)) | Census of India PCA, `data/raw/census/` | 2011 | ⛔ Downloaded but not usable yet (§9) |
 | **Census 2011 roof material** | Sheet-roof share (HH-14 Ahmadabad wards, SLUM HL-02 A Gujarat) | Census of India | 2011 | ✅ Estimated per ward from city and slum rates ([decision_roof_share.md](decision_roof_share.md)) |
 | **Public hospital beds** | 5 hospitals, 7,785 beds | Wikipedia "Healthcare in Ahmedabad", DeshGujarat 2023 | 2019–2023 | ✅ Private beds missing |
 | **AMC Urban Health Centres** | 79 of about 110 centres | AMC list (Nov 2024 copy); personal contact details removed | 2024 | ✅ Not yet placed on the map |
@@ -211,7 +211,7 @@ Every column's source, year and whether it is an estimate is recorded in [data/m
 
 **Important findings from the data:**
 
-1. **WorldPop age shares are the same in every ward.** Elderly is 9.3–9.4% everywhere and under-5 is 7.8–7.9%, because WorldPop applies district-level age proportions uniformly. So these two columns give no ward-to-ward information. The scoring detects this and holds them at a neutral value (see §4.5).
+1. **WorldPop age shares are the same in every ward.** Elderly is 9.3–9.4% everywhere and under-5 is 7.8–7.9%, because WorldPop applies district-level age proportions uniformly. Under-5 is therefore replaced by census 2011 child shares averaged by assembly constituency (6.1–9.1%; [decision_age_worker_data.md](decision_age_worker_data.md)). Elderly has no ward-level source and stays neutral (see §4.5).
 2. **Daytime surface temperature is highest on the city edge, not the centre.** Odhav (49.1 °C) and Ramol-Hathijan (48.6 °C) have bare dry soil that heats faster than the built-up core. Daytime LST barely relates to built-up share (r = −0.11).
 3. **Night-time surface temperature follows the urban heat island closely.** It correlates +0.90 with built-up share and −0.74 with vegetation. Dense wards stay hot at night.
 4. `nearest_hospital_km` is straight-line distance from the ward centre, which is misleading for large wards. Phase 6 will replace it with walking time.
@@ -705,7 +705,7 @@ Before the Phase 3 calibration, this ward scored HTSI 100 and MRI 66.7 (Orange) 
 The Census 2011 ward table has 58 wards identified only by number ("WARD NO.-0001"), with no names or boundaries. Today's map has 48 different wards. Until old wards are matched to new ones, these columns stay empty:
 
 - `outdoor_worker_share`
-- ward-level under-6 children (better than WorldPop's flat shares)
+- exact ward values for under-6 children (now used as constituency averages)
 
 **To unblock:** get a 2011 AMC ward map or number-to-name list from the AMC Estate/Election department or the Directorate of Census Operations, Gujarat (a scanned map is enough). Then build `data/manual/ward_crosswalk_2011_2015.csv` and the columns can be filled automatically.
 

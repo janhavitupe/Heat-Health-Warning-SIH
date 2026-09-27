@@ -54,7 +54,7 @@ from fastapi.responses import FileResponse, HTMLResponse, Response
 from pydantic import BaseModel
 from fastapi.staticfiles import StaticFiles
 
-from api import alerts, db, decisions, dispatch, jobs, loop, report_card
+from api import alerts, db, decisions, dispatch, jobs, loop, report_card, whatsapp_bot
 from heatrisk import load_config
 from heatrisk.config import ROOT
 
@@ -499,6 +499,32 @@ async def ivr_menu(alert_id: int, ward_id: str, request: Request, lang: str = "e
 
     digit = (parse_qs((await request.body()).decode()).get("Digits") or [None])[0]
     return _twiml_response(alert_id, ward_id, lang, audience, digit)
+
+
+@app.get("/whatsapp/preview")
+def whatsapp_preview(text: str = Query(..., max_length=200), replay: str | None = None):
+    """What the WhatsApp reply bot would answer (simulated, read-only; nothing is sent)."""
+    with db.connect() as conn:
+        reply, detail = whatsapp_bot.reply(conn, text, replay)
+    return {"reply": reply, "detail": detail, "simulated": True}
+
+
+@app.post("/whatsapp/inbound")
+async def whatsapp_inbound(request: Request):
+    """Twilio WhatsApp webhook: reply to a ward name with that ward's officer-approved alert."""
+    from urllib.parse import parse_qsl
+
+    params = dict(parse_qsl((await request.body()).decode()))
+    token = os.environ.get("TWILIO_AUTH_TOKEN")
+    if token:
+        base = os.environ.get("HEAT_PUBLIC_URL")
+        if not base:
+            raise HTTPException(403, "set HEAT_PUBLIC_URL (the public https address Twilio calls) to verify requests")
+        url = base.rstrip("/") + request.url.path + (f"?{request.url.query}" if request.url.query else "")
+        if not whatsapp_bot.valid_signature(token, url, params, request.headers.get("X-Twilio-Signature")):
+            raise HTTPException(403, "invalid Twilio signature")
+    xml = whatsapp_bot.handle(params, os.environ.get("HEAT_WHATSAPP_REPLAY") or None)
+    return Response(xml, media_type="application/xml")
 
 
 @app.get("/audit")

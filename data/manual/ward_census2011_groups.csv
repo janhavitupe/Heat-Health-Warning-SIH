@@ -1,0 +1,49 @@
+ward_id,ward_name_2015,census_group,confidence,evidence
+AMC-01,Gota,added_2006,high,"Gota (CT) was outside AMC in 2001 (Ghatlodia AC, Delimitation Order 2008); joined AMC in 2006, census 2011 wards 48-57"
+AMC-02,Chandlodia,added_2006,high,Chandlodiya (M) was a separate municipality in 2001 (Sabarmati AC); joined AMC in 2006
+AMC-03,Chandkheda,added_2006,high,Chandkheda (M) was a separate municipality in 2001 (Gandhinagar South AC); joined AMC in 2006
+AMC-04,Sabarmati,ward_15,medium,Sabarmati AC contains only one 2001 AMC ward (15) plus Kali/Ranip/Chandlodiya municipalities; the 2015 Sabarmati ward is the old AMC part
+AMC-05,Ranip,added_2006,high,Ranip (M) was a separate municipality in 2001 (Sabarmati AC); joined AMC in 2006
+AMC-06,New Wadaj,Naranpura,high,"Nava Vadaj is in Naranpura AC (2001 AMC wards 11-14: Naranpura, Nava Vadaj, Juna Vadaj, Stadium area)"
+AMC-07,Ghatlodia,added_2006,high,Ghatlodiya (M) was a separate municipality in 2001 (Ghatlodia AC); joined AMC in 2006
+AMC-08,Thaltej,added_2006,high,Thaltej (CT) was outside AMC in 2001 (Ghatlodia AC); joined AMC in 2006
+AMC-09,Naranpura,Naranpura,high,Namesake of Naranpura AC (2001 AMC wards 11-14)
+AMC-10,S.P.Stadium,Naranpura,medium,Stadium area lies between Naranpura and Navrangpura; both neighbouring ACs have similar child shares (8.7% and 9.4%)
+AMC-11,Sardarnagar,Naroda,medium,"Sardarnagar/airport area adjoins Ahmedabad Cantonment, which the 2008 order places in Naroda AC"
+AMC-12,Naroda,ward_45,high,Naroda (OG) was census 2001 outgrowth ward 45 (Daskroi AC); census 2011 kept ward number 45
+AMC-13,Saijpur Bogha,Naroda,medium,Saijpur/Naroda Road area is in Naroda AC (2001 AMC wards 23 24 27)
+AMC-14,Kubernagr,Naroda,medium,Kubernagar is in Naroda AC (2001 AMC wards 23 24 27)
+AMC-15,Asarwa,Asarwa,high,"Namesake of Asarwa AC (2001 AMC wards 17-20, Asarva OG 44)"
+AMC-16,Shahibag,Asarwa,high,Asarwa AC extends 'to Shahibaug up to Delhi Chakla' (Delimitation Order 2008)
+AMC-17,Shahpur,Dariapur,medium,Shahpur lies in the walled city next to Dariapur; Dariapur AC = 2001 AMC wards 2 3 4 16
+AMC-18,Navrangpura,Ellisbridge,medium,Navrangpura adjoins Ellis Bridge; Ellisbridge AC = 2001 AMC wards 7-10
+AMC-19,Bodakdev,added_2006,high,Bodakdev village was outside AMC in 2001 (Ghatlodia AC); joined AMC in 2006
+AMC-20,Jodhpur,added_2006,high,Jodhpur (M) was a separate municipality in 2001 (Vejalpur AC); joined AMC in 2006
+AMC-21,Dariyapur,Dariapur,high,Namesake of Dariapur AC (2001 AMC wards 2 3 4 16)
+AMC-22,India Colony,Thakkarbapa Nagar,medium,India Colony adjoins Thakkarbapanagar; Thakkarbapa Nagar AC = 2001 AMC wards 22 25 26
+AMC-23,Thakkarbapanagar,Thakkarbapa Nagar,high,Namesake of Thakkarbapa Nagar AC (2001 AMC wards 22 25 26)
+AMC-24,Nikol,ward_46,high,Nikol (OG) was census 2001 outgrowth ward 46 (Daskroi AC); census 2011 kept ward number 46
+AMC-25,Viratnagar,interpolate,low,No documented AC; gets the city value (census 2011 Ahmedabad M Corp)
+AMC-26,Bapunagar,Bapunagar,high,Namesake of Bapunagar AC (2001 AMC wards 21 28 29)
+AMC-27,Saraspur-Rakhiyal,Bapunagar,medium,Rakhial/Saraspur adjoin Bapunagar; Bapunagar AC = 2001 AMC wards 21 28 29
+AMC-28,Khadia,Jamalpur-Khadiya,high,Namesake of Jamalpur-Khadiya AC (2001 AMC wards 1 5 6 39)
+AMC-29,Jamalpur,Jamalpur-Khadiya,high,Namesake of Jamalpur-Khadiya AC (2001 AMC wards 1 5 6 39)
+AMC-30,Paldi,Ellisbridge,high,Paldi is the core of Ellisbridge AC (2001 AMC wards 7-10)
+AMC-31,Vasna,Ellisbridge,medium,Vasna adjoins Paldi on the west bank; Ellisbridge AC = 2001 AMC wards 7-10
+AMC-32,Vejalpur,added_2006,high,Vejalpur (M) was a separate municipality in 2001 (Vejalpur AC); joined AMC in 2006
+AMC-33,Sarkhej,added_2006,high,Sarkhej-Okaf (M) was a separate municipality in 2001 (Vejalpur AC); joined AMC in 2006
+AMC-34,Maktampura,added_2006,high,Maktampur village was outside AMC in 2001 (Vejalpur AC); joined AMC in 2006
+AMC-35,Baherampura,Danilimda,medium,Behrampura is a Scheduled Caste neighbourhood; Danilimda is the SC-reserved AC and its 2001 wards 30 and 38 are 38% and 31% SC in census 2011
+AMC-36,Danilimda,Danilimda,high,"Namesake of Danilimda AC (2001 AMC wards 30 38 40, Piplaj, Shahwadi)"
+AMC-37,Maninagar,Maninagar,high,Namesake of Maninagar AC (2001 AMC wards 36 37 43)
+AMC-38,Gomtipur,interpolate,low,No documented AC; gets the city value (census 2011 Ahmedabad M Corp)
+AMC-39,Amraiwadi,Amraiwadi,high,Namesake of Amraiwadi AC (2001 AMC wards 32 33 41)
+AMC-40,Odhav,ward_47,high,Odhav (OG) was census 2001 outgrowth ward 47 (Vatva AC); census 2011 kept ward number 47
+AMC-41,Vastral,added_2006,high,Vastral (M) was a separate municipality in 2001 (Vatva AC); joined AMC in 2006
+AMC-42,Indrapuri,interpolate,low,No documented AC; gets the city value (census 2011 Ahmedabad M Corp)
+AMC-43,Bhaipura Hatkeshwar,Amraiwadi,medium,Hatkeshwar/Bhaipura adjoin Amraiwadi; Amraiwadi AC = 2001 AMC wards 32 33 41
+AMC-44,Khokhra,Maninagar,medium,Khokhra adjoins Maninagar; Maninagar AC = 2001 AMC wards 36 37 43
+AMC-45,Isanpur,interpolate,low,No documented AC; gets the city value (census 2011 Ahmedabad M Corp)
+AMC-46,Lambha,added_2006,high,"Lambha, Piplaj and Shahwadi villages were outside AMC in 2001 (Danilimda/Daskroi ACs); joined AMC in 2006"
+AMC-47,Vatva,added_2006,high,Vatva village was outside AMC in 2001 (Vatva AC); joined AMC in 2006
+AMC-48,Ramol Hathijan,added_2006,high,Ramol (M) and Hathijan were outside AMC in 2001 (Vatva AC); joined AMC in 2006

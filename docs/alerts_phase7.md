@@ -55,7 +55,7 @@ The `<sender>` is a placeholder (`heat-alert-prototype@example.invalid`, set in 
 **To enable Twilio**, set all of these:
 - `HEAT_DISPATCH_MODE=twilio`
 - `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN`
-- `TWILIO_SMS_FROM`, `TWILIO_WHATSAPP_FROM` (sandbox number), `TWILIO_VOICE_FROM`
+- A sender for each channel in the recipients file: `TWILIO_WHATSAPP_FROM` (the free sandbox number shown under Messaging → Try it out → Send a WhatsApp message; it differs between accounts, e.g. `whatsapp:+17372508034`) and, if you have a Twilio number (not free on current trial accounts), `TWILIO_SMS_FROM` and `TWILIO_VOICE_FROM`. With only the sandbox, list only `whatsapp` rows in the recipients file. `scripts/run_twilio.ps1` loads these from the git-ignored `.env`.
 - `data/manual/test_recipients.csv` with **your own verified test numbers**. This file is git-ignored; the example file is refused in Twilio mode.
 - optional `HEAT_PUBLIC_URL`, the public address of the API, for the voice keypad menu.
 
@@ -109,3 +109,22 @@ Tested end to end on a copy of the database:
 - OASIS Common Alerting Protocol 1.2: https://docs.oasis-open.org/emergency/cap/v1.2/CAP-v1.2-os.html (schema: `tests/data/CAP-v1.2.xsd`)
 - Twilio TwiML `<Say>` and text-to-speech languages: https://www.twilio.com/docs/voice/twiml/say/text-speech
 - WMO CAP training (urgency, severity, certainty): https://etrp.wmo.int/mod/book/view.php?id=11045&chapterid=1647
+
+## WhatsApp reply bot
+
+Some Twilio test senders (including new trial accounts' WhatsApp sandbox) reject outbound free text with error 21654 "ContentSid Required": they accept only pre-approved templates, and custom templates need a Meta-approved business sender. Replies to a message the user sends are allowed, so the platform also works the other way round: a resident sends a ward name and gets that ward's alert. Code: [api/whatsapp_bot.py](../api/whatsapp_bot.py), endpoint `POST /whatsapp/inbound`.
+
+**How it works**
+- Message format: `<ward> [english|hindi|gujarati]`, e.g. `Vatva`, `Vatva gujarati`, `ward 35`. Messages written in Gujarati or Devanagari script get a Gujarati or Hindi reply. Small typos and unique prefixes are accepted.
+- **Only officer-approved text is sent.** The reply is the approved or dispatched alert covering the ward: in live mode the soonest one from today, and in a replay (`HEAT_WHATSAPP_REPLAY=may2024`) the most recently approved one. With no approved alert, the reply says none has been issued and gives two standard safety tips. No model output is sent without approval.
+- **Requests are verified.** When `TWILIO_AUTH_TOKEN` is set, only requests carrying a valid Twilio signature for `HEAT_PUBLIC_URL` + `/whatsapp/inbound` are answered. The check matches Twilio's documented example (tested).
+- **No phone numbers are stored.** The audit log records ward, language and which alert was shared.
+
+**Setup (free)**
+1. Install ngrok and run `ngrok http 8000`. Copy the `https://…` address into `HEAT_PUBLIC_URL` in `.env`. ngrok's free plan includes one fixed domain, so it doesn't change between runs.
+2. Start the server with `scripts
+un_twilio.ps1`. It prints the webhook address.
+3. In the Twilio Console, go to **Messaging → Try it out → Send a WhatsApp message → Sandbox settings**. Set **When a message comes in** to that address, method **POST**, and save.
+4. From a phone that has joined the sandbox, send a ward name.
+
+**Without a live sender:** the Alerts tab has a **Resident WhatsApp preview** (simulated). It calls `GET /whatsapp/preview`, which runs the same bot code, stores nothing and sends nothing. Twilio trial accounts ("Try out WhatsApp") allow only pre-approved templates, and a custom webhook needs a paid account, so the demo uses this preview.
