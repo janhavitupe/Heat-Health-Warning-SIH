@@ -38,6 +38,11 @@ REPLAYS = {
 }
 
 
+def replay_weather_path(name: str):
+    """Hourly weather of a replay, kept for the what-if simulator (independent of which database is used)."""
+    return ROOT / "data" / "api" / f"replay_{name}_weather.parquet"
+
+
 def with_retries(job: Callable, attempts: int = 3, wait_s: float = 30, **kwargs):
     for i in range(attempts):
         try:
@@ -155,6 +160,7 @@ def build_replay(conn, name: str = "may2024") -> int:
     run_id = db.start_run(conn, "replay", name=name, source=spec["note"])
     try:
         wx = fetch_archive(c["lat"], c["lon"], spec["start"], spec["end"])
+        wx.to_parquet(replay_weather_path(name))           # kept for the what-if simulator
         daily, hourly = forecast.run_wards(wx, wards, cfg)
         store_scores(conn, run_id, daily, hourly, forecast.detect_events(daily, cfg, len(wards)))
         members = {f"{m}_m{lead:02d}": fetch_previous_runs(c["lat"], c["lon"], spec["start"], spec["end"], m, lead)

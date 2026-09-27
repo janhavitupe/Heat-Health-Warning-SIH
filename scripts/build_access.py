@@ -7,12 +7,14 @@ Outputs: data/processed/ward_access.csv      per ward: cooling_gap, cooling_gap_
                                              cooling_desert, health_walk_km (merged by build_wards.py)
          data/processed/cooling_sites.geojson recommended new cooling-centre sites (ranked)
          data/processed/ward_cooling_points.json up to 3 named AMC cooling places per ward (for advisories)
+         data/processed/access_cache.pkl      network + snapped cells for the what-if simulator (not committed)
 Usage:   python scripts/build_access.py
 """
 
 from __future__ import annotations
 
 import json
+import pickle
 import sys
 import time
 from pathlib import Path
@@ -53,6 +55,13 @@ def main() -> None:
         src = set(pts.loc[pts["layer"].isin(layers), "node"])
         d = cooling.network_distance(graph, src, cutoff)
         return cooling.cell_distance(cells["node"].to_numpy(), cells["snap_m"].to_numpy(), d, missing_m=cutoff or 1e6)
+
+    # Cache the network and snapped cells for the what-if simulator (heatrisk/scenarios.py)
+    cool_nodes = set(pts.loc[pts["layer"].isin(cc["existing_layers"]), "node"])
+    with open(PROC / "access_cache.pkl", "wb") as f:
+        pickle.dump({"graph": graph, "nodes": nodes, "nodes_xy": nodes_xy, "reach_m": reach_m,
+                     "cells": cells[["ward_id", "lon", "lat", "pop", "node", "snap_m"]].copy(),
+                     "cooling_nodes": cool_nodes}, f, protocol=pickle.HIGHEST_PROTOCOL)
 
     d_cool = dist_to(cc["existing_layers"], 5000)
     d_comm = dist_to(cc["existing_layers"] + cc["community_layers"], 5000)

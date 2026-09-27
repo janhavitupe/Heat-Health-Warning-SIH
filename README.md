@@ -25,6 +25,9 @@ pip install -e ".[api]"
 python -m api.cli all
 cd frontend && npm install && npm run build && cd ..
 HEAT_SCHEDULER=1 uvicorn api.main:app       # http://127.0.0.1:8000
+
+# Alert workflow demo (drafts only; delivery is simulated unless Twilio is configured)
+python -m api.cli alerts may2024            # then open /?replay=may2024&tab=alerts
 ```
 
 ## Layout

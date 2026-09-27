@@ -1,0 +1,6 @@
+name,phone,channel,lang,audience,ward_id
+Example officer (English SMS),+910000000001,sms,en,public,*
+Example worker contact (Gujarati SMS),+910000000002,sms,gu,workers,*
+Example caregiver (Hindi WhatsApp),+910000000003,whatsapp,hi,elderly,*
+Example resident (Gujarati voice call),+910000000004,voice,gu,public,*
+Baherampura volunteer (Gujarati SMS),+910000000005,sms,gu,public,AMC-35

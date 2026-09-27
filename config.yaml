@@ -187,10 +187,40 @@ cooling:
   desert_gap: 0.5                 # cooling desert: most residents (> 50%) beyond the walking threshold
   new_sites_k: 5
 
+# Phase 7: alert workflow and delivery. Nothing is sent without an officer's approval.
+alert_workflow:
+  min_level: orange               # draft alerts for Orange and Red days (Yellow advisories stay on the map)
+  audiences: [public, workers, elderly]
+  languages: [en, hi, gu]
+  channels: [sms, whatsapp, voice]
+  sender_name: AMC                # signature at the end of each SMS; set by the issuing authority
+  # CAP 1.2 <sender>: a placeholder for the prototype. The issuing authority sets its own address;
+  # this tool must not claim to speak for an organisation that has not adopted it.
+  cap_sender: heat-alert-prototype@example.invalid
+  cap_polygon_tolerance_m: 50     # ward outlines simplified for the CAP <polygon>
+  voice: {en: Google.en-IN-Standard-A, hi: Google.hi-IN-Standard-A, gu: Google.gu-IN-Standard-A}
+
+# §6.12 What-if scenarios (Innovation 3). Levers change ward attributes and the model is re-run.
+scenarios:
+  # Tree cover → NDVI (cross-ward fit, r = 0.91) → night LST via downscaling.lst_regression.night_ndvi
+  # → night air temperature via beta_night; daytime effect through tree shade on radiant temperature.
+  tree_ndvi_slope: 0.727
+  max_tree_pp: 20                 # observed ward tree cover is 0-22%; larger changes would extrapolate
+  default_replay: may2024
+
 # §6.13 Health-worker feedback (Innovation 6)
+# Reports are stored only as counts per ward, day, age band, severity and outcome (no identifiers).
+# Expected cases: the day's city-wide reports shared across wards by population × MRI.
 feedback:
   anomaly_ratio: 2.0              # flag when reported cases ≥ 2× expected
   min_reports: 3                  # ignore tiny counts
+  p_threshold: 0.01               # and when Poisson P(X ≥ reported | expected) is below this
+  prior_cases: 10                 # recalibration shrinks H_m toward 1 with this many pseudo-cases
+  recalibration_p: 0.05           # propose a new H_m only when the season's count differs significantly
   auto_apply_recalibration: false # proposals only; authority must approve
+  age_bands: ["0-4", "5-14", "15-44", "45-59", "60+"]
+  severities: [mild, moderate, severe]            # heat rash/cramps · heat exhaustion · heat stroke
+  outcomes: [treated, referred, died]
+  roles: [asha, anm, phc_doctor, uhc_staff, hospital]
 
 data_labels: [live, census, satellite_derived, historical, model_estimate, scenario_estimate]

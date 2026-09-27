@@ -56,29 +56,56 @@ def work_summary(schedule: dict | None, lang: str) -> str:
 
 
 def short_place(name: str, limit: int = 24) -> str:
-    """Shorten a place name for SMS. ASCII only: one non-GSM character (e.g. "…") would switch an
+    """Shorten a place name for SMS at a word boundary. No "…": one non-GSM character would switch an
     English SMS to Unicode encoding and cut its limit from 160 to 70 characters."""
-    return name if len(name) <= limit else name[: limit - 3].rstrip() + "..."
+    if len(name) <= limit:
+        return name
+    cut = name[:limit]
+    return cut[: cut.rfind(" ")] if " " in cut else cut       # whole words only, no ellipsis
 
 
-def render(ward_name: str, date, level: str, lang: str, audience: str, schedule: dict | None = None,
-           cooling: list[dict] | None = None, peak: str | None = None, sender: str = "AMC") -> dict | None:
-    """One advisory (SMS + long text) or None on Green days."""
-    if level not in ("yellow", "orange", "red"):
-        return None
+def values(ward_name: str, date, level: str, lang: str, schedule: dict | None = None,
+           cooling: list[dict] | None = None, peak: str | None = None, sender: str = "AMC") -> dict:
+    """Placeholder values for one ward-day in one language."""
     t = load_templates()
     places = [p["name"] for p in (cooling or [])]
-    fill = {
+    return {
         "level": t["level_names"][lang][level], "ward": ward_name, "day": _day_text(date, lang), "sender": sender,
         "window": heavy_window(schedule), "cooling": short_place(places[0]) if places else "nearest UHC",
         "cooling_list": ", ".join(places) if places else "—", "peak": (peak or "15:00").split("–")[0],
         "work_summary": work_summary(schedule, lang),
     }
-    sms = t["sms"][lang][audience][level].format(**fill)
+
+
+def templates(level: str, lang: str, audience: str) -> dict:
+    """The SMS and long-text templates (with {placeholders}) for one level, language and audience."""
+    t = load_templates()
     long = t["long"][lang]
-    text = " ".join([long["headline"].format(**fill), long["facts"].format(**fill), long[audience].format(**fill)])
+    return {"sms": t["sms"][lang][audience][level],
+            "long": " ".join([long["headline"], long["facts"], long[audience]])}
+
+
+class _Keep(dict):
+    def __missing__(self, key):                     # unknown placeholder: leave it visible for the reviewer
+        return "{" + key + "}"
+
+
+def fill(template: str, vals: dict) -> str:
+    return template.format_map(_Keep(vals))
+
+
+def render(ward_name: str, date, level: str, lang: str, audience: str, schedule: dict | None = None,
+           cooling: list[dict] | None = None, peak: str | None = None, sender: str = "AMC",
+           template: dict | None = None) -> dict | None:
+    """One advisory (SMS + long text) or None on Green days. `template` overrides the default text."""
+    if level not in ("yellow", "orange", "red"):
+        return None
+    vals = values(ward_name, date, level, lang, schedule, cooling, peak, sender)
+    tpl = template or templates(level, lang, audience)
+    sms, text = fill(tpl["sms"], vals), fill(tpl["long"], vals)
     return {"lang": lang, "audience": audience, "level": level, "sms": sms, "sms_chars": len(sms),
-            "sms_fits": len(sms) <= SMS_LIMIT[lang], "long": text, "review_status": t["review_status"][lang]}
+            "sms_fits": len(sms) <= SMS_LIMIT[lang], "long": text,
+            "review_status": load_templates()["review_status"][lang]}
 
 
 def render_all(ward_name: str, date, level: str, **kwargs) -> list[dict]:

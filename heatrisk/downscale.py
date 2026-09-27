@@ -45,6 +45,12 @@ def temperature_offsets(ward_id: str, wards: pd.DataFrame, cfg: dict) -> dict:
             missing.append(f"lst_{period}")
             a = 0.0
         out[period] = float(ds[f"beta_{period}"] * a)
+    # What-if scenarios add their temperature change directly (heatrisk/scenarios.py), so that
+    # changing one ward does not move the city mean and every other ward's anomaly with it
+    row = wards.set_index("ward_id").loc[ward_id]
+    for period in ("day", "night"):
+        extra = row.get(f"scenario_dt_{period}", 0.0)
+        out[period] += 0.0 if pd.isna(extra) else float(extra)
     out["missing"] = missing
     return out
 

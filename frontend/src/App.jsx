@@ -4,7 +4,11 @@ import DaySlider from './components/DaySlider.jsx'
 import Legend from './components/Legend.jsx'
 import MapView from './components/MapView.jsx'
 import WardList from './components/WardList.jsx'
+import AlertsTab from './components/AlertsTab.jsx'
 import PlanTab from './components/PlanTab.jsx'
+import ReportsTab from './components/ReportsTab.jsx'
+import WhatIfTab from './components/WhatIfTab.jsx'
+import StatusStrip from './components/StatusStrip.jsx'
 import WardPanel from './components/WardPanel.jsx'
 import { LAYERS, ROLES } from './theme.js'
 
@@ -21,9 +25,12 @@ export default function App() {
   const [day, setDay] = useState(null)
   const [wards, setWards] = useState(null)
   const [selected, setSelected] = useState(null)
-  const [tab, setTab] = useState(() => (['ward', 'list', 'plan'].includes(new URLSearchParams(location.search).get('tab')) ? new URLSearchParams(location.search).get('tab') : 'ward'))
+  const [tab, setTab] = useState(() => (['ward', 'list', 'plan', 'alerts', 'whatif', 'reports'].includes(new URLSearchParams(location.search).get('tab')) ? new URLSearchParams(location.search).get('tab') : 'ward'))
   const [error, setError] = useState(null)
   const [cooling, setCooling] = useState(null)
+  const [refreshKey, setRefreshKey] = useState(0)      // bumped after alert actions to refresh the status strip
+  const [armed, setArmed] = useState(false)             // what-if: next map click places a cooling centre
+  const [point, setPoint] = useState(null)
 
   useEffect(() => {                       // keep the URL shareable: ?replay=may2024
     const q = new URLSearchParams(location.search)
@@ -47,8 +54,8 @@ export default function App() {
   }, [day, replay])
 
   useEffect(() => {                       // cooling places and recommended sites, fetched once when first needed
-    if (layer === 'cooling' && !cooling) api.cooling().then(setCooling).catch((e) => setError(e.message))
-  }, [layer, cooling])
+    if ((layer === 'cooling' || tab === 'whatif') && !cooling) api.cooling().then(setCooling).catch((e) => setError(e.message))
+  }, [layer, tab, cooling])
 
   const chooseRole = (r) => { setRole(r); setLayer(ROLES[r].layer) }
   const target = layer === 'hri' || (role === 'healthcare' && LAYERS[layer].kind !== 'alert') ? 'hri' : 'mri'
@@ -74,6 +81,7 @@ export default function App() {
         <span className="estimate">Model estimates, not clinical predictions</span>
       </header>
 
+      <StatusStrip day={day} replay={replay} role={role} refreshKey={refreshKey} onOpenAlerts={() => setTab('alerts')} />
       {error && <div className="banner" role="alert">Data unavailable: {error}</div>}
 
       <div className="main">
@@ -87,7 +95,9 @@ export default function App() {
           </div>
           <div style={{ position: 'relative', minHeight: 0, display: 'grid' }}>
             <MapView data={wards} layer={layer} selected={selected} cooling={layer === 'cooling' ? cooling : null}
-              onSelect={(id) => { setSelected(id); setTab('ward') }} />
+              armed={armed} point={tab === 'whatif' ? point : null}
+              onMapClick={(p) => { setPoint(p); setArmed(false) }}
+              onSelect={(id) => { setSelected(id); if (tab !== 'whatif' && tab !== 'reports') setTab('ward') }} />
             <Legend layer={layer} hasConfidence={hasConfidence} />
           </div>
           {days && <DaySlider days={days.days} day={day} today={replay ? null : localDay()} onChange={setDay} />}
@@ -98,7 +108,13 @@ export default function App() {
             <button aria-pressed={tab === 'ward'} onClick={() => setTab('ward')}>Ward detail</button>
             <button aria-pressed={tab === 'list'} onClick={() => setTab('list')}>All wards</button>
             <button aria-pressed={tab === 'plan'} onClick={() => setTab('plan')}>Plan</button>
+            <button aria-pressed={tab === 'alerts'} onClick={() => setTab('alerts')}>Alerts</button>
+            <button aria-pressed={tab === 'whatif'} onClick={() => setTab('whatif')}>What-if</button>
+            <button aria-pressed={tab === 'reports'} onClick={() => setTab('reports')}>Reports</button>
           </div>
+          {tab === 'whatif' && <WhatIfTab wards={wards} selected={selected} point={point} armed={armed} onArm={setArmed} cooling={cooling} />}
+          {tab === 'reports' && day && <ReportsTab wards={wards} day={day} replay={replay} selected={selected} onChanged={() => setRefreshKey((k) => k + 1)} />}
+          {tab === 'alerts' && <AlertsTab replay={replay} onChanged={() => setRefreshKey((k) => k + 1)} />}
           {tab === 'plan' && day && <PlanTab day={day} replay={replay} role={role} onSelect={(id) => { setSelected(id); setTab('ward') }} />}
           {tab === 'list' && <WardList data={wards} layer={layer} onSelect={(id) => { setSelected(id); setTab('ward') }} />}
           {tab === 'ward' && selected && day && <WardPanel wardId={selected} day={day} target={target} replay={replay} />}

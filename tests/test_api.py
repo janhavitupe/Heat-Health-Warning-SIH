@@ -113,3 +113,32 @@ def test_priorities_cooling_allocation(client):
     al = client.get("/allocation?day=2024-05-21&cooling_units=3&ambulances=7").json()
     assert len(al["cooling_units"]) <= 3 and sum(x["ambulances"] for x in al["ambulances"]) == 7
     assert client.get("/allocation?cooling_units=-1").status_code == 422
+
+
+# ---------- what-if and feedback (Phase 8)
+
+def test_reports_are_counts_only_and_flag_anomalies(client):
+    body = {"ward_id": "AMC-40", "date": "2024-05-21", "age_band": "60+", "severity": "severe", "outcome": "referred", "role": "asha"}
+    for _ in range(6):
+        assert client.post("/reports", json=body).status_code == 200
+    client.post("/reports", json={**body, "ward_id": "AMC-01", "age_band": "15-44"})
+    with db.connect() as conn:
+        cols = [r[1] for r in conn.execute("PRAGMA table_info(report_counts)")]
+    assert not {"name", "phone", "patient", "address"} & set(cols)
+    s = client.get("/reports/summary?day=2024-05-21").json()
+    assert s["total_reports"] == 7 and not s["includes_synthetic"]
+    assert any(f["ward_id"] == "AMC-40" for f in s["flags"])
+    assert client.post("/reports", json={**body, "severity": "fatal?"}).status_code == 422
+    r = client.get("/reports/recalibration").json()
+    assert r["applied"] is False and r["wards"]
+
+
+def test_scenario_endpoint(client):
+    from api import jobs
+    if not jobs.replay_weather_path("may2024").exists():
+        pytest.skip("replay weather not built")
+    r = client.post("/scenarios/run", json={"changes": [{"lever": "tree_cover", "wards": ["AMC-40"], "pp": 10}]}).json()
+    assert r["label"] == "scenario_estimate" and r["wards"][0]["change"]["mean_mri"] < 0
+    assert client.post("/scenarios/run", json={"changes": [{"lever": "tree_cover", "wards": ["AMC-40"], "pp": 99}]}).status_code == 422
+    sid = client.post("/scenarios", json={"name": "t", "changes": [{"lever": "tree_cover", "wards": ["AMC-40"], "pp": 5}]}).json()["scenario_id"]
+    assert client.get(f"/scenarios/{sid}").json()["result"]["label"] == "scenario_estimate"

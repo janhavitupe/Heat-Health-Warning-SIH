@@ -16,6 +16,22 @@ Endpoints (all accept ?replay=<name> to serve a past event, e.g. ?replay=may2024
   GET /priorities              wards ranked for action (municipal: MRI, healthcare: HRI) + city actions
   GET /cooling                 cooling gap per ward, deserts, existing cooling places, recommended new sites
   GET /allocation              where to send N mobile cooling units and M ambulances
+  Alert workflow (Phase 7; write actions need X-API-Token when HEAT_API_TOKEN is set):
+  POST /alerts/generate        draft alerts from the current run (never sends anything)
+  GET  /alerts, /alerts/{id}   drafts and decided alerts, with rendered previews and deliveries
+  PATCH /alerts/{id}           edit a draft (wards, audiences, languages, channels, text)
+  POST /alerts/{id}/approve | /reject | /dispatch    officer decisions; dispatch needs approval
+  GET  /alerts/{id}/cap.xml    CAP 1.2 export
+  GET|POST /ivr/{id}/{ward}    TwiML voice script with keypad menu
+  GET  /audit                  audit log
+  GET  /dashboard              command dashboard summary for a day
+  What-if and feedback (Phase 8):
+  POST /scenarios/run          re-run a replayed heatwave with interventions (Scenario Estimate; nothing saved)
+  POST /scenarios, GET /scenarios[/{id}]   save and compare named scenarios
+  POST /reports                health-worker case report (stored only as counts, no identifiers)
+  GET  /reports/summary        reports per day and ward, anomaly flags
+  GET  /reports/recalibration  proposed H_m per ward (never applied automatically)
+  POST /reports/synthetic      seed labelled synthetic reports for a replay demo
 
 Run:  uvicorn api.main:app --reload            (API only)
       HEAT_SCHEDULER=1 uvicorn api.main:app    (with hourly forecast / daily ensemble refresh)
@@ -32,12 +48,13 @@ from contextlib import asynccontextmanager
 from pathlib import Path
 
 import pandas as pd
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import Depends, FastAPI, Header, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, Response
+from pydantic import BaseModel
 from fastapi.staticfiles import StaticFiles
 
-from api import db, decisions, jobs
+from api import alerts, db, decisions, dispatch, jobs, loop
 from heatrisk import load_config
 from heatrisk.config import ROOT
 
@@ -52,13 +69,21 @@ def start_scheduler():
     tz = load_config()["city"]["timezone"]
     sched = BackgroundScheduler(timezone=tz)
 
+    def draft_alerts(conn):
+        try:
+            generate_drafts(conn, None)
+        except Exception:
+            log.exception("alert drafting failed")
+
     def forecast_job():
         with db.connect() as conn:
-            jobs.with_retries(jobs.run_forecast, conn=conn)
+            if jobs.with_retries(jobs.run_forecast, conn=conn):
+                draft_alerts(conn)
 
     def ensemble_job():
         with db.connect() as conn:
-            jobs.with_retries(jobs.run_ensemble, conn=conn, wait_s=300)
+            if jobs.with_retries(jobs.run_ensemble, conn=conn, wait_s=300):
+                draft_alerts(conn)
 
     sched.add_job(forecast_job, "cron", minute=5, id="forecast", max_instances=1, coalesce=True)
     sched.add_job(ensemble_job, "cron", hour=5, minute=45, id="ensemble", max_instances=1, coalesce=True)
@@ -84,7 +109,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="Heat-Health Early Warning API", version="0.5.0", lifespan=lifespan,
               description="Ward-level heat stress, vulnerability and risk for Ahmedabad. " + LABEL_NOTE)
-app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["GET"], allow_headers=["*"])
+app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["GET", "POST", "PATCH"], allow_headers=["*"])
 
 
 # ---------- helpers
@@ -314,6 +339,310 @@ def allocation_plan(day: str | None = None, replay: str | None = None,
         run, _, day = _run_and_day(conn, replay, day)
         return decisions.allocation_plan(conn, run["run_id"], day, cooling_units, ambulances)
 
+
+# ---------- alert workflow (Phase 7)
+
+def require_token(x_api_token: str | None = Header(None)):
+    """Write actions need the token when HEAT_API_TOKEN is set (always set it outside a local demo)."""
+    token = os.environ.get("HEAT_API_TOKEN")
+    if token and x_api_token != token:
+        raise HTTPException(401, "missing or wrong X-API-Token")
+
+
+class OfficerAction(BaseModel):
+    officer: str
+    note: str = ""
+    reason: str = ""
+
+
+class AlertEdit(BaseModel):
+    officer: str
+    wards: list[str] | None = None
+    audiences: list[str] | None = None
+    languages: list[str] | None = None
+    channels: list[str] | None = None
+    templates: dict | None = None
+
+
+def _probs_by_day(conn, prob_run) -> dict:
+    out: dict = {}
+    for (w, d), v in _probs(conn, prob_run).items():
+        out.setdefault(d, {})[(w, d)] = v
+    return out
+
+
+def generate_drafts(conn, replay: str | None) -> list[int]:
+    run, prob_run = _runs(conn, replay)
+    start = None if replay else jobs.today(load_config()).strftime("%Y-%m-%d")
+    return alerts.generate(conn, run, prob_run, replay, _probs_by_day(conn, prob_run), from_day=start)
+
+
+def _alert_or_404(conn, alert_id: int) -> dict:
+    try:
+        return alerts.load(conn, alert_id)
+    except KeyError:
+        raise HTTPException(404, f"unknown alert {alert_id}") from None
+
+
+def _workflow(fn, *args):
+    try:
+        return fn(*args)
+    except alerts.WorkflowError as e:
+        raise HTTPException(409, str(e)) from None
+
+
+def _detail(conn, a: dict) -> dict:
+    first = a["wards"][0]
+    previews = {lang: {aud: alerts.render(a, first, lang, aud) for aud in a["audiences"]} for lang in a["languages"]}
+    deliveries = [dict(r) for r in conn.execute(
+        "SELECT ward_id, channel, recipient, audience, lang, status, provider, detail, at FROM deliveries WHERE alert_id=?",
+        (a["alert_id"],))]
+    return {**alerts.summary(a), "templates": a["templates"], "preview_ward": a["ward_values"][first]["_meta"]["ward_name"],
+            "previews": previews, "problems": alerts.problems(a), "deliveries": deliveries,
+            "dispatch_mode": dispatch.mode()}
+
+
+@app.post("/alerts/generate", dependencies=[Depends(require_token)])
+def alerts_generate(replay: str | None = None):
+    with db.connect() as conn:
+        ids = generate_drafts(conn, replay)
+    return {"created": ids}
+
+
+@app.get("/alerts")
+def alerts_list(replay: str | None = None, status: str | None = None):
+    sql, args = "SELECT alert_id FROM alerts WHERE mode=? AND IFNULL(replay,'')=?", ["replay" if replay else "live", replay or ""]
+    if status:
+        sql, args = sql + " AND status=?", args + [status]
+    with db.connect() as conn:
+        ids = [r[0] for r in conn.execute(sql + " ORDER BY date, alert_id", args)]
+        return {"dispatch_mode": dispatch.mode(), "alerts": [alerts.summary(alerts.load(conn, i)) for i in ids]}
+
+
+@app.get("/alerts/{alert_id}")
+def alert_detail(alert_id: int):
+    with db.connect() as conn:
+        return _detail(conn, _alert_or_404(conn, alert_id))
+
+
+@app.get("/alerts/{alert_id}/preview")
+def alert_preview(alert_id: int, ward: str, lang: str = "en", audience: str = "public"):
+    with db.connect() as conn:
+        a = _alert_or_404(conn, alert_id)
+        if ward not in a["ward_values"] or lang not in a["templates"] or audience not in a["templates"][lang]:
+            raise HTTPException(404, "unknown ward, language or audience for this alert")
+        return alerts.render(a, ward, lang, audience)
+
+
+@app.patch("/alerts/{alert_id}", dependencies=[Depends(require_token)])
+def alert_edit(alert_id: int, body: AlertEdit):
+    with db.connect() as conn:
+        _alert_or_404(conn, alert_id)
+        a = _workflow(alerts.edit, conn, alert_id, body.officer, body.model_dump(exclude={"officer"}))
+        return _detail(conn, a)
+
+
+@app.post("/alerts/{alert_id}/approve", dependencies=[Depends(require_token)])
+def alert_approve(alert_id: int, body: OfficerAction):
+    with db.connect() as conn:
+        _alert_or_404(conn, alert_id)
+        return _detail(conn, _workflow(alerts.approve, conn, alert_id, body.officer, body.note))
+
+
+@app.post("/alerts/{alert_id}/reject", dependencies=[Depends(require_token)])
+def alert_reject(alert_id: int, body: OfficerAction):
+    with db.connect() as conn:
+        _alert_or_404(conn, alert_id)
+        return _detail(conn, _workflow(alerts.reject, conn, alert_id, body.officer, body.reason))
+
+
+@app.post("/alerts/{alert_id}/dispatch", dependencies=[Depends(require_token)])
+def alert_dispatch(alert_id: int, body: OfficerAction):
+    with db.connect() as conn:
+        _alert_or_404(conn, alert_id)
+        result = _workflow(dispatch.dispatch, conn, alert_id, body.officer)
+        return {**result, "alert": _detail(conn, alerts.load(conn, alert_id))}
+
+
+@app.post("/alerts/{alert_id}/refresh-status", dependencies=[Depends(require_token)])
+def alert_refresh(alert_id: int):
+    with db.connect() as conn:
+        _alert_or_404(conn, alert_id)
+        return {"changed": dispatch.refresh_status(conn, alert_id)}
+
+
+@app.get("/alerts/{alert_id}/cap.xml")
+def alert_cap(alert_id: int):
+    with db.connect() as conn:
+        xml = alerts.cap_xml(conn, _alert_or_404(conn, alert_id))
+    return Response(xml, media_type="application/xml",
+                    headers={"Content-Disposition": f'inline; filename="heat-alert-{alert_id}.xml"'})
+
+
+def _twiml_response(alert_id: int, ward_id: str, lang: str, audience: str, digit: str | None):
+    with db.connect() as conn:
+        a = _alert_or_404(conn, alert_id)
+    if ward_id not in a["ward_values"] or lang not in a["templates"]:
+        raise HTTPException(404, "unknown ward or language for this alert")
+    xml = alerts.twiml(a, ward_id, lang, audience, digit=digit, base_url=os.environ.get("HEAT_PUBLIC_URL"))
+    return Response(xml, media_type="application/xml")
+
+
+@app.api_route("/ivr/{alert_id}/{ward_id}", methods=["GET", "POST"])
+def ivr(alert_id: int, ward_id: str, lang: str = "en", audience: str = "public"):
+    return _twiml_response(alert_id, ward_id, lang, audience, None)
+
+
+@app.post("/ivr/{alert_id}/{ward_id}/menu")
+async def ivr_menu(alert_id: int, ward_id: str, request: Request, lang: str = "en", audience: str = "public"):
+    from urllib.parse import parse_qs
+
+    digit = (parse_qs((await request.body()).decode()).get("Digits") or [None])[0]
+    return _twiml_response(alert_id, ward_id, lang, audience, digit)
+
+
+@app.get("/audit")
+def audit(limit: int = Query(100, ge=1, le=1000), alert_id: int | None = None):
+    with db.connect() as conn:
+        rows = [dict(r) for r in conn.execute("SELECT * FROM audit_log ORDER BY id DESC LIMIT ?", (limit * 5 if alert_id else limit,))]
+    for r in rows:
+        try:
+            r["detail"] = json.loads(r["detail"]) if r["detail"] else None
+        except ValueError:
+            pass
+    if alert_id is not None:
+        rows = [r for r in rows if isinstance(r["detail"], dict) and r["detail"].get("alert_id") == alert_id][:limit]
+    return {"entries": rows}
+
+
+@app.get("/dashboard")
+def dashboard(day: str | None = None, replay: str | None = None,
+              view: str = Query("municipal", pattern="^(municipal|healthcare)$")):
+    """One call for the command screen: status, event, counts, priorities with drivers and actions,
+    work hours in the top wards, cooling deserts and alerts awaiting review."""
+    with db.connect() as conn:
+        run, prob_run, day = _run_and_day(conn, replay, day)
+        probs = _probs(conn, prob_run, day)
+        pr = decisions.priorities(conn, run["run_id"], day, probs, view)
+        top = pr["wards"][:5]
+        for w in top:
+            acts = decisions.ward_actions(conn, run["run_id"], w["ward_id"], day)["actions"]
+            w["n_actions"] = len(acts)
+            w["actions"] = [a["action"] for a in acts[:3]]
+            sched = decisions.schedule(conn, run["run_id"], w["ward_id"], day)
+            w["heavy_work"] = sched["workloads"]["heavy"]["summary"] if sched.get("available") else None
+        evs = [json.loads(r[0]) for r in conn.execute("SELECT event FROM events WHERE run_id=?", (run["run_id"],))]
+        active = next((e for e in evs if e["start"] <= day <= e["end"]), None) or next(
+            (e for e in evs if e["start"] > day), None)
+        cool = decisions.cooling_summary(conn)
+        mode = "replay" if replay else "live"
+        pending = conn.execute("SELECT COUNT(*) FROM alerts WHERE mode=? AND IFNULL(replay,'')=? AND status='draft'",
+                               (mode, replay or "")).fetchone()[0]
+        counts = {lvl: 0 for lvl in ("green", "yellow", "orange", "red")}
+        for r in conn.execute("SELECT data FROM daily_scores WHERE run_id=? AND date=?", (run["run_id"], day)):
+            counts[json.loads(r[0])["alert_mri"]] += 1
+        rep_sum = loop.summary(conn, run["run_id"], replay, None)
+        report_flags = [f for f in rep_sum["flags"] if f["date"] == day]
+    return {"day": day, "view": view, "meta": _meta(run, prob_run, replay), "counts": counts, "event": active,
+            "report_flags": report_flags, "reports_synthetic": rep_sum["includes_synthetic"],
+            "worst_level": pr["worst_level"], "city_actions": pr["city_actions"], "top_wards": top,
+            "cooling": {"city_share_within_walk": cool["city_share_within_walk"],
+                        "deserts": [w["ward_name"] for w in cool["wards"] if w.get("cooling_desert")],
+                        "recommended_sites": len(cool["recommended_sites"]["features"])},
+            "alerts_pending_review": pending, "dispatch_mode": dispatch.mode()}
+
+
+# ---------- what-if scenarios and health-worker feedback (Phase 8)
+
+class ScenarioRun(BaseModel):
+    changes: list[dict]
+    replay: str | None = None
+
+
+class ScenarioSave(ScenarioRun):
+    name: str
+    author: str = ""
+
+
+class Report(BaseModel):
+    ward_id: str
+    date: str
+    age_band: str
+    severity: str
+    outcome: str
+    role: str
+
+
+def _loop(fn, *args):
+    try:
+        return fn(*args)
+    except loop.InputError as e:
+        raise HTTPException(422, str(e)) from None
+
+
+@app.post("/scenarios/run")
+def scenario_run(body: ScenarioRun):
+    return _loop(loop.run_scenario, body.changes, body.replay)
+
+
+@app.post("/scenarios", dependencies=[Depends(require_token)])
+def scenario_save(body: ScenarioSave):
+    with db.connect() as conn:
+        sid = _loop(loop.save_scenario, conn, body.name, body.author, body.changes, body.replay)
+    return {"scenario_id": sid}
+
+
+@app.get("/scenarios")
+def scenario_list():
+    with db.connect() as conn:
+        rows = [dict(r) for r in conn.execute("SELECT scenario_id, name, author, created_at, replay, spec, result FROM scenarios "
+                                              "ORDER BY scenario_id DESC")]
+    for r in rows:
+        r["spec"] = json.loads(r["spec"])
+        r["city"] = json.loads(r.pop("result"))["city"]
+    return {"scenarios": rows}
+
+
+@app.get("/scenarios/{scenario_id}")
+def scenario_get(scenario_id: int):
+    with db.connect() as conn:
+        r = conn.execute("SELECT * FROM scenarios WHERE scenario_id=?", (scenario_id,)).fetchone()
+    if r is None:
+        raise HTTPException(404, f"unknown scenario {scenario_id}")
+    out = dict(r)
+    out["spec"], out["result"] = json.loads(out["spec"]), json.loads(out["result"])
+    return out
+
+
+@app.post("/reports", dependencies=[Depends(require_token)])
+def report_add(body: Report, replay: str | None = None):
+    with db.connect() as conn:
+        _loop(loop.add_report, conn, body.model_dump(), replay)
+        db.log(conn, "report_received", {"ward_id": body.ward_id, "date": body.date, "replay": replay}, actor=body.role)
+    return {"stored": "count incremented; no personal details kept"}
+
+
+@app.get("/reports/summary")
+def report_summary(replay: str | None = None, day: str | None = None):
+    with db.connect() as conn:
+        run, _ = _runs(conn, replay)
+        return loop.summary(conn, run["run_id"], replay, day)
+
+
+@app.get("/reports/recalibration")
+def report_recalibration(replay: str | None = None):
+    with db.connect() as conn:
+        run, _ = _runs(conn, replay)
+        return loop.recalibration(conn, run["run_id"], replay)
+
+
+@app.post("/reports/synthetic", dependencies=[Depends(require_token)])
+def report_synthetic(replay: str = "may2024"):
+    with db.connect() as conn:
+        run, _ = _runs(conn, replay)
+        n = loop.seed_synthetic(conn, run["run_id"], replay)
+    return {"synthetic_reports": n, "label": "SYNTHETIC demo data"}
+
 # ---------- frontend (built React app), if present
 
 if FRONTEND.exists():
@@ -322,3 +651,7 @@ if FRONTEND.exists():
     @app.get("/", include_in_schema=False)
     def index():
         return FileResponse(FRONTEND / "index.html")
+
+    @app.get("/favicon.svg", include_in_schema=False)
+    def favicon():
+        return FileResponse(FRONTEND / "favicon.svg", media_type="image/svg+xml")

@@ -23,3 +23,6 @@ Every change to a value in `config.yaml` is recorded here with its reason (propo
 | 2026-09-26 | cooling.walk_speed_kmh | 4.5 | 4.0 | Older adults walk ~1.1-1.3 m/s (Bohannon & Andrews 2011); 15 min ≈ 1 km | Phase 6 |
 | 2026-09-26 | cooling.* layers (new) | point_types / candidate_site_types | existing / community / candidate / health layers; desert_gap 0.5 | Two-tier cooling definition from the Heat Action Plan | Phase 6 |
 | 2026-09-26 | work_windows.day_hours (new) | — | [6, 20] | Working hours shown in schedules | Phase 6 |
+| 2026-09-26 | alert_workflow (new) | — | min_level orange; en/hi/gu; sms/whatsapp/voice; placeholder CAP sender; Google TTS voices | Phase 7 alert workflow and delivery settings | Phase 7 |
+| 2026-09-27 | scenarios (new) | — | tree_ndvi_slope 0.727, max_tree_pp 20 | Tree cover → NDVI fit across wards (r = 0.91); cap at the observed range | Phase 8 |
+| 2026-09-27 | feedback.p_threshold, prior_cases, recalibration_p (new) | — | 0.01, 10, 0.05 | Anomaly significance, shrinkage and evidence threshold for H_m proposals | Phase 8 |

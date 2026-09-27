@@ -12,12 +12,12 @@ const dark = window.matchMedia?.('(prefers-color-scheme: dark)').matches
 const BASEMAP = `https://tiles.openfreemap.org/styles/${dark ? 'dark' : 'positron'}`
 const CENTER = [72.585, 23.03]
 
-export default function MapView({ data, layer, selected, cooling, onSelect }) {
+export default function MapView({ data, layer, selected, cooling, armed, point, onMapClick, onSelect }) {
   const box = useRef(null)
   const map = useRef(null)
   const ready = useRef(false)
-  const latest = useRef({ data, layer, selected, cooling, onSelect })
-  latest.current = { data, layer, selected, cooling, onSelect }
+  const latest = useRef({ data, layer, selected, cooling, armed, point, onMapClick, onSelect })
+  latest.current = { data, layer, selected, cooling, armed, point, onMapClick, onSelect }
 
   useEffect(() => {
     const m = new maplibregl.Map({ container: box.current, style: BASEMAP, center: CENTER, zoom: 10.6, attributionControl: { compact: true } })
@@ -44,6 +44,10 @@ export default function MapView({ data, layer, selected, cooling, onSelect }) {
       m.addLayer({ id: 'cool-sites', type: 'circle', source: 'cool-sites',
         paint: { 'circle-radius': 9, 'circle-color': dark ? '#199e70' : '#1baf7a', 'circle-stroke-width': 3,
           'circle-stroke-color': dark ? '#ffffff' : '#0b0b0b' } })
+      m.addSource('sc-pt', { type: 'geojson', data: none })         // what-if: placed cooling centre
+      m.addLayer({ id: 'sc-pt', type: 'circle', source: 'sc-pt',
+        paint: { 'circle-radius': 8, 'circle-color': dark ? '#3987e5' : '#2a78d6', 'circle-stroke-width': 3,
+          'circle-stroke-color': dark ? '#ffffff' : '#0b0b0b' } })
       m.addLayer({ id: 'cool-sites-label', type: 'symbol', source: 'cool-sites',
         layout: { 'text-field': ['to-string', ['get', 'rank']], 'text-size': 11, 'text-allow-overlap': true,
           'text-font': ['Noto Sans Bold'] }, paint: { 'text-color': '#ffffff' } })
@@ -63,7 +67,12 @@ export default function MapView({ data, layer, selected, cooling, onSelect }) {
       popup.setLngLat(e.lngLat).setDOMContent(el).addTo(m)
     })
     m.on('mouseleave', 'fill', () => { m.getCanvas().style.cursor = ''; popup.remove() })
-    m.on('click', 'fill', (e) => latest.current.onSelect(e.features[0].properties.ward_id))
+    m.on('click', (e) => {
+      const L = latest.current
+      if (L.armed) { L.onMapClick({ lon: e.lngLat.lng, lat: e.lngLat.lat }); return }
+      const hit = m.queryRenderedFeatures(e.point, { layers: ['fill'] })[0]
+      if (hit) L.onSelect(hit.properties.ward_id)
+    })
     map.current = m
     return () => { ready.current = false; m.remove() }
   }, [])
@@ -88,9 +97,12 @@ export default function MapView({ data, layer, selected, cooling, onSelect }) {
     const none = { type: 'FeatureCollection', features: [] }
     m.getSource('cool-pts').setData(latest.current.cooling?.existing_points ?? none)
     m.getSource('cool-sites').setData(latest.current.cooling?.recommended_sites ?? none)
+    const pt = latest.current.point
+    m.getSource('sc-pt').setData(pt ? { type: 'Feature', geometry: { type: 'Point', coordinates: [pt.lon, pt.lat] }, properties: {} } : none)
+    m.getCanvas().style.cursor = latest.current.armed ? 'crosshair' : ''
   }
 
-  useEffect(render, [data, layer, selected, cooling])
+  useEffect(render, [data, layer, selected, cooling, armed, point])
 
   return <div className="map" ref={box} role="region" aria-label="Ward risk map" />
 }

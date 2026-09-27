@@ -46,10 +46,28 @@ CREATE TABLE IF NOT EXISTS ensemble_probs (
 CREATE TABLE IF NOT EXISTS events (run_id INTEGER, event TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS triggers (
     run_id INTEGER, ward_id TEXT, date TEXT, lead_days INTEGER, rule TEXT, probability REAL, action TEXT);
--- Phase 7: alert drafts, human approval and dispatch
+-- Phase 7: alert drafts, human approval and dispatch. An alert covers one day and level for a
+-- set of wards. `templates` holds the (editable) message text per language and audience with
+-- {placeholders}; `ward_values` holds each ward's values, captured when the draft was made.
 CREATE TABLE IF NOT EXISTS alerts (
-    alert_id INTEGER PRIMARY KEY AUTOINCREMENT, run_id INTEGER, ward_id TEXT, date TEXT, level TEXT,
-    status TEXT, created_at TEXT, decided_at TEXT, decided_by TEXT, message TEXT);
+    alert_id INTEGER PRIMARY KEY AUTOINCREMENT, mode TEXT NOT NULL, replay TEXT, run_id INTEGER,
+    date TEXT NOT NULL, level TEXT NOT NULL, kind TEXT NOT NULL, wards TEXT NOT NULL, audiences TEXT NOT NULL,
+    languages TEXT NOT NULL, channels TEXT NOT NULL, templates TEXT NOT NULL, ward_values TEXT NOT NULL,
+    reason TEXT, status TEXT NOT NULL, supersedes INTEGER, created_at TEXT NOT NULL, updated_at TEXT,
+    decided_at TEXT, decided_by TEXT, decision_note TEXT, dispatched_at TEXT);
+CREATE INDEX IF NOT EXISTS alerts_day ON alerts(mode, replay, date, level, kind, status);
+CREATE TABLE IF NOT EXISTS deliveries (
+    id INTEGER PRIMARY KEY AUTOINCREMENT, alert_id INTEGER NOT NULL, ward_id TEXT, channel TEXT, recipient TEXT,
+    audience TEXT, lang TEXT, body TEXT, status TEXT, provider TEXT, provider_id TEXT, detail TEXT, at TEXT);
+-- Phase 8: saved what-if scenarios, and health-worker reports stored ONLY as counts (no identifiers)
+CREATE TABLE IF NOT EXISTS scenarios (
+    scenario_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, author TEXT, created_at TEXT NOT NULL,
+    replay TEXT, spec TEXT NOT NULL, result TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS report_counts (
+    mode TEXT NOT NULL, replay TEXT NOT NULL DEFAULT '', ward_id TEXT NOT NULL, date TEXT NOT NULL,
+    age_band TEXT NOT NULL, severity TEXT NOT NULL, outcome TEXT NOT NULL, role TEXT NOT NULL,
+    synthetic INTEGER NOT NULL DEFAULT 0, count INTEGER NOT NULL,
+    PRIMARY KEY (mode, replay, ward_id, date, age_band, severity, outcome, role, synthetic));
 CREATE TABLE IF NOT EXISTS audit_log (
     id INTEGER PRIMARY KEY AUTOINCREMENT, at TEXT NOT NULL, actor TEXT, action TEXT NOT NULL, detail TEXT);
 """
@@ -77,6 +95,9 @@ def connect(path: Path | str | None = None):
 
 
 def init(conn: sqlite3.Connection) -> None:
+    cols = {r[1] for r in conn.execute("PRAGMA table_info(alerts)")}
+    if cols and "templates" not in cols:            # pre-Phase 7 placeholder table (never used): replace it
+        conn.execute("DROP TABLE alerts")
     conn.executescript(SCHEMA)
 
 

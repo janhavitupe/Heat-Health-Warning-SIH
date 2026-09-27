@@ -4,6 +4,7 @@
   python -m api.cli forecast         deterministic forecast for every ward
   python -m api.cli ensemble         ensemble probabilities (~4 min)
   python -m api.cli replay may2024   build a replay (archive weather + lagged-ensemble probabilities)
+  python -m api.cli alerts [may2024] draft alerts for live data or a replay (drafts only; nothing is sent)
   python -m api.cli all              wards + forecast + ensemble + all replays
 """
 
@@ -14,6 +15,12 @@ import sys
 import time
 
 from api import db, jobs
+
+
+def _drafts(conn, replay):
+    from api.main import generate_drafts          # imported here: the API module is only needed for this step
+
+    return generate_drafts(conn, replay)
 
 
 def main(argv: list[str]) -> None:
@@ -28,6 +35,7 @@ def main(argv: list[str]) -> None:
             "forecast": lambda: jobs.run_forecast(conn),
             "ensemble": lambda: jobs.run_ensemble(conn),
             "replay": lambda: jobs.build_replay(conn, argv[1] if len(argv) > 1 else "may2024"),
+            "alerts": lambda: print(f"drafted {len(_drafts(conn, argv[1] if len(argv) > 1 else None))} alerts"),
         }
         order = ["wards", "forecast", "ensemble"] if cmd == "all" else [cmd]
         for step in order:

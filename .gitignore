@@ -32,3 +32,9 @@ frontend/node_modules/
 
 # Walking network (rebuilt by scripts/build_walk_network.py)
 data/processed/walk_graph.graphml
+
+# Real test phone numbers for Twilio sandbox dispatch (never committed)
+data/manual/test_recipients.csv
+
+# What-if simulator cache (rebuilt by scripts/build_access.py)
+data/processed/access_cache.pkl

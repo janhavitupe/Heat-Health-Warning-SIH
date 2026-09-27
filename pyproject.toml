@@ -22,7 +22,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=8"]
+dev = ["pytest>=8", "xmlschema>=3"]      # xmlschema: CAP 1.2 validation in tests
 gee = ["earthengine-api>=0.1.390"]
 pdf = ["pdfplumber>=0.11"]            # scripts/extract_slums.py
 access = ["osmnx>=2.0"]                # scripts/build_walk_network.py, build_access.py
