@@ -34,7 +34,11 @@ REPLAYS = {
     "may2024": {"title": "May 2024 heatwave", "start": "2024-05-01", "end": "2024-06-15",
                 "prob_models": ["ecmwf_ifs025", "gfs_seamless", "icon_seamless"], "prob_leads": [3, 4, 5],
                 "note": "Weather: ERA5 reanalysis. Probabilities: forecasts issued 3-5 days ahead by ECMWF, GFS "
-                        "and ICON (9 members), i.e. what the system would have shown 3 days before each day."},
+                        "and ICON (9 members), i.e. what the system would have shown 3 days before each day.",
+                "reference": "backtest/results/may2024_city.csv",
+                "reference_note": "References: IMD red alert for Ahmedabad 20-24 May 2024; Heat Action Plan colour from "
+                                  "observed Tmax at the airport (IMD 42647). Health outcomes are city-level only "
+                                  "(69 heatstroke cases in May 2024)."},
 }
 
 

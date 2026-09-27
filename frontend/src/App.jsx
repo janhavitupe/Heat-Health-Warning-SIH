@@ -8,6 +8,7 @@ import AlertsTab from './components/AlertsTab.jsx'
 import PlanTab from './components/PlanTab.jsx'
 import ReportsTab from './components/ReportsTab.jsx'
 import WhatIfTab from './components/WhatIfTab.jsx'
+import MethodTab from './components/MethodTab.jsx'
 import StatusStrip from './components/StatusStrip.jsx'
 import WardPanel from './components/WardPanel.jsx'
 import { LAYERS, ROLES } from './theme.js'
@@ -25,7 +26,7 @@ export default function App() {
   const [day, setDay] = useState(null)
   const [wards, setWards] = useState(null)
   const [selected, setSelected] = useState(null)
-  const [tab, setTab] = useState(() => (['ward', 'list', 'plan', 'alerts', 'whatif', 'reports'].includes(new URLSearchParams(location.search).get('tab')) ? new URLSearchParams(location.search).get('tab') : 'ward'))
+  const [tab, setTab] = useState(() => (['ward', 'list', 'plan', 'alerts', 'whatif', 'reports', 'method'].includes(new URLSearchParams(location.search).get('tab')) ? new URLSearchParams(location.search).get('tab') : 'ward'))
   const [error, setError] = useState(null)
   const [cooling, setCooling] = useState(null)
   const [refreshKey, setRefreshKey] = useState(0)      // bumped after alert actions to refresh the status strip
@@ -105,13 +106,15 @@ export default function App() {
 
         <aside className="panel" aria-label="Details">
           <div className="tabs" role="group" aria-label="Panel view">
-            <button aria-pressed={tab === 'ward'} onClick={() => setTab('ward')}>Ward detail</button>
+            <button aria-pressed={tab === 'ward'} onClick={() => setTab('ward')}>Ward</button>
             <button aria-pressed={tab === 'list'} onClick={() => setTab('list')}>All wards</button>
             <button aria-pressed={tab === 'plan'} onClick={() => setTab('plan')}>Plan</button>
             <button aria-pressed={tab === 'alerts'} onClick={() => setTab('alerts')}>Alerts</button>
             <button aria-pressed={tab === 'whatif'} onClick={() => setTab('whatif')}>What-if</button>
             <button aria-pressed={tab === 'reports'} onClick={() => setTab('reports')}>Reports</button>
+            <button aria-pressed={tab === 'method'} onClick={() => setTab('method')}>Method</button>
           </div>
+          {tab === 'method' && <MethodTab replay={replay} />}
           {tab === 'whatif' && <WhatIfTab wards={wards} selected={selected} point={point} armed={armed} onArm={setArmed} cooling={cooling} />}
           {tab === 'reports' && day && <ReportsTab wards={wards} day={day} replay={replay} selected={selected} onChanged={() => setRefreshKey((k) => k + 1)} />}
           {tab === 'alerts' && <AlertsTab replay={replay} onChanged={() => setRefreshKey((k) => k + 1)} />}

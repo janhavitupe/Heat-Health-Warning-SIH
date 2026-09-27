@@ -142,3 +142,16 @@ def test_scenario_endpoint(client):
     assert client.post("/scenarios/run", json={"changes": [{"lever": "tree_cover", "wards": ["AMC-40"], "pp": 99}]}).status_code == 422
     sid = client.post("/scenarios", json={"name": "t", "changes": [{"lever": "tree_cover", "wards": ["AMC-40"], "pp": 5}]}).json()["scenario_id"]
     assert client.get(f"/scenarios/{sid}").json()["result"]["label"] == "scenario_estimate"
+
+
+def test_report_card(client):
+    r = client.get("/report-card?format=json")
+    assert r.status_code == 200
+    card = r.json()
+    assert card["mode"] == "live" and card["verification"] is None      # no reference observations for live runs
+    s = card["summary"]
+    assert s["red_ward_days"] == sum(w["red_days"] for w in card["wards"])
+    assert 0 <= s["red_ward_days_alerted"] <= s["red_ward_days"] and len(card["wards"]) == 48
+    page = client.get("/report-card").text
+    assert page.startswith("<!doctype html>") and "not clinical predictions" in page
+    assert client.get("/report-card?event=9").status_code == 404

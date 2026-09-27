@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { api } from '../api.js'
+import { api, reportCardUrl } from '../api.js'
 import { ALERTS } from '../theme.js'
 
 // City status for the chosen day: ward counts by level, heatwave event, alerts awaiting review.
@@ -20,7 +20,8 @@ export default function StatusStrip({ day, replay, role, onOpenAlerts, refreshKe
           <span key={a.key} className="cnt"><span className="dot" style={{ background: a.color }} />{d.counts[a.key]} {a.label}</span>
         ))}
       </span>
-      {ev && <span>Heatwave {ev.start <= d.day ? 'under way' : 'forecast'}: {ev.start.slice(5)} to {ev.end.slice(5)}{ev.open_ended ? '+' : ''} · peak {ev.peak.slice(5)}</span>}
+      {ev && <span>Heatwave {ev.start <= d.day ? 'under way' : 'forecast'}: {ev.start.slice(5)} to {ev.end.slice(5)}{ev.open_ended ? '+' : ''} · peak {ev.peak.slice(5)}
+        {' · '}<a href={reportCardUrl(replay, d.event_index)} target="_blank" rel="noreferrer">Report card</a></span>}
       <span>Cooling deserts: {d.cooling.deserts.length}</span>
       {d.report_flags?.length > 0 && <span className="flagged">Case reports above expected: {d.report_flags.map((f) => `${f.ward_name} (${f.reports} vs ${f.expected.toFixed(1)})`).join(', ')}{d.reports_synthetic ? ' · synthetic' : ''}</span>}
       <button className="linkish" onClick={onOpenAlerts}>{d.alerts_pending_review} alert{d.alerts_pending_review === 1 ? '' : 's'} awaiting review</button>

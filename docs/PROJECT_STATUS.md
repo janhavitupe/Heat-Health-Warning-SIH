@@ -1,7 +1,7 @@
 # Project Status Report — Heat-Health Early Warning Platform
 
 SIH 2026 · Problem Statement 26083 · Pilot city: **Ahmedabad** (48 wards)
-Status as of **25 September 2026**. Phases 0, 1 and 2 are done. Phases 3 to 8 are complete (Phase 7 in simulated-delivery mode; Phase 8 feedback shown on synthetic data). Phase 9 has not started.
+Status as of **27 September 2026**. Phases 0 to 8 are complete (Phase 7 in simulated-delivery mode; Phase 8 feedback shown on synthetic data). Phase 9 is built (evaluation, report card, methodology page, demo script, Q&A); a live timed rehearsal, a usability test with a newcomer and the backup recording remain.
 
 This report explains everything built so far: what the platform is meant to do, what data was collected and where it came from, how each score is calculated, what was tested, what problems were found, and what is still missing.
 
@@ -20,6 +20,7 @@ This report explains everything built so far: what the platform is meant to do, 
    - [Phase 6 — Decision layer](#5e-phase-6--decision-layer)
    - [Phase 7 — Command dashboard and alert delivery](#5f-phase-7--command-dashboard-and-alert-delivery)
    - [Phase 8 — What-if simulator and health-worker feedback](#5g-phase-8--what-if-simulator-and-health-worker-feedback)
+   - [Phase 9 — Validation, report card and demo](#5h-phase-9--validation-report-card-and-demo)
 6. [Tests](#6-tests)
 7. [Real-data results so far](#7-real-data-results-so-far)
 8. [Known problems and open questions](#8-known-problems-and-open-questions)
@@ -73,7 +74,7 @@ Alert draft → officer review → approval → SMS/WhatsApp/voice ← Phase 7 (
 What-if scenarios; health-worker reports → flags → recalibration ← Phase 8
    │
    ▼
-Validation, polish, demo                                     ← Phase 9 (not started)
+Evaluation, report card, methodology page, demo             ← Phase 9
 ```
 
 **Guiding principle:** get one honest number right before building anything around it. The scoring library is built and tested first. The API, map, dashboard and simulator will all call the same library, so the explanation shown to a user always matches the score.
@@ -93,9 +94,9 @@ Validation, polish, demo                                     ← Phase 9 (not st
 | 6 | Decision layer (work windows, cooling deserts) | ✅ Done. Actions (Heat Action Plan departments), safe work hours, cooling deserts and new sites, resource allocation, advisories in en/hi/gu (hi/gu need native review) |
 | 7 | Dashboard & alert delivery | ✅ Done in simulated mode. Draft → review → approve → dispatch with audit trail, CAP 1.2 (schema-validated), voice menu; real Twilio sending needs your credentials |
 | 8 | What-if simulator & health-worker feedback | ✅ Done. Tree cover, cool roofs and cooling-centre scenarios in about 1 s; anonymous count-only reports, anomaly flags, recalibration proposals (synthetic demo data) |
-| 9 | Validation, polish, demo | Not started |
+| 9 | Validation, polish, demo | ✅ Built. [evaluation.md](evaluation.md), post-event [report card](report_card_may2024.pdf) (`/report-card`), in-app Method tab, [demo script](demo_script.md) (automated rehearsal passed), [Q&A](judge_qa.md). Open: live rehearsal, newcomer usability test, backup recording |
 
-**Code:** a Python package `heatrisk/` with 9 modules, 3 data scripts, 1 Earth Engine script, 3 backtest scripts, 155 passing tests.
+**Code:** a Python package `heatrisk/` with 9 modules, 3 data scripts, 1 Earth Engine script, 3 backtest scripts, 156 passing tests.
 **Git:** nothing is committed yet. All files are untracked on branch `master`.
 
 ---
@@ -614,16 +615,36 @@ Full details and privacy note: [docs/whatif_feedback_phase8.md](whatif_feedback_
 
 ---
 
+## 5h. Phase 9 — Validation, report card and demo
+
+- **Evaluation** ([evaluation.md](evaluation.md)): every test in one place, in plain language.
+  - **May 2024:** 11 of 11 Heat Action Plan Orange/Red days caught, 0 missed, 4 days of warning before IMD's red alert.
+  - **Early warning:** 232 of 350 Red ward-days flagged 3–5 days ahead.
+  - **Stability:** rankings stable (ρ ≥ 0.978).
+  - **What it can't show:** no ward-level health validation.
+- **Post-event report card** (`GET /report-card?replay=may2024`, or the *Report card* link on the status strip; code [api/report_card.py](../api/report_card.py)). One page per event:
+  - predicted Red/Orange ward-days and early warning;
+  - checks against IMD and the Heat Action Plan;
+  - health-worker reports and flags;
+  - officer actions from the audit log;
+  - limitations. Synthetic and simulated data are tagged.
+  - Generated for the backtest: [report_card_may2024.pdf](report_card_may2024.pdf).
+- **Method tab** in the app: the formulas, with weights read live from `/config`, the May 2024 results, data sources with estimate labels, and limitations.
+- **Demo** ([demo_script.md](demo_script.md)): a 6-minute run through all six innovations on the replay. `scripts/demo_setup.py` builds a separate demo database with labelled synthetic reports and scripted (simulated) approvals, leaving the first Red alert for a live approval. An automated rehearsal checked every step.
+- **Q&A sheet** ([judge_qa.md](judge_qa.md)) covering validation, data gaps, clinical claims, privacy, scale and cost.
+
+---
+
 ## 6. Tests
 
-**155 tests, all passing** (`pytest`, about 30 seconds): 114 test functions, several run with many inputs, some run with several inputs. Most use synthetic weather, so they run without internet.
+**156 tests, all passing** (`pytest`, about 30 seconds): 114 test functions, several run with many inputs, some run with several inputs. Most use synthetic weather, so they run without internet.
 
 | File | Test functions | What they check |
 |---|---|---|
 | `test_config.py` | 7 | Config loads; bad weights, bands and ranges are rejected |
 | `test_thermal.py` | 8 | Sun position, MRT higher by day than night, agreement with pythermalcomfort, extreme wind and saturated air |
 | `test_scoring.py` | 23 | Normalization, persistence counting and resets (only heat-alert-level days count), roof points gating and caps, neutral PVI indicators, percentile-rank scaling, risk multiplier centred on the average ward, Red reachable, alert band edges, city-wide batch table, explanations add up exactly, a "golden day" with known output |
-| `test_api.py` | 10 | GeoJSON with scores and probabilities, ward detail explanation adds up, days and events, config disclosed, error codes, actions / work windows / advisories / priorities / cooling / allocation endpoints (temporary database, no network) |
+| `test_api.py` | 11 | GeoJSON with scores and probabilities, ward detail explanation adds up, days and events, config disclosed, error codes, actions / work windows / advisories / priorities / cooling / allocation endpoints (temporary database, no network) |
 | `test_scenarios.py` | 7 | Trees cool nights and lower risk only in chosen wards, other wards unchanged, cool roofs lower indoor heat (and report missing data), roof estimate in range, invalid changes rejected (4 cases), cooling centre lowers gap and PVI |
 | `test_feedback.py` | 4 | Expected share, flag rules, bounded significant-only recalibration, reproducible synthetic data |
 | `test_alerts.py` | 8 | Engine drafts once per day/level, nothing sent without approval, named officer and reason required, edit → approve → dispatch → audit order, CAP validates against the OASIS 1.2 schema, voice menu in Gujarati, API token, Twilio mode refuses example recipients |
@@ -717,7 +738,7 @@ Phase 3 is done (§5b), including both decisions.
 
 ~~**Phase 8 — What-if simulator & health-worker feedback.**~~ Done: see [whatif_feedback_phase8.md](whatif_feedback_phase8.md).
 
-**Phase 9 — Validation, polish & demo** (next): post-event report card, end-to-end demo script, and final checks.
+~~**Phase 9 — Validation, polish & demo.**~~ Built: see [evaluation.md](evaluation.md), [demo_script.md](demo_script.md) and [judge_qa.md](judge_qa.md). **Open:** a live timed rehearsal, a usability pass with someone new to the project, the backup screen recording, and updating the proposal slides with these results.
 
 In parallel: chase the census crosswalk and the CPCB/SAFAR station data, and consider replaying May 2010 (published daily mortality).
 
@@ -780,7 +801,7 @@ heat/
 ├── README.md                         setup and layout
 ├── config.yaml                       every weight and threshold
 ├── pyproject.toml                    package and dependencies
-├── api/                              FastAPI app, SQLite storage, refresh jobs, CLI (Phase 5); alerts, dispatch (Phase 7)
+├── api/                              FastAPI app, SQLite storage, refresh jobs, CLI (Phase 5); alerts, dispatch (Phase 7); report card (Phase 9)
 ├── frontend/                         React + MapLibre ward map (Phase 5)
 ├── Dockerfile, docker-compose.yml    one-command setup (untested)
 ├── heatrisk/                         scoring library
@@ -839,9 +860,13 @@ heat/
 │   ├── decision_layer_phase6.md      Phase 6 decision layer
 │   ├── alerts_phase7.md              Phase 7 alert workflow and delivery
 │   ├── whatif_feedback_phase8.md     Phase 8 simulator, feedback loop and privacy note
+│   ├── evaluation.md                 Phase 9 methods, results and limitations
+│   ├── report_card_may2024.html/.pdf post-event report card for the backtest
+│   ├── demo_script.md, judge_qa.md   demo run sheet and expected questions
+│   ├── decision_roof_share.md        how sheet-roof shares are estimated
 │   └── weights_changelog.md          every config change and why
 ├── phases/                           plan for phases 0–9
-└── tests/                            155 tests
+└── tests/                            156 tests
 ```
 
 *All scores are model estimates, not clinical predictions.*

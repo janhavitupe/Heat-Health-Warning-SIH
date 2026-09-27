@@ -50,11 +50,11 @@ from pathlib import Path
 import pandas as pd
 from fastapi import Depends, FastAPI, Header, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse, Response
+from fastapi.responses import FileResponse, HTMLResponse, Response
 from pydantic import BaseModel
 from fastapi.staticfiles import StaticFiles
 
-from api import alerts, db, decisions, dispatch, jobs, loop
+from api import alerts, db, decisions, dispatch, jobs, loop, report_card
 from heatrisk import load_config
 from heatrisk.config import ROOT
 
@@ -544,12 +544,26 @@ def dashboard(day: str | None = None, replay: str | None = None,
         rep_sum = loop.summary(conn, run["run_id"], replay, None)
         report_flags = [f for f in rep_sum["flags"] if f["date"] == day]
     return {"day": day, "view": view, "meta": _meta(run, prob_run, replay), "counts": counts, "event": active,
+            "event_index": evs.index(active) if active else None,
             "report_flags": report_flags, "reports_synthetic": rep_sum["includes_synthetic"],
             "worst_level": pr["worst_level"], "city_actions": pr["city_actions"], "top_wards": top,
             "cooling": {"city_share_within_walk": cool["city_share_within_walk"],
                         "deserts": [w["ward_name"] for w in cool["wards"] if w.get("cooling_desert")],
                         "recommended_sites": len(cool["recommended_sites"]["features"])},
             "alerts_pending_review": pending, "dispatch_mode": dispatch.mode()}
+
+
+@app.get("/report-card")
+def report_card_view(replay: str | None = None, event: int = Query(0, ge=0),
+                     format: str = Query("html", pattern="^(html|json)$")):
+    """Post-event report card (Phase 9): predicted vs observed, early warning, reports, officer actions."""
+    with db.connect() as conn:
+        run, prob_run = _runs(conn, replay)
+        try:
+            card = report_card.build(conn, run, prob_run, replay, event)
+        except LookupError as e:
+            raise HTTPException(404, str(e)) from None
+    return card if format == "json" else HTMLResponse(report_card.render_html(card))
 
 
 # ---------- what-if scenarios and health-worker feedback (Phase 8)

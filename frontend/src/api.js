@@ -27,7 +27,15 @@ async function send(method, path, body) {
   return data
 }
 
+// Post-event report card: a printable HTML page served by the API
+export function reportCardUrl(replay, event = 0) {
+  const q = new URLSearchParams({ event: String(event ?? 0) })
+  if (replay) q.set('replay', replay)
+  return `/report-card?${q}`
+}
+
 export const api = {
+  config: () => get('/config'),
   status: () => get('/status'),
   days: (replay) => get('/days', { replay }),
   wards: (day, replay) => get('/wards', { day, replay }),
