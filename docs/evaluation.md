@@ -6,7 +6,7 @@ This page brings together how the Heat-Health Early Warning Platform was tested,
 - **The event:** we replayed the May 2024 Ahmedabad heatwave through the full system.
 - **Days that mattered:** the model rated as Orange or Red every day that the city's own Heat Action Plan rule (observed temperature) called Orange or Red: 11 of 11.
 - **Lead time:** it gave 4 days of Orange-or-worse warning before IMD's red alert.
-- **Probabilistic warning:** forecasts issued 3–5 days ahead flagged about two-thirds of Red ward-days (232 of 350) with at least a 40% chance of Red.
+- **Probabilistic warning:** forecasts issued 3–5 days ahead flagged about two-thirds of Red ward-days (238 of 344) with at least a 40% chance of Red.
 - **Stability:** ward rankings barely change when any weight moves by ±20%.
 - **What we cannot show:** the model predicts fewer deaths or admissions in the wards it ranks higher. Health outcomes for 2024 exist only for the city as a whole.
 
@@ -81,7 +81,7 @@ The over-warning days are mostly one step up on humid days. The Heat Action Plan
 
 ### 2.5 Early warning of Red wards (report card)
 
-Of the 350 Red ward-days in the May 2024 event, **232 (66%)** had a chance of Red ≥ 40% in the forecasts issued 3–5 days before. The first such day was 16 May, one day before the first Red ward and four days before IMD's red alert. See the [report card](report_card_may2024.html) ([PDF](report_card_may2024.pdf)).
+Of the 344 Red ward-days in the May 2024 event, **238 (69%)** had a chance of Red ≥ 40% in the forecasts issued 3–5 days before. The first such day was 16 May, one day before the first Red ward and four days before IMD's red alert. See the [report card](report_card_may2024.html) ([PDF](report_card_may2024.pdf)).
 
 ### 2.6 Feedback loop (synthetic)
 

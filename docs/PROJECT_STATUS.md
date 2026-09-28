@@ -619,7 +619,7 @@ Full details and privacy note: [docs/whatif_feedback_phase8.md](whatif_feedback_
 
 - **Evaluation** ([evaluation.md](evaluation.md)): every test in one place, in plain language.
   - **May 2024:** 11 of 11 Heat Action Plan Orange/Red days caught, 0 missed, 4 days of warning before IMD's red alert.
-  - **Early warning:** 232 of 350 Red ward-days flagged 3–5 days ahead.
+  - **Early warning:** 238 of 344 Red ward-days flagged 3–5 days ahead.
   - **Stability:** rankings stable (ρ ≥ 0.978).
   - **What it can't show:** no ward-level health validation.
 - **Post-event report card** (`GET /report-card?replay=may2024`, or the *Report card* link on the status strip; code [api/report_card.py](../api/report_card.py)). One page per event:
