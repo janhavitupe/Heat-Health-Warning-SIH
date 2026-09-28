@@ -1,0 +1,21 @@
+# HTTPS in front of the app with Caddy (free automatic certificates from Let's Encrypt).
+# Needs a domain name pointing at this server and ports 80 + 443 open. Set HEAT_DOMAIN in .env.
+#   docker compose -f docker-compose.yml -f docker-compose.https.yml up -d --build
+services:
+  heat:
+    ports: !reset []          # only reachable through Caddy
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      HEAT_DOMAIN: ${HEAT_DOMAIN:?set HEAT_DOMAIN in .env}
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+    depends_on:
+      - heat
+volumes:
+  caddy-data:

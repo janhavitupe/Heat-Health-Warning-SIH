@@ -6,3 +6,14 @@ data/raw
 data/forecast
 data/api
 .git
+# secrets and personal data never go into the image
+.env
+*.env
+data/manual/test_recipients.csv
+# not needed at runtime (only to rebuild data)
+data/processed/walk_graph.graphml
+docs
+phases
+tests
+gee
+.github

@@ -17,7 +17,7 @@ uvicorn api.main:app                       # map at http://127.0.0.1:8000, API d
 
 - **Automatic refresh:** start with `HEAT_SCHEDULER=1`. The forecast then refreshes every hour at :05 and the ensemble daily at 05:45 IST. An empty database is filled straight away (tested).
 - **Frontend development:** `cd frontend && npm run dev` runs a live-reloading map that proxies API calls to port 8000.
-- **Docker:** `docker compose up --build`. Written but **not tested**, because Docker isn't installed on the development machine.
+- **Docker:** see [DEPLOY.md](../DEPLOY.md). The image is built and smoke-tested by GitHub Actions (`.github/workflows/docker.yml`) on every push; the start-up script was also tested outside Docker from an empty database.
 
 ## Backend
 

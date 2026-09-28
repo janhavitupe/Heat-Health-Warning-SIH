@@ -1,5 +1,6 @@
-# One image: builds the map (Node) and runs the API + scheduler (Python), serving both on :8000.
-# Untested in the development environment (Docker not installed there) - see docs/api_map_phase5.md.
+# One image: builds the map (Node) and runs the API + scheduler (Python), serving both on $PORT (default 8000).
+# Start-up (docker/entrypoint.sh) builds the May 2024 replay and first forecast if missing.
+# Deployment guide: DEPLOY.md
 
 FROM node:24-slim AS frontend
 WORKDIR /app/frontend
@@ -10,14 +11,22 @@ RUN npm run build
 
 FROM python:3.11-slim
 WORKDIR /app
-ENV PYTHONUNBUFFERED=1 HEAT_SCHEDULER=1 HEAT_DB=/app/data/api/heat.db
+ENV PYTHONUNBUFFERED=1 HEAT_SCHEDULER=1 PORT=8000 TZ=Asia/Kolkata
 COPY pyproject.toml README.md ./
 COPY heatrisk/ heatrisk/
 COPY api/ api/
 RUN pip install --no-cache-dir -e ".[api]"
 COPY config.yaml ./
+COPY resources/ resources/
 COPY data/processed/ data/processed/
 COPY data/manual/ data/manual/
+COPY backtest/results/may2024_city.csv backtest/results/may2024_city.csv
+COPY scripts/demo_setup.py scripts/demo_setup.py
+COPY docker/entrypoint.sh /entrypoint.sh
 COPY --from=frontend /app/frontend/dist frontend/dist
+# Writable database folder; some hosts (Hugging Face Spaces) run the container as user 1000
+RUN mkdir -p data/api && chmod -R a+rwX data /entrypoint.sh && sed -i 's/\r$//' /entrypoint.sh
 EXPOSE 8000
-CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000"]
+HEALTHCHECK --interval=60s --timeout=10s --start-period=300s --retries=3 \
+  CMD python -c "import os, urllib.request; urllib.request.urlopen('http://127.0.0.1:%s/status' % os.environ.get('PORT', '8000'), timeout=8)"
+CMD ["/bin/sh", "/entrypoint.sh"]

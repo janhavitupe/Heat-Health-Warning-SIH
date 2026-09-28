@@ -36,5 +36,5 @@ data/processed/walk_graph.graphml
 # Real test phone numbers for Twilio sandbox dispatch (never committed)
 data/manual/test_recipients.csv
 
-# What-if simulator cache (rebuilt by scripts/build_access.py)
-data/processed/access_cache.pkl
+# What-if simulator cache (scripts/build_access.py) is committed: the server needs it and can't rebuild it
+# without the 60 MB walking network

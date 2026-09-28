@@ -59,6 +59,7 @@ def test_roof_share_estimate_in_range(wards):
     {"lever": "tree_cover", "wards": ["AMC-99"], "pp": 5},
     {"lever": "cool_roofs", "wards": ["AMC-35"], "share": 1.5},
     {"lever": "magic"},
+    {"lever": "cooling_centre", "site": 0},                        # location missing
 ])
 def test_invalid_changes_are_rejected(wards, hot, cfg, change):
     with pytest.raises(scenarios.ScenarioError):

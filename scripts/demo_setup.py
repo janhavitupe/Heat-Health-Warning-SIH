@@ -70,6 +70,7 @@ def main() -> None:
           f"Red alert for {LIVE_DAY} left as a draft for the live demo")
 
     out = ROOT / "docs" / "report_card_may2024.html"
+    out.parent.mkdir(exist_ok=True)
     out.write_text(report_card.render_html(card), encoding="utf-8")
     print("wrote", out.relative_to(ROOT))
     if "--no-pdf" in sys.argv:

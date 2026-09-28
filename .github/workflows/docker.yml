@@ -1,0 +1,55 @@
+# Builds the Docker image and checks that the started container serves the demo.
+# Runs on GitHub's machines, so nobody needs Docker installed locally.
+name: docker
+
+on:
+  push:
+    branches: [master, main]
+    paths: ["Dockerfile", "docker/**", "api/**", "heatrisk/**", "frontend/**", "data/**", "config.yaml", "resources/**", "pyproject.toml", ".github/workflows/docker.yml"]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build-and-smoke-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build image
+        run: docker build -t heat-health .
+
+      - name: Start container (demo mode)
+        run: docker run -d --name heat -p 8000:8000 -e HEAT_DEMO=1 -e HEAT_API_TOKEN=ci-token heat-health
+
+      - name: Wait for start-up (replay build needs internet, ~1-2 min)
+        run: |
+          for i in $(seq 1 60); do
+            if curl -sf http://localhost:8000/status > /dev/null; then echo "up after $((i*5)) s"; exit 0; fi
+            sleep 5
+          done
+          docker logs heat; exit 1
+
+      - name: Smoke test
+        run: |
+          set -e
+          check() { code=$(curl -s -o /dev/null -w '%{http_code}' "http://localhost:8000$1"); echo "$code $1"; [ "$code" = "$2" ]; }
+          check "/" 200
+          check "/status" 200
+          check "/days?replay=may2024" 200
+          check "/wards?replay=may2024&day=2024-05-17" 200
+          check "/ward/AMC-35/actions?replay=may2024&day=2024-05-17" 200
+          check "/report-card?replay=may2024" 200
+          check "/whatsapp/preview?text=Baherampura&replay=may2024" 200
+          check "/cooling" 200
+          # write actions must be refused without the token
+          code=$(curl -s -o /dev/null -w '%{http_code}' -X POST -H 'Content-Type: application/json' -d '{"officer":"ci"}' http://localhost:8000/alerts/1/approve)
+          echo "$code approve without token"; [ "$code" = "401" ]
+          # the demo leaves the 17 May Red alert as a draft
+          curl -s "http://localhost:8000/alerts?replay=may2024&status=draft" | python3 -c "import json,sys; a=json.load(sys.stdin)['alerts']; assert any(x['date']=='2024-05-17' and x['level']=='red' for x in a); print('17 May Red draft present')"
+          # cooling-centre what-if needs the committed access cache
+          curl -sf -X POST -H 'Content-Type: application/json' -d '{"changes":[{"lever":"cooling_centre","lon":72.595,"lat":22.995}]}' http://localhost:8000/scenarios/run > /dev/null && echo "what-if ok"
+
+      - name: Container logs
+        if: always()
+        run: docker logs heat 2>&1 | tail -60

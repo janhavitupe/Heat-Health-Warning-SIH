@@ -93,7 +93,11 @@ def apply(wards: pd.DataFrame, changes: list[dict], cfg: dict) -> tuple[pd.DataF
         if lever not in LEVERS:
             raise ScenarioError(f"unknown lever {lever!r}; choose from {LEVERS}")
         if lever == "cooling_centre":
-            ids, info = _cooling_centre(scen, float(ch["lon"]), float(ch["lat"]))
+            try:
+                lon, lat = float(ch["lon"]), float(ch["lat"])
+            except (KeyError, TypeError, ValueError):
+                raise ScenarioError("cooling_centre: give the location as lon and lat") from None
+            ids, info = _cooling_centre(scen, lon, lat)
             affected += ids
             notes.append(info)
             continue

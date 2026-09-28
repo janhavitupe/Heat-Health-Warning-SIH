@@ -566,7 +566,7 @@ Full details: [docs/api_map_phase5.md](api_map_phase5.md).
   - a ward panel explaining every score with source labels, trajectory, probability bars and hourly curve;
   - a sortable all-wards table;
   - light and dark themes and a phone layout.
-- **Not yet verified:** the Docker setup is written but untested (Docker isn't installed on the development machine).
+- **Deployment:** see [DEPLOY.md](../DEPLOY.md) (free Hugging Face Space for the demo, or a VM with Docker and HTTPS). GitHub Actions builds and tests the Docker image on every push.
 
 ---
 
@@ -803,7 +803,7 @@ heat/
 ├── pyproject.toml                    package and dependencies
 ├── api/                              FastAPI app, SQLite storage, refresh jobs, CLI (Phase 5); alerts, dispatch (Phase 7); report card (Phase 9)
 ├── frontend/                         React + MapLibre ward map (Phase 5)
-├── Dockerfile, docker-compose.yml    one-command setup (untested)
+├── Dockerfile, docker-compose*.yml   container setup; DEPLOY.md explains hosting
 ├── heatrisk/                         scoring library
 │   ├── config.py                     load and validate config
 │   ├── weather.py                    Open-Meteo forecast and archive → WeatherFrame
