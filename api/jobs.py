@@ -156,6 +156,25 @@ def run_ensemble(conn) -> int:
         raise
 
 
+def replay_input_dir(name: str):
+    """Weather inputs of a replay, committed to the repository so a replay builds without
+    internet (servers on shared cloud IPs are often rate-limited by Open-Meteo)."""
+    return ROOT / "data" / "processed" / "replay_inputs" / name
+
+
+def _cached(path, fetch):
+    """Read a weather frame from `path`, or fetch it and save it there for next time."""
+    if path.exists():
+        return pd.read_parquet(path)
+    df = fetch()
+    try:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        df.to_parquet(path)
+    except OSError:
+        pass                                   # read-only image: just use the fetched data
+    return df
+
+
 def build_replay(conn, name: str = "may2024") -> int:
     """Score a past event and store it (with lagged-ensemble probabilities) as a replay run."""
     spec = REPLAYS[name]
@@ -163,11 +182,13 @@ def build_replay(conn, name: str = "may2024") -> int:
     c = cfg["city"]["centre"]
     run_id = db.start_run(conn, "replay", name=name, source=spec["note"])
     try:
-        wx = fetch_archive(c["lat"], c["lon"], spec["start"], spec["end"])
+        src = replay_input_dir(name)
+        wx = _cached(src / "archive.parquet", lambda: fetch_archive(c["lat"], c["lon"], spec["start"], spec["end"]))
         wx.to_parquet(replay_weather_path(name))           # kept for the what-if simulator
         daily, hourly = forecast.run_wards(wx, wards, cfg)
         store_scores(conn, run_id, daily, hourly, forecast.detect_events(daily, cfg, len(wards)))
-        members = {f"{m}_m{lead:02d}": fetch_previous_runs(c["lat"], c["lon"], spec["start"], spec["end"], m, lead)
+        members = {f"{m}_m{lead:02d}": _cached(src / f"{m}_m{lead:02d}.parquet", lambda m=m, lead=lead: fetch_previous_runs(
+                       c["lat"], c["lon"], spec["start"], spec["end"], m, lead))
                    for m in spec["prob_models"] for lead in spec["prob_leads"]}
         store_probs(conn, run_id, ensemble.probabilities(ensemble.score_members(members, wards, cfg), cfg))
         db.delete_runs(conn, [r[0] for r in conn.execute(
