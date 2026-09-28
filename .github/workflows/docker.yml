@@ -11,8 +11,13 @@ on:
 
 jobs:
   build-and-smoke-test:
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
+    # x86 (most servers) and ARM (Oracle Cloud's free Ampere VM); ARM runners are free for public repos
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: [ubuntu-latest, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
 

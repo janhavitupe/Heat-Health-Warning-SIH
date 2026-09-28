@@ -24,7 +24,7 @@ COPY backtest/results/may2024_city.csv backtest/results/may2024_city.csv
 COPY scripts/demo_setup.py scripts/demo_setup.py
 COPY docker/entrypoint.sh /entrypoint.sh
 COPY --from=frontend /app/frontend/dist frontend/dist
-# Writable database folder; some hosts (Hugging Face Spaces) run the container as user 1000
+# Writable database folder, so the container also works when a host runs it as a non-root user
 RUN mkdir -p data/api && chmod -R a+rwX data /entrypoint.sh && sed -i 's/\r$//' /entrypoint.sh
 EXPOSE 8000
 HEALTHCHECK --interval=60s --timeout=10s --start-period=300s --retries=3 \

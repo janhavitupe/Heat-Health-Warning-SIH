@@ -566,7 +566,7 @@ Full details: [docs/api_map_phase5.md](api_map_phase5.md).
   - a ward panel explaining every score with source labels, trajectory, probability bars and hourly curve;
   - a sortable all-wards table;
   - light and dark themes and a phone layout.
-- **Deployment:** see [DEPLOY.md](../DEPLOY.md) (free Hugging Face Space for the demo, or a VM with Docker and HTTPS). GitHub Actions builds and tests the Docker image on every push.
+- **Deployment:** see [DEPLOY.md](../DEPLOY.md): a free, permanent Oracle Cloud Always Free ARM server with Docker and HTTPS. GitHub Actions builds and tests the Docker image for x86 and ARM on every push.
 
 ---
 
