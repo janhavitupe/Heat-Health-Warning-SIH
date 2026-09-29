@@ -697,6 +697,11 @@ if FRONTEND.exists():
     def index():
         return FileResponse(FRONTEND / "index.html")
 
+    @app.get("/about", include_in_schema=False)
+    @app.get("/about.html", include_in_schema=False)
+    def about():
+        return FileResponse(FRONTEND / "about.html")
+
     @app.get("/favicon.svg", include_in_schema=False)
     def favicon():
         return FileResponse(FRONTEND / "favicon.svg", media_type="image/svg+xml")

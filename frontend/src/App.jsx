@@ -92,12 +92,13 @@ export default function App() {
           {Object.entries(ROLES).map(([k, r]) => <button key={k} aria-pressed={role === k} onClick={() => chooseRole(k)}>{r.label}</button>)}
         </div>
         <div className="spacer" />
+        <a className="about-link" href="/about.html" target="_blank" rel="noopener">About this demo & how to try it ↗</a>
         <span className="estimate">Model estimates, not clinical predictions</span>
       </header>
 
       <StatusStrip day={day} replay={replay} role={role} refreshKey={refreshKey} onOpenAlerts={() => setTab('alerts')} />
       {error && <div className="banner" role="alert">Data unavailable: {error}</div>}
-      {notice && <div className="banner notice" role="status">{notice}</div>}
+      {notice && <div className="banner notice" role="status">{notice} <a href="/about.html" target="_blank" rel="noopener">Why?</a></div>}
 
       <div className="main">
         <div className="mapcol">

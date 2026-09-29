@@ -222,3 +222,5 @@ details summary { cursor: pointer; margin: 8px 0; }
 .wa-bot { background: var(--chip); color: var(--ink); }
 .wa form input { flex: 1; min-width: 0; }
 .map-failed { margin: 24px; max-width: 460px; font-size: 13px; color: var(--ink-2); }
+.about-link { font-size: 13px; font-weight: 600; color: var(--accent); text-decoration: none; white-space: nowrap; }
+.about-link:hover { text-decoration: underline; }
