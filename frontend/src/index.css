@@ -137,6 +137,7 @@ table.list tr { cursor: pointer; }
 table.list tr:hover td { background: var(--chip); }
 
 .banner { padding: 10px 16px; background: var(--chip); color: var(--ink); font-size: 13px; }
+.banner.notice { color: var(--ink-2); }
 .empty { color: var(--ink-2); padding: 24px 0; }
 .srcnote { color: var(--muted); font-size: 11px; margin-top: 16px; }
 
@@ -220,3 +221,4 @@ details summary { cursor: pointer; margin: 8px 0; }
 .wa-me { margin-left: auto; background: #d9fdd3; color: #0b0b0b; }
 .wa-bot { background: var(--chip); color: var(--ink); }
 .wa form input { flex: 1; min-width: 0; }
+.map-failed { margin: 24px; max-width: 460px; font-size: 13px; color: var(--ink-2); }

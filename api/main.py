@@ -129,7 +129,8 @@ def _runs(conn, replay: str | None) -> tuple[dict, dict | None]:
         return dict(r), dict(r)
     fc = db.latest_run(conn, "forecast")
     if fc is None:
-        raise HTTPException(503, "no forecast yet: run `python -m api.cli forecast` or start with HEAT_SCHEDULER=1")
+        raise HTTPException(503, "live forecast not available yet: the weather service could not be reached "
+                                 "(it is retried every hour; run `python -m api.cli forecast` to fetch it now)")
     ens = db.latest_run(conn, "ensemble")
     return dict(fc), (dict(ens) if ens else None)
 

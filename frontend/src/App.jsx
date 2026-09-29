@@ -28,6 +28,7 @@ export default function App() {
   const [selected, setSelected] = useState(null)
   const [tab, setTab] = useState(() => (['ward', 'list', 'plan', 'alerts', 'whatif', 'reports', 'method'].includes(new URLSearchParams(location.search).get('tab')) ? new URLSearchParams(location.search).get('tab') : 'ward'))
   const [error, setError] = useState(null)
+  const [notice, setNotice] = useState(null)            // e.g. live forecast unavailable, replay shown instead
   const [cooling, setCooling] = useState(null)
   const [refreshKey, setRefreshKey] = useState(0)      // bumped after alert actions to refresh the status strip
   const [armed, setArmed] = useState(false)             // what-if: next map click places a cooling centre
@@ -38,20 +39,32 @@ export default function App() {
     if (replay) q.set('replay', replay)
     else q.delete('replay')
     history.replaceState(null, '', `${location.pathname}${q.size ? `?${q}` : ''}`)
-    api.days(replay).then((d) => { setError(null); setDays(d); setDay(d.default_day) }).catch((e) => setError(e.message))
+    let current = true                    // ignore answers that arrive after the mode changed
+    api.days(replay).then((d) => { if (current) { setError(null); setDays(d); setDay(d.default_day) } })
+      .catch((e) => {
+        if (!current) return
+        if (!replay && e.message.startsWith('503')) {   // no live forecast yet: show the replay instead
+          setNotice('The live forecast is not available right now (the free weather service is limiting this server; it retries every hour). Showing the May 2024 heatwave replay instead.')
+          setReplay('may2024')
+        } else setError(e.message)
+      })
+    return () => { current = false }
   }, [replay])
 
   const chooseMode = (r) => {
     if (r === replay) return
-    setDays(null); setWards(null); setDay(null); setError(null); setReplay(r)
+    setDays(null); setWards(null); setDay(null); setError(null); setNotice(null); setReplay(r)
   }
 
   useEffect(() => {
     if (!day) return
+    let current = true
     api.wards(day, replay).then((w) => {
+      if (!current) return
       setWards(w)
       setSelected((s) => s ?? [...w.features].sort((a, b) => b.properties.mri - a.properties.mri)[0].properties.ward_id)
-    }).catch((e) => setError(e.message))
+    }).catch((e) => current && setError(e.message))
+    return () => { current = false }
   }, [day, replay])
 
   useEffect(() => {                       // cooling places and recommended sites, fetched once when first needed
@@ -84,6 +97,7 @@ export default function App() {
 
       <StatusStrip day={day} replay={replay} role={role} refreshKey={refreshKey} onOpenAlerts={() => setTab('alerts')} />
       {error && <div className="banner" role="alert">Data unavailable: {error}</div>}
+      {notice && <div className="banner notice" role="status">{notice}</div>}
 
       <div className="main">
         <div className="mapcol">

@@ -1,6 +1,6 @@
 import * as maplibregl from 'maplibre-gl'
 import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { featureColor, valueText } from '../layers.js'
 import { LAYERS } from '../theme.js'
 
@@ -16,11 +16,18 @@ export default function MapView({ data, layer, selected, cooling, armed, point, 
   const box = useRef(null)
   const map = useRef(null)
   const ready = useRef(false)
+  const [failed, setFailed] = useState(null)      // map could not start (e.g. no WebGL2): the rest of the app still works
   const latest = useRef({ data, layer, selected, cooling, armed, point, onMapClick, onSelect })
   latest.current = { data, layer, selected, cooling, armed, point, onMapClick, onSelect }
 
   useEffect(() => {
-    const m = new maplibregl.Map({ container: box.current, style: BASEMAP, center: CENTER, zoom: 10.6, attributionControl: { compact: true } })
+    let m
+    try {
+      m = new maplibregl.Map({ container: box.current, style: BASEMAP, center: CENTER, zoom: 10.6, attributionControl: { compact: true } })
+    } catch (e) {
+      setFailed(e.message || String(e))
+      return undefined
+    }
     m.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right')
     const popup = new maplibregl.Popup({ closeButton: false, closeOnClick: false, offset: 8 })
     m.on('load', () => {
@@ -104,5 +111,9 @@ export default function MapView({ data, layer, selected, cooling, armed, point, 
 
   useEffect(render, [data, layer, selected, cooling, armed, point])
 
-  return <div className="map" ref={box} role="region" aria-label="Ward risk map" />
+  return (
+    <div className="map" ref={box} role="region" aria-label="Ward risk map">
+      {failed && <p className="map-failed">The map needs WebGL2, which this browser or computer can't provide (try another browser, or turn on hardware acceleration). Everything else, including the ward list, works: use <b>All wards</b>.</p>}
+    </div>
+  )
 }
