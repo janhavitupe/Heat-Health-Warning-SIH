@@ -85,11 +85,15 @@ def start_scheduler():
             if jobs.with_retries(jobs.run_ensemble, conn=conn, wait_s=300):
                 draft_alerts(conn)
 
+    # HEAT_ENSEMBLE=0 skips the 122-run ensemble (small free hosts: it needs minutes of CPU)
+    use_ensemble = os.environ.get("HEAT_ENSEMBLE", "1") != "0"
     sched.add_job(forecast_job, "cron", minute=5, id="forecast", max_instances=1, coalesce=True)
-    sched.add_job(ensemble_job, "cron", hour=5, minute=45, id="ensemble", max_instances=1, coalesce=True)
+    if use_ensemble:
+        sched.add_job(ensemble_job, "cron", hour=5, minute=45, id="ensemble", max_instances=1, coalesce=True)
     sched.start()
     with db.connect() as conn:          # fill an empty database straight away
-        need_fc, need_ens = db.latest_run(conn, "forecast") is None, db.latest_run(conn, "ensemble") is None
+        need_fc = db.latest_run(conn, "forecast") is None
+        need_ens = use_ensemble and db.latest_run(conn, "ensemble") is None
     if need_fc or need_ens:
         threading.Thread(target=lambda: (need_fc and forecast_job(), need_ens and ensemble_job()), daemon=True).start()
     return sched
